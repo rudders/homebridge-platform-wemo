@@ -17,7 +17,6 @@
 var Accessory, Characteristic, PowerConsumption, Service, uuid;
 var Wemo = require('wemo-client');
 var Storage = require('node-persist');
-
 var wemo = new Wemo();
 
 var noMotionTimer;
@@ -274,14 +273,14 @@ WemoAccessory.prototype._statusChange = function(deviceId, capabilityId, value) 
     */
     if (this.enddevice.deviceId != deviceId){
         // we get called for every bulb on the link so lets get out of here if the call is for a differnt bulb
-        this.log('statusChange Ignored (device): ', this.enddevice.deviceId, deviceId, capabilityId, value)
+        this.log('statusChange Ignored (device): ', this.enddevice.deviceId, deviceId, capabilityId, value);
         return;
         }
     
     if (this._capabilities[capabilityId] === value) {
         // nothing's changed - lets get out of here to stop an endless loop as 
         // this callback was probably triggered by us updating HomeKit
-        this.log('statusChange Ignored (capability): ', deviceId, capabilityId, value)
+        this.log('statusChange Ignored (capability): ', deviceId, capabilityId, value);
         return;
         }
 
@@ -440,8 +439,8 @@ WemoAccessory.prototype.getStatus = function (cb) {
 WemoAccessory.prototype.setOnStatus = function (value, cb) {
 //  var client = wemo.client(this.device);
     this.onState = value;
-    this._client.setDeviceStatus(this.enddevice.deviceId, 10006, (value ? 1 : 0));
     this.log("setOnStatus: %s to %s", this.name, value > 0 ? "on" : "off");
+    this._client.setDeviceStatus(this.enddevice.deviceId, 10006, (value ? 1 : 0));
     if (cb) cb(null);
 }
 
