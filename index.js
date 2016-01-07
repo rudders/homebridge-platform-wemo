@@ -15,7 +15,7 @@
 "use strict";
 
 var Accessory, Characteristic, PowerConsumption, Service, uuid;
-var Wemo = require('wemo-client');
+var Wemo = require('wemo-client');  
 var wemo = new Wemo();
 
 var noMotionTimer;
