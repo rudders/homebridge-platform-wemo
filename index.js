@@ -63,7 +63,8 @@ WemoPlatform.prototype = {
             this.expectedAccessories ? this.expectedAccessories : "an unknown number" , this.timeout);
         var foundAccessories = [];
         var self = this;
-        wemo.discover(function (device) {
+
+        var addDiscoveredDevice = function(device) {
             self.log("Found: %s, type: %s", device.friendlyName, device.deviceType.split(":")[3]);
             if (device.deviceType === Wemo.DEVICE_TYPE.Bridge) { // a wemolink bridge - find bulbs
                 var client = this.client(device);
@@ -82,20 +83,24 @@ WemoPlatform.prototype = {
                         }
                     }
                 });
-            } else if (device.deviceType !== Wemo.DEVICE_TYPE.Maker) {
+            }
+            else if (device.deviceType !== Wemo.DEVICE_TYPE.Maker) {
                 var accessory = new WemoAccessory(self.log, device, null);
                 foundAccessories.push(accessory);
                 self.log("Discovered %s accessories of %s ",
                             foundAccessories.length,
                             self.expectedAccessories ? self.expectedAccessories : "an unspecified number of accessories");
-                if (foundAccessories.length == self.expectedAccessories)
-                    {
+                if (foundAccessories.length == self.expectedAccessories) {
                     self.log("Woohoo!!! all %s accessories found.", self.expectedAccessories );
                     if (timer) {clearTimeout(timer);} // if setTimeout got called already cancel it.
                     callback(foundAccessories);
-                    }
                 }
-        });
+            }
+        }
+
+        wemo.discover(addDiscoveredDevice);
+        wemo.discover(addDiscoveredDevice);
+        wemo.discover(addDiscoveredDevice);
 
         // we'll wait here for the accessories to be found unless the specified number of 
         // accessories has already been found in which case the timeout is cancelled!!
