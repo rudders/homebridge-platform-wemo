@@ -382,11 +382,17 @@ WemoAccessory.prototype.setOnStatus = function (value, cb) {
     if(this.onState !== value) { // if we have nothing to do so lets leave it at that.
         this.onState = value;
         debug("this.Onstate now: %s", this.onState);
-        this.log("setOnStatus: %s to %s", this.name, value > 0 ? "on" : "off");
-        this._client.setDeviceStatus(this.enddevice.deviceId, 10006, (value ? 1 : 0));
+        this._client.setDeviceStatus(this.enddevice.deviceId, 10006, (value ? 1 : 0), function (err) {
+          if (err) {
+            this.log("setOnStatus: FAILED setting %s to %s. Error: %s", this.name, value > 0 ? "on" : "off", err);
+            cb(err);
+            return;
+          }
+
+          this.log("setOnStatus: %s to %s", this.name, value > 0 ? "on" : "off");
+          cb(null);
+        }.bind(this));
     }
-    if (cb) cb(null);
-    
 }
 
 WemoAccessory.prototype.getOnStatus = function (cb) {
@@ -397,11 +403,18 @@ WemoAccessory.prototype.getOnStatus = function (cb) {
 WemoAccessory.prototype.setBrightness = function (value, cb) {
 //  var client = wemo.client(this.device);
     if(this.brightness !== value) { // we have nothing to do so lets leave it at that.
-        this._client.setDeviceStatus(this.enddevice.deviceId, 10008, value*255/100 );
-        this.log("setBrightness: %s to %s%%", this.name, value);
         this.brightness = value;
-        }
-    if (cb) cb(null);
+        this._client.setDeviceStatus(this.enddevice.deviceId, 10008, value*255/100, function (err) {
+          if (err) {
+            this.log("setBrightness: FAILED setting %s to %s%%. Error: %s", this.name, value, err);
+            cb(err);
+            return;
+          }
+
+          this.log("setBrightness: %s to %s%%", this.name, value);
+          cb(null);
+        }.bind(this));
+    }
 }
 
 WemoAccessory.prototype.getBrightness = function (cb) {
