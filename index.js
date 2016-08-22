@@ -181,7 +181,7 @@ function WemoAccessory(log, device, enddevice) {
         if(device.deviceType === Wemo.DEVICE_TYPE.Insight) {
             this._client.on('insightParams', function(state, power){
                 //self.log('%s inUse: %s', this.name, state);
-                self.inUse = state === 1 ? true : false ;
+                self.inUse = state == 1 ? true : false ;
                 self.powerUsage = Math.round(power / 100) / 10;
 
                 if (self.service) {
