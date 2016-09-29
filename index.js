@@ -256,7 +256,6 @@ function WemoAccessory(log, accessory, device) {
     this.service = this.getService();
 
     this.setupDevice(device);
-    this.updateReachability(true);
 
     this.accessory.getService(Service.AccessoryInformation)
         .setCharacteristic(Characteristic.Manufacturer, "Belkin WeMo")
@@ -434,6 +433,8 @@ WemoAccessory.prototype.setupDevice = function(device) {
     this.client.on('error', function(err) {
         self.log('%s reported error %s', self.accessory.displayName, err.code);
     });
+
+    this.updateReachability(true);
 }
 
 WemoAccessory.prototype.updateEventHandlers= function (characteristic) {
