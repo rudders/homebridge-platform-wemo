@@ -6,11 +6,14 @@
 //      {
 //          "platform": "BelkinWeMo",
 //          "name": "Belkin WeMo",
-//          "no_motion_timer": 60 // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
+//          "noMotionTimer": 60 // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
 //      }
 // ],
 
 "use strict";
+
+const DEFAULT_DOOR_OPEN_TIME = 20,
+      DEFAULT_NO_MOTION_TIME = 60;
 
 var Wemo  = require('wemo-client'),
     debug = require('debug')('homebridge-platform-wemo');
@@ -18,7 +21,7 @@ var Wemo  = require('wemo-client'),
 var Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen;
 var wemo = new Wemo();
 
-var noMotionTimer;
+var doorOpenTimer, noMotionTimer;
 
 module.exports = function (homebridge) {
     Accessory = homebridge.platformAccessory;
@@ -61,6 +64,7 @@ module.exports = function (homebridge) {
 
 function WemoPlatform(log, config, api) {
     this.config = config || {};
+    this.ignoredDevices = this.config.ignoredDevices || [];
 
     var self = this;
 
@@ -68,7 +72,8 @@ function WemoPlatform(log, config, api) {
     this.accessories = {};
     this.log = log;
 
-    noMotionTimer = this.config.no_motion_timer || 60;
+    doorOpenTimer = this.config.doorOpenTimer || DEFAULT_DOOR_OPEN_TIME;
+    noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || DEFAULT_NO_MOTION_TIME;
 
     var addDiscoveredDevice = function(device) {
         var uuid = UUIDGen.generate(device.UDN);
@@ -82,11 +87,18 @@ function WemoPlatform(log, config, api) {
                     uuid = UUIDGen.generate(enddevices[i].deviceId);
                     accessory = self.accessories[uuid];
 
+                    if (self.ignoredDevices.indexOf(device.serialNumber) !== -1) {
+                        if (accessory !== undefined) {
+                            self.removeAccessory(accessory);
+                        }
+
+                        return;
+                    }
+
                     if (accessory === undefined) {
                         self.addLinkAccessory(device, enddevices[i]);
                     }
                     else {
-                        self.log("Online: %s [%s]", accessory.displayName, device.deviceId);
                         self.accessories[uuid] = new WemoLinkAccessory(self.log, accessory, device, enddevices[i]);
                     }
                 }
@@ -94,6 +106,14 @@ function WemoPlatform(log, config, api) {
         }
         else {
             accessory = self.accessories[uuid];
+
+            if (self.ignoredDevices.indexOf(device.serialNumber) !== -1) {
+                if (accessory !== undefined) {
+                    self.removeAccessory(accessory);
+                }
+
+                return;
+            }
 
             if (accessory === undefined) {
                 self.addAccessory(device);
@@ -118,18 +138,35 @@ function WemoPlatform(log, config, api) {
         function(){
             wemo.discover(addDiscoveredDevice);
         },
-        60000
+        30000
     );
 }
 
 WemoPlatform.prototype.addAccessory = function(device) {
-    this.log("Found: %s [%s]", device.friendlyName, device.macAddress);
+    var serviceType;
 
-    var serviceType = getServiceType(device.deviceType);
+    switch(device.deviceType) {
+        case Wemo.DEVICE_TYPE.Insight:
+        case Wemo.DEVICE_TYPE.LightSwitch:
+        case Wemo.DEVICE_TYPE.Switch:
+            serviceType = Service.Switch;
+            break;
+        case Wemo.DEVICE_TYPE.Motion:
+        case "urn:Belkin:device:NetCamSensor:1":
+            serviceType = Service.MotionSensor;
+            break;
+        case Wemo.DEVICE_TYPE.Maker:
+            serviceType = Service.Switch;
+            break;
+        default:
+            this.log("Not Supported: %s [%s]", device.friendlyName, device.deviceType);
+    }
 
     if (serviceType === undefined) {
         return;
     }
+
+    this.log("Found: %s [%s]", device.friendlyName, device.macAddress);
 
     var accessory = new Accessory(device.friendlyName, UUIDGen.generate(device.UDN));
     var service = accessory.addService(serviceType, device.friendlyName);
@@ -139,9 +176,6 @@ WemoPlatform.prototype.addAccessory = function(device) {
             service.addCharacteristic(Characteristic.OutletInUse);
             service.addCharacteristic(Consumption);
             service.addCharacteristic(TotalConsumption);
-            break;
-        case Wemo.DEVICE_TYPE.Maker:
-            service.addCharacteristic(Characteristic.ContactSensorState);
             break;
     }
 
@@ -160,6 +194,7 @@ WemoPlatform.prototype.addLinkAccessory = function(link, device) {
 }
 
 WemoPlatform.prototype.configureAccessory = function(accessory) {
+    accessory.updateReachability(false);
     this.accessories[accessory.UUID] = accessory;
 }
 
@@ -236,9 +271,8 @@ WemoPlatform.prototype.configurationRequestHandler = function(context, request, 
     }
 }
 
-
 WemoPlatform.prototype.removeAccessory = function(accessory) {
-    this.log("Remove: %s", accessory.displayName);
+    this.log("Remove Accessory: %s", accessory.displayName);
 
     if (this.accessories[accessory.UUID]) {
         delete this.accessories[accessory.UUID];
@@ -253,7 +287,6 @@ function WemoAccessory(log, accessory, device) {
     this.accessory = accessory;
     this.device = device;
     this.log = log;
-    this.service = this.getService();
 
     this.setupDevice(device);
 
@@ -268,292 +301,493 @@ function WemoAccessory(log, accessory, device) {
         callback();
     });
 
-    var service = this.accessory.getService(getServiceType(device.deviceType));
-
-    if (service.testCharacteristic(Characteristic.Name) === false) {
-        service.addCharacteristic(Characteristic.Name);
-    }
-
-    if (service.getCharacteristic(Characteristic.Name).value === undefined) {
-        service.getCharacteristic(Characteristic.Name).setValue(device.friendlyName);
-    }
-
     this.observeDevice(device);
+    this.addEventHandlers();
 }
 
-WemoAccessory.prototype.getService = function() {
-    var service = getServiceType(this.device.deviceType);
+
+WemoAccessory.prototype.addEventHandler = function(serviceName, characteristic) {
+    serviceName = serviceName || Service.Switch;
+
+    var service = this.accessory.getService(serviceName);
 
     if (service === undefined) {
         return;
     }
 
-    return this.accessory.getService(service);
+    if (service.testCharacteristic(characteristic) === false) {
+        return;
+    }
+
+    switch(characteristic) {
+        case Characteristic.On:
+            service
+                .getCharacteristic(characteristic)
+                .on('set', this.setSwitchState.bind(this));
+            break;
+        case Characteristic.TargetDoorState:
+            service
+                .getCharacteristic(characteristic)
+                .on('set', this.setTargetDoorState.bind(this));
+    }
 }
 
-WemoAccessory.prototype.observeDevice = function (device) {
-    var self = this;
+WemoAccessory.prototype.addEventHandlers = function() {
+    this.addEventHandler(Service.Switch, Characteristic.On);
+    this.addEventHandler(Service.GarageDoorOpener, Characteristic.TargetDoorState);
+}
 
-    if (device.deviceType === Wemo.DEVICE_TYPE.Maker) {
-        this.client.getAttributes(function(err, attributes) {
+WemoAccessory.prototype.getAttributes = function(callback) {
+    callback = callback || function() {};
+
+    this.client.getAttributes(function(err, attributes) {
+        if (err) {
+            this.log(err);
+            callback();
+            return;
+        }
+
+        this.device.attributes = attributes;
+
+        // SwitchMode - Momentary
+        if (attributes.SwitchMode == 1) {
+            if (this.accessory.getService(Service.GarageDoorOpener) === undefined) {
+                this.accessory.addService(Service.GarageDoorOpener, this.accessory.displayName);
+                this.addEventHandler(Service.GarageDoorOpener, Characteristic.TargetDoorState);
+            }
+
+            if (this.accessory.getService(Service.Switch) !== undefined) {
+                this.accessory.removeService(this.accessory.getService(Service.Switch));
+            }
+
+            if (this.accessory.getService(Service.ContactSensor) !== undefined) {
+                this.accessory.removeService(this.accessory.getService(Service.ContactSensor));
+            }
+        }
+        // SwitchMode - Toggle
+        else if (attributes.SwitchMode == 0) {
+            if (this.accessory.getService(Service.Switch) === undefined) {
+                this.accessory.addService(Service.Switch, this.accessory.displayName);
+                this.addEventHandler(Service.Switch, Characteristic.On);
+            }
+
+            if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
+                this.accessory.removeService(this.accessory.getService(Service.GarageDoorOpener));
+            }
+        }
+
+        if (attributes.SensorPresent == 1) {
+            if (this.accessory.getService(Service.Switch) !== undefined) {
+                 if (this.accessory.getService(Service.ContactSensor) === undefined) {
+                     this.log("%s - Add Service: %s", this.accessory.displayName, "Service.ContactSensor");
+                     this.accessory.addService(Service.ContactSensor, this.accessory.displayName);
+                 }
+            }
+            else if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
+                this.sensorPresent = true;
+            }
+
+            this.updateSensorState(attributes.Sensor);
+        }
+        else {
+            var contactSensor = this.accessory.getService(Service.ContactSensor);
+
+            if (contactSensor !== undefined) {
+                this.log("%s - Remove Service: %s", this.accessory.displayName, "Service.ContactSensor");
+                this.accessory.removeService(contactSensor);
+            }
+
+            delete this.sensorPresent;
+        }
+
+        if (this.accessory.getService(Service.Switch) !== undefined) {
+            this.updateSwitchState(attributes.Switch);
+        }
+
+        callback();
+    }.bind(this));
+}
+
+WemoAccessory.prototype.getSwitchState = function(callback) {
+    if (this.device.deviceType === Wemo.DEVICE_TYPE.Maker) {
+        this.getAttributes(function() {
+            callback(null, this.accessory.getService(Service.Switch).getCharacteristic(Characteristic.On).value);
+        }.bind(this));
+    }
+    else {
+        this.client.getBinaryState(function(err, state) {
             if (err) {
+                callback(null, this.accessory.getService(Service.Switch).getCharacteristic(Characteristic.On).value);
                 return;
             }
 
-            var value = parseInt(attributes.Switch);
+            callback(null, this.updateSwitchState(state));
+        }.bind(this));
+    }
+}
 
-            self.onState = value > 0;
-
-            if (self.service) {
-                if (self.onState !== self._onState) {
-                    self.service.getCharacteristic(Characteristic.On).setValue(self.onState);
-                }
-
-                self._onState = self.onState;
-            }
-
-            value = parseInt(attributes.Sensor);
-
-            self.onSensor = value > 0 ? Characteristic.ContactSensorState.CONTACT_NOT_DETECTED : Characteristic.ContactSensorState.CONTACT_DETECTED;
-
-            if (self.service) {
-                if (self.onSensor !== self._onSensor) {
-                    self.service.getCharacteristic(Characteristic.ContactSensorState).setValue(self.onSensor);
-                }
-
-                self._onSensor = self.onSensor;
-            }
-        });
+WemoAccessory.prototype.observeDevice = function(device) {
+    if (device.deviceType === Wemo.DEVICE_TYPE.Maker) {
+        this.getAttributes();
 
         this.client.on('attributeList', function(name, value, prevalue, timestamp) {
             switch(name) {
                 case 'Switch':
-                    self.onState = value > 0;
-
-                    if (self.service) {
-                        if (self.onState !== self._onState) {
-                            self.service.getCharacteristic(Characteristic.On).setValue(self.onState);
+                    if (this.accessory.getService(Service.Switch) !== undefined) {
+                        this.updateSwitchState(value);
+                    }
+                    else if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
+                        if (value == 1) {
+                            // Triggered through HomeKit
+                            if (this.homekitTriggered === true) {
+                                delete this.homekitTriggered;
+                            }
+                            // Triggered using the button on the WeMo Maker
+                            else {
+                                var targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
+                                var state = targetDoorState.value ? Characteristic.TargetDoorState.OPEN : Characteristic.TargetDoorState.CLOSED;
+                                this.log("%s - Set Target Door State: %s (triggered by Maker)", this.accessory.displayName, (state ? "Closed" : "Open"));
+                                targetDoorState.updateValue(state);
+                                this.setDoorMoving(state);
+                            }
                         }
-
-                        self._onState = self.onState;
                     }
                     break;
                 case 'Sensor':
-                    self.onSensor = value > 0 ? Characteristic.ContactSensorState.CONTACT_NOT_DETECTED : Characteristic.ContactSensorState.CONTACT_DETECTED;
-
-                    if (self.service) {
-                        if (self.onSensor !== self._onSensor) {
-                            self.service.getCharacteristic(Characteristic.ContactSensorState).setValue(self.onSensor);
-                        }
-
-                        self._onSensor = self.onSensor;
-                    }
+                    this.updateSensorState(value, true);
                     break;
             }
         }.bind(this));
     }
     else {
         this.client.on('binaryState', function(state) {
-            self.onState = state > 0;
-
-            if (self.service) {
-                if (self.onState !== self._onState) {
-                    if (self.device.deviceType === Wemo.DEVICE_TYPE.Motion || self.device.deviceType === "urn:Belkin:device:NetCamSensor:1") {
-                        self.updateMotionDetected();
-                    }
-                    else {
-                        self.log('%s binaryState: %s', self.accessory.displayName, self.onState ? "on" : "off");
-                        self.service.getCharacteristic(Characteristic.On).setValue(self.onState);
-
-                        if(self.onState === false && self.device.deviceType === Wemo.DEVICE_TYPE.Insight) {
-                            self.inUse = false;
-                            self.updateInUse();
-
-                            self.powerUsage = 0;
-                            self.updatePowerUsage();
-                        }
-                    }
-                }
-
-                self._onState = self.onState;
+            if (this.device.deviceType === Wemo.DEVICE_TYPE.Motion || this.device.deviceType === "urn:Belkin:device:NetCamSensor:1") {
+                this.updateMotionDetected(state);
+            }
+            else {
+                this.updateSwitchState(state);
             }
         }.bind(this));
     }
 
     if (device.deviceType === Wemo.DEVICE_TYPE.Insight) {
-        this.client.on('insightParams', function(state, power, data){
-            self.inUse = (state == 1);
-            self.powerUsage = Math.round(power / 1000);
-
-            // not currently returned by wemo-client
-            if (data.TodayConsumed !== undefined) {
-                self.totalUsage = Math.round(data.TodayConsumed / 10000 * 6) / 100;
-            }
-
-            if (self.service) {
-                self.updateInUse();
-                self.updatePowerUsage();
-            }
-        }.bind(this));
+        this.client.on('insightParams', this.updateInsightParams.bind(this));
     }
 }
 
-WemoAccessory.prototype.setOn = function (value, cb) {
-    if (this.onState !== value) {  //remove redundent calls to setBinaryState when requested state is already achieved
-        //this.log("setOn: %s to %s", this.accessory.displayName, value > 0 ? "on" : "off");
-        this.client.setBinaryState(value ? 1 : 0, function (err){
+WemoAccessory.prototype.setDoorMoving = function(targetDoorState, homekitTriggered) {
+    var service = this.accessory.getService(Service.GarageDoorOpener);
+
+    if (this.movingTimer) {
+        clearTimeout(this.movingTimer);
+        delete this.movingTimer;
+    }
+
+    if (this.isMoving === true) {
+        delete this.isMoving;
+        this.updateCurrentDoorState(Characteristic.CurrentDoorState.STOPPED);
+
+        // Toggle TargetDoorState after receiving a stop
+        setTimeout(
+            function(obj, state) {
+                obj.updateValue(state);
+            },
+            500,
+            service.getCharacteristic(Characteristic.TargetDoorState),
+            targetDoorState == Characteristic.TargetDoorState.OPEN ? Characteristic.TargetDoorState.CLOSED : Characteristic.TargetDoorState.OPEN
+        );
+        return;
+    }
+
+    this.isMoving = true;
+
+    if (homekitTriggered === true) {
+        var currentDoorState = service.getCharacteristic(Characteristic.CurrentDoorState);
+
+        if (targetDoorState == Characteristic.TargetDoorState.CLOSED) {
+            if (currentDoorState.value != Characteristic.CurrentDoorState.CLOSED) {
+                this.updateCurrentDoorState(Characteristic.CurrentDoorState.CLOSING);
+            }
+        }
+        else if (targetDoorState == Characteristic.TargetDoorState.OPEN) {
+            if ((this.sensorPresent !== true && currentDoorState.value != Characteristic.CurrentDoorState.OPEN) || currentDoorState.value == Characteristic.CurrentDoorState.STOPPED) {
+                this.updateCurrentDoorState(Characteristic.CurrentDoorState.OPENING);
+            }
+        }
+    }
+
+    this.movingTimer = setTimeout(function(self) {
+        delete self.movingTimer;
+        delete self.isMoving;
+
+        var targetDoorState = self.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
+
+        if (self.sensorPresent !== true) {
+            self.updateCurrentDoorState(targetDoorState.value ? Characteristic.CurrentDoorState.CLOSED : Characteristic.CurrentDoorState.OPEN);
+            return;
+        }
+
+        self.getAttributes();
+    }, doorOpenTimer * 1000, this);
+}
+
+WemoAccessory.prototype.setSwitchState = function(state, callback) {
+    var value = state | 0;
+    var switchState = this.accessory.getService(Service.Switch).getCharacteristic(Characteristic.On);
+    callback = callback || function() {};
+
+    if (switchState.value != value) {  //remove redundent calls to setBinaryState when requested state is already achieved
+        this.client.setBinaryState(value, function (err) {
             if(!err) {
-                this.log("setOn: %s to %s", this.accessory.displayName, value > 0 ? "on" : "off");
-                this.onState = value;
-                if (cb) {
-                    cb(null);
-                }
+                this.log("%s - Set state: %s", this.accessory.displayName, (value ? "On" : "Off"));
+                callback(null);
             }
             else {
-                this.log("setOn: FAILED setting %s to %s. Error: %s", this.accessory.displayName, value > 0 ? "on" : "off", err.code);
-                if (cb) {
-                    cb(new Error(err));
-                }
+                this.log("%s - Set state FAILED: %s. Error: %s", this.accessory.displayName, (value ? "on" : "off"), err.code);
+                callback(new Error(err));
             }
         }.bind(this));
     }
     else {
-        if (cb) {
-            cb(null);
-        }
+        callback(null);
     }
 }
 
+WemoAccessory.prototype.setTargetDoorState = function(state, callback) {
+    var value = state | 0;
+    callback = callback || function() {};
+
+    this.homekitTriggered = true;
+
+    var currentDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.CurrentDoorState);
+
+    if (this.isMoving !== true && value == Characteristic.TargetDoorState.CLOSED && currentDoorState.value == Characteristic.CurrentDoorState.CLOSED) {
+        this.log("Door already closed");
+        callback(null);
+        return;
+    }
+
+    this.client.setBinaryState(1, function (err) {
+        if(!err) {
+            this.log("%s - Set Target Door State: %s (triggered by HomeKit)",
+                this.accessory.displayName,
+                (value ? "Closed" : "Open")
+            );
+
+            this.setDoorMoving(value, true);
+
+            callback(null);
+        }
+        else {
+            this.log("%s - Set state FAILED: %s. Error: %s", this.accessory.displayName, (value ? "on" : "off"), err.code);
+            callback(new Error(err));
+        }
+    }.bind(this));
+}
+
 WemoAccessory.prototype.setupDevice = function(device) {
-    var self = this;
     this.device = device;
     this.client = wemo.client(device);
-    this.onState = false;
 
     this.client.on('error', function(err) {
-        self.log('%s reported error %s', self.accessory.displayName, err.code);
-    });
+      this.log('%s reported error %s', this.accessory.displayName, err.code);
+    }.bind(this));
 
     this.updateReachability(true);
 }
 
-WemoAccessory.prototype.updateEventHandlers= function (characteristic) {
-    var self = this;
+WemoAccessory.prototype.updateConsumption = function(raw) {
+    var value = Math.round(raw / 1000);
+    var consumption = this.accessory.getService(Service.Switch).getCharacteristic(Consumption);
 
-    if (this.service.testCharacteristic(characteristic) === false) {
+    if (consumption.value !== value) {
+        this.log("%s - Consumption: %sw", this.accessory.displayName, value);
+        consumption.setValue(value);
+    }
+
+    return value;
+}
+
+WemoAccessory.prototype.updateInsightParams = function(state, power, data) {
+    this.updateSwitchState(state);
+    this.updateOutletInUse(state);
+    this.updateConsumption(power);
+    this.updateTotalConsumption(data.TodayConsumed);
+}
+
+WemoAccessory.prototype.updateOutletInUse = function(state) {
+    state = state | 0;
+
+    var value = !!state;
+    var outletInUse = this.accessory.getService(Service.Switch).getCharacteristic(Characteristic.OutletInUse);
+
+    if (outletInUse.value !== value) {
+        this.log("%s - Outlet In Use: %s", this.accessory.displayName, (value ? "Yes" : "No"));
+        outletInUse.setValue(value);
+    }
+
+    return value;
+}
+
+WemoAccessory.prototype.updateMotionDetected = function(state) {
+    state = state | 0;
+
+    var value = !!state;
+    var motionDetected = this.accessory.getService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected);
+
+    if ((value === motionDetected.value && this.motionTimer === undefined) || (value === false && this.motionTimer)) {
         return;
     }
 
-    this.service.getCharacteristic(characteristic).removeAllListeners();
-
-    if (this.accessory.reachable !== true) {
-        return;
-    }
-
-    switch(characteristic) {
-        case Characteristic.ContactSensorState:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.onSensor)});
-            break;
-        case Characteristic.MotionDetected:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.onState)});
-            break;
-        case Characteristic.On:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.onState)})
-                .on('set', this.setOn.bind(this));
-            break;
-        case Characteristic.OutletInUse:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.inUse)});
-            break;
-        case Consumption:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.powerUsage)});
-            break;
-        case TotalConsumption:
-            this.service
-                .getCharacteristic(characteristic)
-                .on('get', function(callback) {callback(null, self.totalUsage)});
-            break;
-    }
-}
-
-WemoAccessory.prototype.updateInUse = function () {
-    if (this.inUse !== this._inUse) {
-        this.service.getCharacteristic(Characteristic.OutletInUse).setValue(this.inUse);
-        this._inUse = this.inUse;
-    }
-}
-
-WemoAccessory.prototype.updateMotionDetected = function() {
-    var self = this;
-
-    if (self.onState === true || self._onState === undefined) {
-        if (self.motionTimer) {
-            this.log("%s - no motion timer stopped", self.accessory.displayName);
-            clearTimeout(self.motionTimer);
-            self.motionTimer = null;
+    if (value === true || noMotionTimer == 0) {
+        if (this.motionTimer) {
+            this.log("%s - no motion timer stopped", this.accessory.displayName);
+            clearTimeout(this.motionTimer);
+            delete this.motionTimer;
         }
 
-        self.log("%s - notify binaryState change: %s", self.accessory.displayName, +self.onState);
-        self.getService().getCharacteristic(Characteristic.MotionDetected).setValue(self.onState);
+        this.log("%s - Motion Sensor: %s", this.accessory.displayName, (value ? "Detected" : "Clear"));
+        motionDetected.setValue(value);
     }
     else {
-        self.log("%s - no motion timer started [%d secs]", self.accessory.displayName, noMotionTimer);
-        clearTimeout(self.motionTimer);
-        self.motionTimer = setTimeout(function () {
-            self.log("%s - no motion timer completed; notify binaryState change: 0", self.accessory.displayName);
-            self.getService(self.accessory).getCharacteristic(Characteristic.MotionDetected).setValue(false);
-            self._onState = false;
-            self.motionTimer = null;
-        }, noMotionTimer * 1000);
-    }
-}
-
-WemoAccessory.prototype.updatePowerUsage = function () {
-    if (this.powerUsage !== this._powerUsage) {
-        this.service.getCharacteristic(Consumption).setValue(this.powerUsage);
-        this._powerUsage = this.powerUsage;
-    }
-
-    if (this.totalUsage !== this._totalUsage) {
-        this.service.getCharacteristic(TotalConsumption).setValue(this.totalUsage);
-        this._totalUsage = this.totalUsage;
+        this.log("%s - no motion timer started [%d secs]", this.accessory.displayName, noMotionTimer);
+        clearTimeout(this.motionTimer);
+        this.motionTimer = setTimeout(function(self) {
+            self.log("%s - Motion Sensor: Clear; no motion timer completed", self.accessory.displayName);
+            self.accessory.getService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected).setValue(false);
+            delete self.motionTimer;
+        }, noMotionTimer * 1000, this);
     }
 }
 
 WemoAccessory.prototype.updateReachability = function(reachable) {
     this.accessory.updateReachability(reachable);
+}
 
-    switch(this.device.deviceType) {
-        case Wemo.DEVICE_TYPE.Insight:
-            this.updateEventHandlers(Characteristic.On);
-            this.updateEventHandlers(Characteristic.OutletInUse);
-            this.updateEventHandlers(Consumption);
-            this.updateEventHandlers(TotalConsumption);
+WemoAccessory.prototype.updateCurrentDoorState = function(value, actualFeedback) {
+    var state;
+
+    switch(value) {
+        case Characteristic.CurrentDoorState.OPEN:
+            state = "Open";
             break;
-        case Wemo.DEVICE_TYPE.Maker:
-            this.updateEventHandlers(Characteristic.On);
-            this.updateEventHandlers(Characteristic.ContactSensorState);
+        case Characteristic.CurrentDoorState.CLOSED:
+            state = "Closed";
             break;
-        case Wemo.DEVICE_TYPE.LightSwitch:
-        case Wemo.DEVICE_TYPE.Switch:
-            this.updateEventHandlers(Characteristic.On);
+        case Characteristic.CurrentDoorState.OPENING:
+            state = "Opening";
             break;
-        case Wemo.DEVICE_TYPE.Motion:
-        case "urn:Belkin:device:NetCamSensor:1":
-            this.updateEventHandlers(Characteristic.On);
+        case Characteristic.CurrentDoorState.CLOSING:
+            state = "Closing";
             break;
-        default:
-            console.log("Not implemented");
+        case Characteristic.CurrentDoorState.STOPPED:
+            state = "Stopped";
+            break;
     }
+
+    this.log("%s - Get Current Door State: %s",
+        this.accessory.displayName,
+        state
+    );
+
+    this.accessory
+        .getService(Service.GarageDoorOpener)
+        .getCharacteristic(Characteristic.CurrentDoorState)
+        .updateValue(value);
+}
+
+WemoAccessory.prototype.updateSensorState = function(state, wasTriggered) {
+    state = state | 0;
+
+    var value = !state;
+
+    if (this.accessory.getService(Service.ContactSensor) !== undefined) {
+        var sensorState = this.accessory.getService(Service.ContactSensor).getCharacteristic(Characteristic.ContactSensorState);
+
+        if (sensorState.value !== value) {
+            this.log("%s - Sensor: %s", this.accessory.displayName, (value ? "Detected" : "Not detected"));
+            sensorState.updateValue(value ?  Characteristic.ContactSensorState.CONTACT_DETECTED: Characteristic.ContactSensorState.CONTACT_NOT_DETECTED);
+        }
+    }
+    else if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
+        var targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
+
+        if (targetDoorState.value == Characteristic.TargetDoorState.OPEN) {
+            // Garage door's target state is OPEN and the garage door's current state is OPEN
+            if (value == Characteristic.CurrentDoorState.OPEN) {
+                if (this.isMoving !== true) {
+                    this.updateCurrentDoorState(Characteristic.CurrentDoorState.OPEN, true);
+                }
+                else {
+                    this.updateCurrentDoorState(Characteristic.CurrentDoorState.OPENING, true);
+                }
+            }
+            // Garage door's target state is OPEN, but the garage door's current state is CLOSED,
+            // it must have been triggered externally by a remote control
+            else if (value == Characteristic.CurrentDoorState.CLOSED) {
+                this.log("%s - Set Target Door State: Closed (triggered by External)", this.accessory.displayName);
+                delete this.isMoving;
+                targetDoorState.updateValue(Characteristic.TargetDoorState.CLOSED);
+                this.updateCurrentDoorState(Characteristic.CurrentDoorState.CLOSED, true);
+            }
+        }
+        else if (targetDoorState.value == Characteristic.TargetDoorState.CLOSED) {
+            // Garage door's target state is CLOSED and the garage door's current state is CLOSED
+            if (value == Characteristic.CurrentDoorState.CLOSED) {
+                delete this.isMoving;
+
+                if (this.movingTimer) {
+                    clearTimeout(this.movingTimer);
+                    delete this.movingTimer;
+                }
+
+                this.updateCurrentDoorState(Characteristic.CurrentDoorState.CLOSED, true);
+            }
+            // Garage door's target state is CLOSED, but the garage door's current state is OPEN,
+            // it must have been triggered externally by a remote control
+            else if (value == Characteristic.CurrentDoorState.OPEN) {
+                this.log("%s - Set Target Door State: Open (triggered by External)", this.accessory.displayName);
+                targetDoorState.updateValue(Characteristic.TargetDoorState.OPEN);
+
+                if (wasTriggered === true) {
+                    this.setDoorMoving(Characteristic.TargetDoorState.OPEN);
+                }
+            }
+        }
+    }
+
+    return value;
+}
+
+WemoAccessory.prototype.updateSwitchState = function(state) {
+    state = state | 0;
+
+    var value = !!state;
+    var switchState = this.accessory.getService(Service.Switch).getCharacteristic(Characteristic.On)
+
+    if (switchState.value !== value) {
+        this.log("%s - Get state: %s", this.accessory.displayName, (value ? "On" : "Off"));
+        switchState.updateValue(value);
+
+        if(value === false && this.device.deviceType === Wemo.DEVICE_TYPE.Insight) {
+            this.updateOutletInUse(0);
+            this.updateConsumption(0);
+        }
+    }
+
+    return value;
+}
+
+WemoAccessory.prototype.updateTotalConsumption = function(raw) {
+    var value = Math.round(raw / 10000 * 6) / 100;
+    var totalConsumption = this.accessory.getService(Service.Switch).getCharacteristic(TotalConsumption);
+
+    if (totalConsumption.value !== value) {
+        this.log("%s - Total Consumption: %skwh", this.accessory.displayName, value);
+        totalConsumption.updateValue(value);
+    }
+
+    return value;
 }
 
 function WemoLinkAccessory(log, accessory, link, device) {
@@ -564,172 +798,82 @@ function WemoLinkAccessory(log, accessory, link, device) {
     this.device = device;
     this.log = log;
     this.client = wemo.client(link, log);
-    this.onState = false;
-    this.brightness = null;
 
     this.client.on('error', function(err) {
-        self.log('%s reported error %s', self.accessory.displayName, err.code);
-    });
+        this.log('%s reported error %s', this.accessory.displayName, err.code);
+    }.bind(this));
 
-    this.updateReachability(true);
+    this.updateReachability(false);
 
     this.accessory.getService(Service.AccessoryInformation)
         .setCharacteristic(Characteristic.Manufacturer, "Belkin WeMo")
+        .setCharacteristic(Characteristic.Model, "Dimmable Bulb")
         .setCharacteristic(Characteristic.SerialNumber, device.deviceId);
 
     this.accessory.on('identify', function(paired, callback) {
-        self.log("%s - identify", self.accessory.displayName);
-        callback();
-    });
+        this.log("%s - Identify", this.accessory.displayName);
 
-    var service = this.accessory.getService(Service.Lightbulb);
+        var switchState = this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On);
+        var count = 0;
 
-    if (service.testCharacteristic(Characteristic.Name) === false) {
-        service.addCharacteristic(Characteristic.Name);
-    }
+        if (switchState.value == true) {
+            setOff();
+        }
+        else {
+            setOn();
+        }
 
-    if (service.getCharacteristic(Characteristic.Name).value === undefined) {
-        service.getCharacteristic(Characteristic.Name).setValue(device.friendlyName);
-    }
+        function setOn() {
+            switchState.setValue(true);
+            count++;
 
-    // we can't depend on the capabilities returned from Belkin so we'll go ask expliciitly.
-    this.getStatus(function (err) {
-        self.onState = (self.device.capabilities['10006'].substr(0,1) === '1') ? true : false ;
-        self.log("%s (bulb) reported as %s", self.accessory.displayName, self.onState ? "on" : "off");
-        self.brightness = Math.round(self.device.capabilities['10008'].split(':').shift() / 255 * 100 );
-        self.log("%s (bulb) reported as at %s%% brightness", self.accessory.displayName, self.brightness);
-    });
+            if (count == 6) {
+                callback();
+                return;
+            }
+
+            setTimeout(function() {
+                setOff();
+            }, 500);
+        }
+
+        function setOff() {
+            switchState.setValue(false);
+            count++;
+
+            if (count == 6) {
+                callback();
+                return;
+            }
+
+            setTimeout(function() {
+                setOn();
+            }, 750);
+        }
+    }.bind(this));
+
+    this.addEventHandlers();
+    this.getSwitchState();
 
     // register eventhandler
     this.client.on('statusChange', function(deviceId, capabilityId, value) {
-        self.statusChange(deviceId, capabilityId, value);
-    });
-}
-
-WemoLinkAccessory.prototype.getStatus = function (cb) {
-    // this function is called on initialisation of a Bulbs because we can't rely on Belkin's
-    // capabilities structure on initialisation so we'll explicity retrieve it here.
-    var self = this;
-
-    this.client.getDeviceStatus(this.device.deviceId, function (err, capabilities) {
-        if(err) {
-            if(cb) {cb("unknown error getting device status (getStatus)", capabilities)}
+        if (this.device.deviceId !== deviceId){
+            return;
         }
-        else {
-            if (!capabilities['10006'].length) { // we've get no data in the capabilities array, so it's off
-                self.log("%s appears to be off, i.e. at the power!",self.name);
-            }
-            else {
-                //self.log("getStatus: %s is ", self.name, capabilities);
-                self._capabilities = capabilities;
-            }
 
-            if (cb) {
-                cb(null)
-            }
-        }
-    });
+        this.statusChange(deviceId, capabilityId, value);
+    }.bind(this));
 }
 
-WemoLinkAccessory.prototype.setBrightness = function (value, cb) {
-    this._brightness = value;
-
-    //defer the actual update by 100 milliseconds to smooth out changes from sliders
-    setTimeout(function(brightness, caller) {
-        //check that we actually have a change to make and that something
-        //hasn't tried to update the brightness again in the last 100 milliseconds
-        if(caller.brightness !== brightness && caller._brightness == brightness) {
-            caller.client.setDeviceStatus(caller.device.deviceId, 10008, brightness*255/100 );
-            caller.log("setBrightness: %s to %s%%", caller.accessory.displayName, brightness);
-            caller.brightness = brightness;
-        }
-    }, 100, value, this);
-
-    if (cb) {
-        cb(null);
-    }
+WemoLinkAccessory.OPTIONS = {
+    Brightness: '10008',
+    Switch:     '10006'
 }
 
-WemoLinkAccessory.prototype.setOnStatus = function (value, cb) {
-    this.log("this.Onstate currently %s, value is %s", this.onState, value );
-
-    if(this.onState !== value) { // if we have nothing to do so lets leave it at that.
-        this.onState = value;
-        this.log("this.Onstate now: %s", this.onState);
-        this.log("setOnStatus: %s to %s", this.accessory.displayName, value > 0 ? "on" : "off");
-        this.client.setDeviceStatus(this.device.deviceId, 10006, (value ? 1 : 0));
-    }
-
-    if (cb) {
-        cb(null);
-    }
-}
-
-WemoLinkAccessory.prototype.statusChange = function(deviceId, capabilityId, value) {
-        // We recieve this notification if the wemo's are changed by Homekit (i.e us) or
-        // some other trigger (i.e. any of the pethora of wemo apps).
-        // We want to update homekit with these changes,
-        // to do that we need to use setValue which triggers another call back to here which
-        // we need to ignore - much of this function deals with the idiosyncrasies around this issue.
-
-    if (this.device.deviceId !== deviceId){
-        // we get called for every bulb on the link so lets get out of here if the call is for a differnt bulb
-        this.log('statusChange Ignored (device): ', this.device.deviceId, deviceId, capabilityId, value);
-        return;
-    }
-
-    if (this.device.capabilities[capabilityId] === value) {
-        // nothing's changed - lets get out of here to stop an endless loop as
-        // this callback was probably triggered by us updating HomeKit
-        this.log('statusChange Ignored (capability): ', deviceId, capabilityId, value);
-        return;
-    }
-
-    this.log('statusChange processing: ', deviceId, capabilityId, value);
-
-    // update our internal array with newly passed value.
-    this.device.capabilities[capabilityId] = value;
-
-    switch(capabilityId) {
-        case '10008': // this is a brightness change
-            // update our convenience variable ASAP to minimise race condition possibiities
-            var newbrightness = Math.round(this.device.capabilities['10008'].split(':').shift() / 255 * 100 );
-
-            // changing wemo bulb brightness always turns them on so lets reflect this locally and in homekit.
-            // do we really need this or do we get both status change messages from wemo?
-            if (!this.onState){ // if off
-                this.log('Update homekit onState: %s is %s', this.accessory.displayName, true);
-                this.device.capabilities['10006'] = '1';
-                this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On).setValue(true);
-            }
-
-            // call setValue to update HomeKit and iOS (this generates another statusChange that will get ignored)
-            this.log('Update homekit brightness: %s is %s', this.accessory.displayName, newbrightness);
-            this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness).setValue(newbrightness);
-            break;
-        case '10006': // on/off/etc
-            // reflect change of onState from potentially and external change (from Wemo App for instance)
-            var newState = (this.device.capabilities['10006'].substr(0,1) === '1') ? true : false;
-            // similarly we need to update iOS with this change - which will trigger another state shange which we'll ignore
-            this.log('Update homekit onState: %s is %s', this.accessory.displayName, newState);
-            this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On).setValue(newState);
-            break;
-        default:
-            console.log("This capability (%s) not implemented", capabilityId);
-    }
-}
-
-WemoLinkAccessory.prototype.updateEventHandlers= function (characteristic) {
-    var self = this;
+WemoLinkAccessory.prototype.addEventHandler = function(characteristic) {
     var service = this.accessory.getService(Service.Lightbulb)
 
     if (service.testCharacteristic(characteristic) === false) {
-        return;
-    }
-
-    service.getCharacteristic(characteristic).removeAllListeners();
-
-    if (this.accessory.reachable !== true) {
         return;
     }
 
@@ -737,41 +881,138 @@ WemoLinkAccessory.prototype.updateEventHandlers= function (characteristic) {
         case Characteristic.On:
             service
                 .getCharacteristic(Characteristic.On)
-                .on('set', this.setOnStatus.bind(this))
-                .on('get', function(callback) {callback(null, self.onState)});
+                .on('set', this.setSwitchState.bind(this));
             break;
         case Characteristic.Brightness:
             service
                 .getCharacteristic(Characteristic.Brightness)
-                .on('set', this.setBrightness.bind(this))
-                .on('get', function(callback) {callback(null, self.brightness)});
+                .on('set', this.setBrightness.bind(this));
             break;
     }
+}
+
+WemoLinkAccessory.prototype.addEventHandlers = function () {
+    this.addEventHandler(Characteristic.On);
+    this.addEventHandler(Characteristic.Brightness);
+}
+
+WemoLinkAccessory.prototype.getSwitchState = function(callback) {
+    callback = callback || function() {};
+
+    this.client.getDeviceStatus(this.device.deviceId, function(err, capabilities) {
+        if(err) {
+            callback(null);
+            return;
+        }
+
+        if (!capabilities[WemoLinkAccessory.OPTIONS.Switch].length) { // we've get no data in the capabilities array, so it's off
+            this.log("Offline: %s [%s]", this.accessory.displayName, this.device.deviceId);
+            this.updateReachability(false);
+            callback(null);
+            return;
+        }
+
+        this.log("Online: %s [%s]", this.accessory.displayName, this.device.deviceId);
+
+        var value = this.updateSwitchState(capabilities[WemoLinkAccessory.OPTIONS.Switch]);
+        this.updateBrightness(capabilities[WemoLinkAccessory.OPTIONS.Brightness]);
+        this.updateReachability(true);
+        callback(null, value);
+    }.bind(this));
+}
+
+WemoLinkAccessory.prototype.setBrightness = function(value, callback) {
+    callback = callback || function() {};
+
+    if (this.brightness == value) {
+        callback(null);
+        return;
+    }
+
+    this._brightness = value;
+
+    //defer the actual update to smooth out changes from sliders
+    setTimeout(function(caller, value) {
+        //check that we actually have a change to make and that something
+        //hasn't tried to update the brightness again in the last 0.1 seconds
+        if (caller.brightness !== value && caller._brightness == value) {
+            caller.client.setDeviceStatus(caller.device.deviceId, 10008, value * 255 / 100, function(err, response) {
+                caller.log("%s - Set brightness: %s%", caller.accessory.displayName, value);
+                caller.brightness = value;
+            }.bind(caller));
+        }
+    }, 100, this, value);
+
+    callback(null);
+}
+
+WemoLinkAccessory.prototype.setSwitchState = function(state, callback) {
+    var value = state | 0;
+    var switchState = this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On);
+    callback = callback || function() {};
+
+    if(switchState.value == value) {
+        callback(null);
+        return;
+    }
+
+    this.log("%s - Set state: %s", this.accessory.displayName, (value ? "On" : "Off"));
+    this.client.setDeviceStatus(this.device.deviceId, WemoLinkAccessory.OPTIONS.Switch, value, function(err, response) {
+        this.device.capabilities[WemoLinkAccessory.OPTIONS.Switch] = value;
+        callback(null);
+    }.bind(this));
+}
+
+WemoLinkAccessory.prototype.statusChange = function(deviceId, capabilityId, value) {
+    if (this.accessory.reachable === false) {
+        this.updateReachability(true);
+    }
+
+    if (this.device.capabilities[capabilityId] == value) {
+        return;
+    }
+
+    this.device.capabilities[capabilityId] = value;
+
+    switch(capabilityId) {
+        case WemoLinkAccessory.OPTIONS.Brightness:
+            this.updateBrightness(value);
+            break;
+        case WemoLinkAccessory.OPTIONS.Switch:
+            this.updateSwitchState(value);
+            break;
+        default:
+            this.log("This capability (%s) not implemented", capabilityId);
+    }
+}
+
+WemoLinkAccessory.prototype.updateBrightness = function(capability) {
+    var value = Math.round(capability.split(':').shift() * 100 / 255 );
+    var brightness = this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness);
+
+    if (brightness.value != value) {
+        this.log("%s - Get brightness: %s%", this.accessory.displayName, value);
+        brightness.updateValue(value);
+        this.brightness = value;
+    }
+
+    return value;
 }
 
 WemoLinkAccessory.prototype.updateReachability = function(reachable) {
     this.accessory.updateReachability(reachable);
-    this.updateEventHandlers(Characteristic.On);
-    this.updateEventHandlers(Characteristic.Brightness);
 }
 
-function getServiceType(deviceType) {
-    var service;
+WemoLinkAccessory.prototype.updateSwitchState = function(state) {
+    state = state | 0;
 
-    switch(deviceType) {
-        case Wemo.DEVICE_TYPE.Insight:
-        case Wemo.DEVICE_TYPE.LightSwitch:
-        case Wemo.DEVICE_TYPE.Maker:
-        case Wemo.DEVICE_TYPE.Switch:
-            service = Service.Switch;
-            break;
-        case Wemo.DEVICE_TYPE.Motion:
-        case "urn:Belkin:device:NetCamSensor:1":
-            service = Service.MotionSensor;
-            break;
-        default:
-            console.log("Not Supported: %s", deviceType);
+    var value = !!state;
+    var switchState = this.accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On);
+
+    if (switchState.value != value) {
+        this.log("%s - Get state: %s", this.accessory.displayName, (value ? "On" : "Off"));
+        switchState.updateValue(value);
     }
 
-    return service;
+    return value;
 }

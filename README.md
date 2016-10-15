@@ -7,9 +7,9 @@ Belkin WeMo Platform plugin for the awesome  [Homebridge](https://github.com/nfa
 ## Currently supports
 - Wemo Switch
 - Wemo Light Switch 
-- Wemo Insight Switch (on/off/in use only)
+- Wemo Insight Switch
 - Wemo Bulb (via Wemo Link - on/off/brightness)
-- Wemo Maker
+- Wemo Maker (as Garage Door Opener or Switch with Contact Sensor)
 - Wemo Motion
 - Wemo NetCam (Sensor)
 
@@ -29,26 +29,23 @@ Recently refactored to increase speed of operation and update on/off/brightness 
 
 Configuration sample:
 
-`no_motion_timer` is optional, defaults to 60 and applies to WeMo Motion Only. It is a timer in seconds for how long after motion is not detected that the state is changed.
+`noMotionTimer` is optional, defaults to 60 and applies to WeMo Motion only. It is a timer in seconds for how long after motion is not detected that the state is changed.
+
+`doorOpenTimer` is optional, defaults to 15 and applies to WeMo Maker only (Garage Door Opener mode). The time in seconds for how long it takes the garage door to open. It is used to generate the `Open` state after the door has been requested to `Open`, due to only having one input. If `Sensor` is set to `No` in the WeMo app, the time is also used to generate the `Closed` state (**Not Recommended**)
+
+`ignoredDevices` is optional. Expects an array of serial numbers, any devices found with matching serial numbers will be skipped or removed from Homebridge
 
  ```javascript
     "platforms": [
         {
           "platform": "BelkinWeMo",
           "name": "WeMo Platform",
-          "no_motion_timer": 60
+          "noMotionTimer": 60,
+          "ignoredDevices": []
         }   
     ]
 
 ```
-
-The module will try and find all your WeMo Devices and make them available to HomeBridge / HomeKit / Siri. It will use the name you have set up with the Belkin app as the name used for Homekit and hence Siri so ensure your naming is distinct so poor Siri has some chance of getting you commands right. To change a name simply use the Wemo App on your smartphone and restart homebridge to pick up the changes.
-
-The discovery process can be a little hit or miss with the Wemo platform so if all your devices are not discovered try restarting homebridge a few times and make sure all Lights (Bulbs) are on!
-
-# ToDo
-
-Update to increase the speed of status checking by persisting the WemoClient objects properly - work is in progress and may remove the necessity for the brute force crashing of homebridge if the expected number of devices isn't found.
 
 # Credits
 
