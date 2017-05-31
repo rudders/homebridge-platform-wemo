@@ -322,7 +322,6 @@ function WemoAccessory(log, accessory, device) {
     this.log = log;
 
     this.setupDevice(device);
-    this.updateReachability(true);
 
     this.accessory.getService(Service.AccessoryInformation)
         .setCharacteristic(Characteristic.Manufacturer, "Belkin WeMo")
@@ -483,7 +482,7 @@ WemoAccessory.prototype.observeDevice = function(device) {
                                 delete this.homekitTriggered;
                             }
                             // Triggered using the button on the WeMo Maker
-                            else {                                
+                            else {
                                 var targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
                                 var state = targetDoorState.value ? Characteristic.TargetDoorState.OPEN : Characteristic.TargetDoorState.CLOSED;
                                 this.log("%s - Set Target Door State: %s (triggered by Maker)", this.accessory.displayName, (state ? "Closed" : "Open"));
@@ -638,8 +637,10 @@ WemoAccessory.prototype.setupDevice = function(device) {
     this.client = wemo.client(device);
 
     this.client.on('error', function(err) {
-        this.log('%s reported error %s', this.accessory.displayName, err.code);
+      this.log('%s reported error %s', this.accessory.displayName, err.code);
     }.bind(this));
+
+    this.updateReachability(true);
 }
 
 WemoAccessory.prototype.updateConsumption = function(raw) {
