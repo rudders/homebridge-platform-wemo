@@ -56,6 +56,8 @@ Optional parameters:
 
 `discovery` is optional, defaults to true. A way to disable device discovery if not required
 
+`discoveryInterval` is optional, dafaults to 30. Sets the interval in seconds at which SSDP-SEARCH broadcasts are sent. It will influence the time it takes to discover NEW devices.
+
 `wemoClient` is optional. Expects an object of initialisation parameters to be passed to wemo-client.
 
  ```javascript
@@ -67,6 +69,7 @@ Optional parameters:
             "ignoredDevices": [],
             "manualDevices": [],
             "discovery": true,
+            "discoveryInterval": 30,
             "wemoClient": {         // this is an example, please don't copy and paste this.
                 port: 1234,
                 discover_opts: {
