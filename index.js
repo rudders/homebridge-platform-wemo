@@ -69,6 +69,25 @@ module.exports = function (homebridge) {
     homebridge.registerPlatform("homebridge-platform-wemo", "BelkinWeMo", WemoPlatform, true);
 };
 
+function getSupportedMakerServices() {
+    return [Service.GarageDoorOpener, Service.Switch];
+}
+
+function getServiceDescription(service) {
+    var name = 'Unknown';
+
+    switch(service) {
+        case Service.GarageDoorOpener:
+            name = 'Garage Door Opener';
+            break;
+        case Service.Switch:
+            name = 'Switch';
+            break;
+    }
+
+    return name;
+}
+
 function WemoPlatform(log, config, api) {
     if (!config) {
         log.warn("Ignoring WeMo Platform setup because it is not configured");
@@ -329,7 +348,7 @@ WemoPlatform.prototype.configurationRequestHandler = function(context, request, 
             var items = [];
 
             if (context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker && context.accessory.context.switchMode == RELAY_MODE_MOMENTARY) {
-                var services = [Service.GarageDoorOpener, Service.Switch];
+                var services = getSupportedMakerServices();
 
                 for (var index in services) {
                     var service = services[index];
@@ -339,18 +358,7 @@ WemoPlatform.prototype.configurationRequestHandler = function(context, request, 
                     }
 
                     context.canChangeService.push(service);
-
-                    switch(service.UUID) {
-                        case Service.GarageDoorOpener.UUID:
-                            items.push('GarageDoorOpener');
-                            break;
-                        case Service.Switch.UUID:
-                            items.push('Switch');
-                            break;
-                        default:
-                            items.push('unknown');
-                            break;
-                    }
+                    items.push(getServiceDescription(service));
                 }
             }
 
@@ -733,6 +741,20 @@ WemoAccessory.prototype.observeDevice = function(device) {
     }
 }
 
+WemoAccessory.prototype.removeMakerServices = function(service) {
+    var services = getSupportedMakerServices();
+
+    for (var index in services) {
+        if (services[index] == service) {
+            continue;
+        }
+
+        if (this.accessory.getService(services[index]) !== undefined) {
+            this.accessory.removeService(this.accessory.getService(services[index]));
+        }
+    }
+}
+
 WemoAccessory.prototype.setDoorMoving = function(targetDoorState, homekitTriggered) {
     var service = this.accessory.getService(Service.GarageDoorOpener);
 
@@ -1011,14 +1033,7 @@ WemoAccessory.prototype.updateMakerMode = function() {
                     this.addEventHandler(Service.GarageDoorOpener, Characteristic.TargetDoorState);
                 }
 
-                if (this.accessory.getService(Service.Switch) !== undefined) {
-                    this.accessory.removeService(this.accessory.getService(Service.Switch));
-                }
-
-                if (this.accessory.getService(Service.ContactSensor) !== undefined) {
-                    this.accessory.removeService(this.accessory.getService(Service.ContactSensor));
-                }
-
+                this.removeMakerServices(Service.GarageDoorOpener);
                 break;
             case Service.Switch.UUID:
                 if (this.accessory.getService(Service.Switch) === undefined) {
@@ -1026,10 +1041,7 @@ WemoAccessory.prototype.updateMakerMode = function() {
                     this.addEventHandler(Service.Switch, Characteristic.On);
                 }
 
-                if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
-                    this.accessory.removeService(this.accessory.getService(Service.GarageDoorOpener));
-                }
-
+                this.removeMakerServices(Service.Switch);
                 break;
         }
     }
@@ -1040,9 +1052,7 @@ WemoAccessory.prototype.updateMakerMode = function() {
             this.addEventHandler(Service.Switch, Characteristic.On);
         }
 
-        if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
-            this.accessory.removeService(this.accessory.getService(Service.GarageDoorOpener));
-        }
+        this.removeMakerServices(Service.Switch);
     }
 }
 
