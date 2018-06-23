@@ -128,6 +128,10 @@ function WemoPlatform(log, config, api) {
                     if (accessory === undefined) {
                         self.addLinkAccessory(device, enddevices[i]);
                     }
+                    else if (accessory instanceof WemoLinkAccessory) {
+                        this.setupDevice(device, enddevices[i]);
+                        this.observeDevice();
+                    }
                     else {
                         self.accessories[uuid] = new WemoLinkAccessory(self.log, accessory, device, enddevices[i]);
                     }
@@ -1163,11 +1167,8 @@ function WemoLinkAccessory(log, accessory, link, device) {
     this.link = link;
     this.device = device;
     this.log = log;
-    this.client = wemo.client(link, log);
 
-    this.client.on('error', function(err) {
-        this.log('%s reported error %s', this.accessory.displayName, err.code);
-    }.bind(this));
+    this.setupDevice(link, device);
 
     this.accessory.getService(Service.AccessoryInformation)
         .setCharacteristic(Characteristic.Manufacturer, "Belkin WeMo")
@@ -1217,16 +1218,7 @@ function WemoLinkAccessory(log, accessory, link, device) {
     }.bind(this));
 
     this.addEventHandlers();
-    this.getSwitchState();
-
-    // register eventhandler
-    this.client.on('statusChange', function(deviceId, capabilityId, value) {
-        if (this.device.deviceId !== deviceId){
-            return;
-        }
-
-        this.statusChange(deviceId, capabilityId, value);
-    }.bind(this));
+    this.observeDevice();
 }
 
 WemoLinkAccessory.OPTIONS = {
@@ -1290,6 +1282,19 @@ WemoLinkAccessory.prototype.getSwitchState = function(callback) {
 
 WemoLinkAccessory.prototype.miredKelvin = function(value) {
     return Math.round(100000/(5 * value)) * 50;
+}
+
+WemoLinkAccessory.prototype.observeDevice = function() {
+    this.getSwitchState();
+
+    // register eventhandler
+    this.client.on('statusChange', function(deviceId, capabilityId, value) {
+        if (this.device.deviceId !== deviceId){
+            return;
+        }
+
+        this.statusChange(deviceId, capabilityId, value);
+    }.bind(this));
 }
 
 WemoLinkAccessory.prototype.setBrightness = function(value, callback) {
@@ -1365,6 +1370,16 @@ WemoLinkAccessory.prototype.setSwitchState = function(state, callback) {
     this.client.setDeviceStatus(this.device.deviceId, WemoLinkAccessory.OPTIONS.Switch, value, function(err, response) {
         this.device.capabilities[WemoLinkAccessory.OPTIONS.Switch] = value;
         callback(null);
+    }.bind(this));
+}
+
+WemoLinkAccessory.prototype.setupDevice = function(link, device) {
+    this.link = link;
+    this.device = device;
+    this.client = wemo.client(link, this.log);
+
+    this.client.on('error', function(err) {
+        this.log('%s reported error %s', this.accessory.displayName, err.code);
     }.bind(this));
 }
 
