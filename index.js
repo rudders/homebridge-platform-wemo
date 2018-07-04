@@ -1059,7 +1059,7 @@ WemoAccessory.prototype.updateMakerMode = function() {
 WemoAccessory.prototype.updateOutletInUse = function(state) {
     state = state | 0;
 
-    var value = !!state;
+    var value = state == 1;
     var service = this.accessory.getService(Service.Switch) || this.accessory.getService(Service.Outlet);
     var outletInUse = service.getCharacteristic(Characteristic.OutletInUse);
 
