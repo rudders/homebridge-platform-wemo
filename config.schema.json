@@ -24,21 +24,23 @@
              "title": "Ignored Devices",
               "properties": {
                  "ignoredDevices": {
-                         "title": "",
+                         "title": "Ignored Devices",
                          "type": "string"
                     },
              "description": " optional, Expects an array of serial numbers, any devices found with matching serial numbers will be skipped or removed from Homebridge."
+         }
          },
          "manualDevices": {
              "type": "object",
              "title": "Manual Devices",
               "properties": {
                  "manualDevices": {
-                         "title": "",
+                         "title": "Manual Devices",
                          "type": "string"
                     },
              "description": "optional, Expects an array of device setup urls (eg. \"http://192.168.1.20:49153/setup.xml\") to be configured manually outside the device discovery process."
-         },
+              }
+        },
          "discovery": {
              "type": "boolean",
              "title": "Discovery",
