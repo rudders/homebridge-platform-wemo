@@ -1,6 +1,6 @@
 {
     "name": "homebridge-belkin-wemo",
-    "version": "2.0.0",
+    "version": "1.4.0",
     "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
     "author": "d0n4v4nb3ck3r",
     "main": "index.js",
