@@ -1,21 +1,37 @@
 {
-    "name": "homebridge-platform-wemo",
-    "version": "1.3.8",
-    "description": "WeMo Platform plugin for homebridge - Blubs, Switches and Insight Switches Supported",
+    "name": "homebridge-belkin-wemo",
+    "version": "1.4.0",
+    "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
+    "author": "d0n4v4nb3ck3r",
+    "main": "index.js",
+    "scripts": {
+    "developer": "DEBUG=honeywell-home homebridge -D -U `pwd` -P `pwd`",
+    "lint": "jshint package.json *.js",
+    "watch": "nodemon"
+    },
     "license": "ISC",
     "keywords": [
-        "homebridge-plugin"
+        "homebridge-plugin",
+        "wemo"
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/rudders/homebridge-platform-wemo.git"
+        "url": "git://github.com/donavanbecker/homebridge-belkin-wemo.git"
     },
-    "engines": {
-        "node": ">=6",
-        "homebridge": ">=0.4.29"
+    "bugs": {
+    "url": "https://github.com/donavanbecker/homebridge-honeywell-home/issues"
+    },
+	"engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.4.52"
     },
     "dependencies": {
         "wemo-client": ">=0.15.0",
         "debug": "*"
-    }
+    },
+    "devDependencies": {
+        "homebridge-config-ui-x": "4.13.3",
+        "homebridge": "0.4.53",
+        "nodemon": "2.0.2"
+  }
 }
