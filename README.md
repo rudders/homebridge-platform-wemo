@@ -1,87 +1,31 @@
-# homebridge-belkin-wemo
+<span align="center">
 
-[![donate](https://img.shields.io/badge/%24-Buy%20me%20a%20coffee-ff69b4.svg)](https://www.buymeacoffee.com/devbobo)
-[![Slack Channel](https://img.shields.io/badge/slack-homebridge--wemo-E01563.svg)](https://homebridgeteam.slack.com/messages/C0HSKCAR4/)
+<a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="homebridge-verified" src="https://raw.githubusercontent.com/donavanbecker/homebridge-belkin-wemo/master/wemo/wemo.png" width="200px"></a>
 
+# Homebridge Belkin Wemo
 
-Belkin WeMo Platform plugin for the awesome  [Homebridge](https://github.com/nfarina/homebridge) project.
+<a href="https://www.npmjs.com/package/homebridge-honeywell-home"><img title="npm version" src="https://badgen.net/npm/v/homebridge-honeywell-home" ></a>
+<a href="https://www.npmjs.com/package/homebridge-honeywell-home"><img title="npm downloads" src="https://badgen.net/npm/dt/homebridge-honeywell-home" ></a>
 
-## Currently supports
-- Wemo Switch
-- Wemo Light Switch 
-- Wemo Dimmer (As Light Switch, no dimming)
-- Wemo Insight Switch
-- Wemo Bulb (via Wemo Link - on/off/brightness)
-- Wemo Maker (as Garage Door Opener or Switch with Contact Sensor)
-- Wemo Motion
-- Wemo NetCam (Sensor)
+<p><a href="https://wemo.com">Belin Wemo</a> plugin for 
+  <a href="https://homebridge.io">Homebridge</a>. 
+  
+  This Plugin allows you to control your Belkin Wemo Devices from HomeKit.
+</p>
 
-# Installation
+</span>
 
-1. Install homebridge using: `npm install -g homebridge`
-2. Install this plugin using: `npm install -g homebridge-platform-wemo`
-3. Update your configuration file. See the sample below.
+## Installation
+* Install [homebridge-config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
+* Search for "Belkin Wemo" on the plugin ccreen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
+* Click install.
 
-# Updating
+## Configuration
+* After plugin is installed, [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) will populate required fields.
+* You will now be able to select optional fields
+* Click Save to save to `config.json`.
+* Restart Homebridge for the changes to take effect.
 
-Recently refactored to increase speed of operation and update on/off/brightness status more reliably.
+## Manual Setup
 
-1. npm update -g homebridge-platform-wemo
-
-# Configuration
-
-Configuration sample:
-
- ```javascript
-    "platforms": [
-        {
-            "platform": "BelkinWeMo",
-            "name": "WeMo Platform"
-        }
-    ]
-```
-
-Optional parameters:
-
-`noMotionTimer` is optional, defaults to 60 and applies to WeMo Motion only. It is a timer in seconds for how long after motion is not detected that the state is changed.
-
-`doorOpenTimer` is optional, defaults to 15 and applies to WeMo Maker only (Garage Door Opener mode). The time in seconds for how long it takes the garage door to open. It is used to generate the `Open` state after the door has been requested to `Open`, due to only having one input. If `Sensor` is set to `No` in the WeMo app, the time is also used to generate the `Closed` state (**Not Recommended**)
-
-`ignoredDevices` is optional. Expects an array of serial numbers, any devices found with matching serial numbers will be skipped or removed from Homebridge
-
-`manualDevices` is optional. Expects an array of device setup urls (eg. "http://192.168.1.20:49153/setup.xml") to be configured manually outside the device discovery process
-
-`discovery` is optional, defaults to true. A way to disable device discovery if not required
-
-`wemoClient` is optional. Expects an object of initialisation parameters to be passed to wemo-client.
-
- ```javascript
-    "platforms": [
-        {
-            "platform": "BelkinWeMo",
-            "name": "WeMo Platform",
-            "noMotionTimer": 60,
-            "ignoredDevices": [],
-            "manualDevices": [],
-            "discovery": true,
-            "wemoClient": {         // this is an example, please don't copy and paste this.
-                port: 1234,
-                discover_opts: {
-                    unicastBindPort: 1235
-                },
-                listen_interface: 'wlan0'
-            }
-        }
-    ]
-```
-
-# Credits
-
-Credit goes to
-- Timon Reinhard for his awesome [Wemo Client](https://github.com/timonreinhard/wemo-client) module and advise 
-- Andy Lindeman for the [homebridge-smartthings](https://github.com/alindeman/homebridge-smartthings) that this is work is based on.
-- [David Parry](https://github.com/devbobo) for his contributions.
-
-# License
-
-Published under the MIT License.
+  Visit Manual Setup [Wiki](https://github.com/donavanbecker/homebridge-belkin-wemo/wiki/Manual-Setup).
