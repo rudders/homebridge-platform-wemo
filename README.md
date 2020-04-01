@@ -4,8 +4,8 @@
 
 # Homebridge Belkin Wemo
 
-<a href="https://www.npmjs.com/package/homebridge-honeywell-home"><img title="npm version" src="https://badgen.net/npm/v/homebridge-honeywell-home" ></a>
-<a href="https://www.npmjs.com/package/homebridge-honeywell-home"><img title="npm downloads" src="https://badgen.net/npm/dt/homebridge-honeywell-home" ></a>
+<a href="https://www.npmjs.com/package/homebridge-beklin-wemo"><img title="npm version" src="https://badgen.net/npm/v/homebridge-belkin-wemo" ></a>
+<a href="https://www.npmjs.com/package/homebridge-belkin-wemo"><img title="npm downloads" src="https://badgen.net/npm/dt/homebridge-belkin-wemo" ></a>
 
 <p><a href="https://wemo.com">Belin Wemo</a> plugin for 
   <a href="https://homebridge.io">Homebridge</a>. 
