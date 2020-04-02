@@ -48,5 +48,84 @@
         "description": "default: true. A way to disable device discovery if not required."
       }
     }
-  }
+  },
+  "layout": [
+    {
+      "type": "flex",
+      "flex-flow": "row wrap",
+      "items": [
+        {
+          "key": "name",
+          "type": "name"
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Optional Configuration",
+      "expandable": true,
+      "items": [
+        {
+          "type": "help",
+          "helpvalue": "<h6>Devices To Ignore</h6><em class='primary-text'></em>"
+        },
+        {
+          "key": "ignoredDevices",
+          "add": "Add Another Devices To Ignore",
+          "type": "array",
+          "pattern": "^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$",
+          "nodescription": true,
+          "notitle": true,
+          "items": [
+            {
+              "type": "div",
+              "displayFlex": true,
+              "flex-direction": "row wrap",
+              "nodescription": true,
+              "notitle": true,
+              "items": [
+                {
+                  "key": "ignoredDevices[]",
+                  "placeholder": "Device serial number.",
+                  "notitle": true,
+                  "description": "Devices with matching serial numbers will be skipped or removed from Homebridge."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "help",
+          "helpvalue": "<h6>Manually Configured Devices</h6><em class='primary-text'></em>"
+        },
+        {
+          "key": "manualDevices",
+          "add": "Add Another Manual Devices",
+          "type": "array",
+          "nodescription": true,
+          "notitle": true,
+          "items": [
+            {
+              "type": "div",
+              "displayFlex": true,
+              "flex-direction": "row wrap",
+              "nodescription": true,
+              "notitle": true,
+              "items": [
+                {
+                  "key": "manualDevices[]",
+                  "placeholder": "\nhttp://192.168.1.20:49153/setup.xml",
+                  "notitle": true,
+                  "description": "Devices to be configured manually outside the device discovery process."
+                }
+              ]
+            }
+          ]
+        },
+        "noMotionTimer",
+        "discovery",
+        "wemoClient"
+      ]
+    }
+  ]
 }
