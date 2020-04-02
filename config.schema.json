@@ -36,12 +36,6 @@
           "type": "string"
         }
       },
-      "wemoClient": {
-        "type": "object",
-        "title": "Wemo Client",
-        "required": false,
-        "description": "This must be setup manually."
-      },
       "discovery": {
         "type": "boolean",
         "title": "Discovery",
@@ -124,7 +118,10 @@
         },
         "noMotionTimer",
         "discovery",
-        "wemoClient"
+        {
+          "type": "help",
+          "helpvalue": "<h6>Wemo Client</h6><em class='primary-text'>See Manual Setup Wiki to manually configure this.</em>"
+        }
       ]
     }
   ]
