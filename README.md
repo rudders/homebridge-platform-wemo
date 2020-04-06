@@ -28,4 +28,4 @@
 
 ## Manual Setup
 
-  Visit Manual Setup [Wiki](https://github.com/rudder/homebridge-platform-wemo/wiki/Manual-Setup).
+  Visit Manual Setup [Wiki](https://github.com/rudders/homebridge-platform-wemo/wiki/Manual-Setup).
