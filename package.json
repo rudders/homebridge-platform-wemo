@@ -23,6 +23,16 @@
         "node": ">=0.12.0",
         "homebridge": ">=0.4.53"
     },
+    "files": [
+        "README.md",
+        "CHANGELOG.md",
+        "config.schema.json",
+        "package-lock.json",
+        "package.json",
+        "nodemon.json",
+        "LICENSE",
+        "index.js"
+    ],
     "dependencies": {
         "wemo-client": ">=0.15.0",
         "debug": "*"
