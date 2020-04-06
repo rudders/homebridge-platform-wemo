@@ -7,17 +7,17 @@
 <a href="https://www.npmjs.com/package/homebridge-platform-wemo"><img title="npm version" src="https://badgen.net/npm/v/homebridge-platform-wemo" ></a>
 <a href="https://www.npmjs.com/package/homebridge-platform-wemo"><img title="npm downloads" src="https://badgen.net/npm/dt/homebridge-platform-wemo" ></a>
 
-<p>The <a href="https://wemo.com">Wemo</a> plugin for 
-  <a href="https://homebridge.io">Homebridge</a>. 
-  
+<p>The <a href="https://wemo.com">Wemo</a> plugin for
+  <a href="https://homebridge.io">Homebridge</a>.
+
   This Plugin allows you to control your Wemo Devices from HomeKit.
 </p>
 
 </span>
 
 ## Installation
-* Install [homebridge-config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
-* Search for "Platform Wemo" on the plugin ccreen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
+* Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
+* Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
 * Click install.
 
 ## Configuration

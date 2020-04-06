@@ -1,6 +1,6 @@
 {
     "name": "homebridge-platform-wemo",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
     "main": "index.js",
     "scripts": {
