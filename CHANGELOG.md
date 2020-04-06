@@ -4,13 +4,20 @@ All notable changes to this project will be documented in this file. This projec
 
 ## 1.5.0 (2020-04-XX)
 
-## [Version 1.5.0](https://github.com/donavanbecker/homebridge-honeywell-home/compare/v1.4.0...1.5.0)
+## [Version 1.5.0](https://github.com/donavanbecker/homebridge-honeywell-home/compare/v1.4.1...1.5.0)
 
 #### Features
 
 - Support optional config value "discoveryInterval"
 - Add Changelog.
 - Repo Updates.
+
+## [Version 1.4.1](https://github.com/donavanbecker/homebridge-honeywell-home/compare/v1.4.0...1.4.1)
+
+#### Features
+
+- Fix miss spelling
+- Fix config.schema.json
 
 ## 1.4.0 (2020-04-05)
 

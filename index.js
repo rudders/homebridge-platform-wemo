@@ -707,7 +707,7 @@ WemoAccessory.prototype.observeDevice = function(device) {
                                 delete this.homekitTriggered;
                             }
                             // Triggered using the button on the WeMo Maker
-                            else {                                
+                            else {
                                 var targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
                                 var state = targetDoorState.value ? Characteristic.TargetDoorState.OPEN : Characteristic.TargetDoorState.CLOSED;
                                 this.log("%s - Set Target Door State: %s (triggered by Maker)", this.accessory.displayName, (state ? "Closed" : "Open"));
