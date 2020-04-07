@@ -41,6 +41,12 @@
         "title": "Discovery",
         "description": "default: true. A way to disable device discovery if not required."
       },
+      "discoveryInterval": {
+        "type": "integer",
+        "title": "Discovery Interval",
+        "placeholder": "30",
+        "description": "Sets the interval in seconds at which SSDP-SEARCH broadcasts are sent. It will influence the time it takes to discover NEW devices."
+      },
       "wemoClient": {
         "type": "array",
         "title": "Wemo Client"
@@ -122,6 +128,7 @@
         },
         "noMotionTimer",
         "discovery",
+        "discoveryInterval",
         {
           "type": "help",
           "helpvalue": "<h6>Wemo Client</h6><em class='primary-text'>See Manual Setup Wiki to manually configure this.</em>"
