@@ -6,11 +6,12 @@
 //      {
 //          "platform": "BelkinWeMo",
 //          "name": "Belkin WeMo",
-//          "noMotionTimer": 60,  // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
-//          "ignoredDevices": [], // optional: an array of Device serial numbers to ignore
-//          "manualDevices": [],  // optional: an array of config urls for devices to be manually configured eg. "manualDevices": ["http://192.168.1.20:49153/setup.xml"]
-//          "discovery": true,    // optional: turn off device discovery if not required
-//          "wemoClient": {}      // optional: initialisation parameters to be passed to wemo-client
+//          "noMotionTimer": 60,    // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
+//          "ignoredDevices": [],   // optional: an array of Device serial numbers to ignore
+//          "manualDevices": [],    // optional: an array of config urls for devices to be manually configured eg. "manualDevices": ["http://192.168.1.20:49153/setup.xml"]
+//          "discovery": true,      // optional: turn off device discovery if not required
+//          "discoveryInterval": 30 // optional: the interval in seconds at which to send ssdp-search requests
+//          "wemoClient": {}        // optional: initialisation parameters to be passed to wemo-client
 //      }
 // ],
 
@@ -108,6 +109,7 @@ function WemoPlatform(log, config, api) {
     }
 
     this.discovery = this.config.discovery || true;
+    this.discoveryInterval = this.config.discoveryInterval || 30;
     this.ignoredDevices = this.config.ignoredDevices || [];
     this.manualDevices = this.config.manualDevices || [];
 
@@ -198,7 +200,7 @@ function WemoPlatform(log, config, api) {
             function(){
                 wemo.discover(addDiscoveredDevice);
             },
-            30000
+            this.discoveryInterval * 1000
         );
     }
 }
@@ -705,7 +707,7 @@ WemoAccessory.prototype.observeDevice = function(device) {
                                 delete this.homekitTriggered;
                             }
                             // Triggered using the button on the WeMo Maker
-                            else {                                
+                            else {
                                 var targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState);
                                 var state = targetDoorState.value ? Characteristic.TargetDoorState.OPEN : Characteristic.TargetDoorState.CLOSED;
                                 this.log("%s - Set Target Door State: %s (triggered by Maker)", this.accessory.displayName, (state ? "Closed" : "Open"));
