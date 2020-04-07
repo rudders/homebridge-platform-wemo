@@ -40,6 +40,10 @@
         "type": "boolean",
         "title": "Discovery",
         "description": "default: true. A way to disable device discovery if not required."
+      },
+      "wemoClient": {
+        "type": "array",
+        "title": "Wemo Client"
       }
     }
   },
@@ -121,6 +125,11 @@
         {
           "type": "help",
           "helpvalue": "<h6>Wemo Client</h6><em class='primary-text'>See Manual Setup Wiki to manually configure this.</em>"
+        },
+        {
+          "key": "wemoClient",
+          "notitle": true,
+          "type": "object"
         }
       ]
     }
