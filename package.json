@@ -5,20 +5,22 @@
     "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
     "main": "index.js",
     "scripts": {
-    "developer": "DEBUG=platform-wemo homebridge -D -U `pwd` -P `pwd`",
-    "lint": "jshint package.json *.js",
-    "watch": "nodemon"
+        "developer": "DEBUG=platform-wemo homebridge -D -U `pwd` -P `pwd`",
+        "lint": "jshint package.json *.js",
+        "watch": "nodemon"
     },
     "license": "ISC",
     "keywords": [
-        "homebridge-plugin"
+        "homebridge-plugin",
+        "wemo-client",
+        "wemo"
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/rudders/homebridge-platform-wemo.git"
+        "url": "git://github.com/donavanbecker/homebridge-platform-wemo.git"
     },
     "bugs": {
-    "url": "https://github.com/rudders/homebridge-platform-wemo/issues"
+        "url": "https://github.com/donavanbecker/homebridge-platform-wemo/issues"
     },
     "engines": {
         "node": ">=0.12.0",
@@ -42,5 +44,5 @@
         "homebridge-config-ui-x": "4.13.3",
         "homebridge": "0.4.53",
         "nodemon": "2.0.2"
-  }
+    }
 }

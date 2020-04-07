@@ -1,6 +1,6 @@
 <span align="center">
 
-<a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="homebridge-verified" src="https://raw.githubusercontent.com/rudders/homebridge-platform-wemo/master/wemo/wemo.png" width="200px"></a>
+<a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="homebridge-verified" src="https://raw.githubusercontent.com/donavanbecker/homebridge-platform-wemo/master/wemo/wemo.png" width="200px"></a>
 
 # Homebridge Belkin Wemo
 
@@ -28,4 +28,4 @@
 
 ## Manual Setup
 
-  Visit Manual Setup [Wiki](https://github.com/rudders/homebridge-platform-wemo/wiki/Manual-Setup).
+  Visit Manual Setup [Wiki](https://github.com/donavanbecker/homebridge-platform-wemo/wiki/Manual-Setup).

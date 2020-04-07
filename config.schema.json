@@ -1,8 +1,8 @@
 {
   "pluginAlias": "BelkinWeMo",
   "pluginType": "platform",
-  "headerDisplay": "<p align='center'><img width='150px' src='https://raw.githubusercontent.com/rudders/homebridge-platform-wemo/master/wemo/wemo.png'></p>\n\nThe **Homebridge Platform WeMo** plugin allows you to control your WeMo Devices from HomeKit. To get started setup your config below.",
-  "footerDisplay": "</p>\n\nFor Wemo Client see [Manual Setup Wiki](https://github.com/rudders/homebridge-platform-wemo/wiki/Manual-Setup).</p>\n\nYour WeMo device is setup.",
+  "headerDisplay": "<p align='center'><img width='150px' src='https://raw.githubusercontent.com/donavanbecker/homebridge-platform-wemo/master/wemo/wemo.png'></p>\n\nThe **Homebridge Platform WeMo** plugin allows you to control your WeMo Devices from HomeKit. To get started setup your config below.",
+  "footerDisplay": "</p>\n\nFor Wemo Client see [Manual Setup Wiki](https://github.com/donavanbecker/homebridge-platform-wemo/wiki/Manual-Setup).</p>\n\nYour WeMo device is setup.",
   "singular": true,
   "schema": {
     "type": "object",
