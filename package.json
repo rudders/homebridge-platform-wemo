@@ -43,7 +43,7 @@
     },
     "devDependencies": {
         "homebridge-config-ui-x": ">=4.14.0",
-        "homebridge": "0.4.53",
-        "nodemon": "2.0.2"
+        "homebridge": ">=0.4.53",
+        "nodemon": ">=2.0.2"
     }
 }
