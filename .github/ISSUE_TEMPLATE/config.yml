@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Homebridge Discord Server
-    url: https://discord.gg/bHjKNkN
+  - name: Homebridge Discord Wemo Channel
+    url: https://discord.gg/5av8BQ2
     about: Please ask and answer questions here.
   - name: Homebridge-Wemo - Pull Requests
     url: https://github.com/donavanbecker/homebridge-wemo/pulls
