@@ -2,7 +2,7 @@
 
 <a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="homebridge-verified" src="https://raw.githubusercontent.com/donavanbecker/homebridge-platform-wemo/master/wemo/wemo.png" width="200px"></a>
 
-# Homebridge Belkin Wemo
+# Homebridge Wemo
 
 <a href="https://www.npmjs.com/package/homebridge-platform-wemo"><img title="npm version" src="https://badgen.net/npm/v/homebridge-platform-wemo" ></a>
 <a href="https://www.npmjs.com/package/homebridge-platform-wemo"><img title="npm downloads" src="https://badgen.net/npm/dt/homebridge-platform-wemo" ></a>
