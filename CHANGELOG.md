@@ -1,6 +1,14 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/).
+
+## 1.5.5 (2020-04-11)
+
+## [Version 1.5.5](https://github.com/donavanbecker/homebridge-honeywell-home/compare/v1.5.4...1.5.5)
+
+#### Features
+
+- update node engine dependencies
 
 ## 1.5.4 (2020-04-11)
 
