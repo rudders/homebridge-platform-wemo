@@ -1,7 +1,7 @@
 {
     "name": "homebridge-platform-wemo",
     "displayName": "Homebridge Wemo",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "author": "donavanbecker",
     "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
     "main": "index.js",
@@ -24,7 +24,7 @@
         "url": "https://github.com/donavanbecker/homebridge-platform-wemo/issues"
     },
     "engines": {
-        "node": ">=8.15.1",
+        "node": ">=12.16.2",
         "homebridge": ">=0.4.53"
     },
     "files": [
@@ -42,8 +42,6 @@
         "debug": "*"
     },
     "devDependencies": {
-        "homebridge-config-ui-x": ">=4.14.0",
-        "homebridge": ">=0.4.53",
         "nodemon": ">=2.0.2"
     }
 }
