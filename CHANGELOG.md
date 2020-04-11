@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file. This projec
 
 #### Features
 
-- update node engine dependencies
+- update engine dependencies
 
 ## 1.5.4 (2020-04-11)
 
