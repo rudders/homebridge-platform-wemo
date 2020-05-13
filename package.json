@@ -2,7 +2,7 @@
     "name": "homebridge-platform-wemo",
     "displayName": "Homebridge Wemo",
     "version": "1.5.5",
-    "author": "donavanbecker",
+    "author": "homebridge-plugins",
     "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
     "main": "index.js",
     "scripts": {
@@ -18,10 +18,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/donavanbecker/homebridge-platform-wemo.git"
+        "url": "git://github.com/homebridge-plugins/homebridge-platform-wemo.git"
     },
     "bugs": {
-        "url": "https://github.com/donavanbecker/homebridge-platform-wemo/issues"
+        "url": "https://github.com/homebridge-plugins/homebridge-platform-wemo/issues"
     },
     "engines": {
         "node": ">=8.15.1",
