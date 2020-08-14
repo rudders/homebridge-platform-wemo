@@ -824,6 +824,17 @@ WemoAccessory.prototype.setSwitchState = function(state, callback) {
             if(!err) {
                 this.log("%s - Set state: %s", this.accessory.displayName, (value ? "On" : "Off"));
                 callback(null);
+
+                // for dimmer, poll brightness for ON events (supports night mode)
+                if (value && this.device.deviceType === Wemo.DEVICE_TYPE.Dimmer) {
+                    this.client.getBrightness(function(err, brightness) {
+                        if (err) {
+                            this.log("%s - Error ON brightness", this.accessory.displayName);
+                            return;
+                        }
+                        this.updateBrightness(brightness);
+                    }.bind(this));
+                }
             }
             else {
                 this.log("%s - Set state FAILED: %s. Error: %s", this.accessory.displayName, (value ? "on" : "off"), err.code);
@@ -1146,6 +1157,17 @@ WemoAccessory.prototype.updateSwitchState = function(state) {
     if (switchState.value !== value) {
         this.log("%s - Get state: %s", this.accessory.displayName, (value ? "On" : "Off"));
         switchState.updateValue(value);
+
+        // for dimmer, poll brightness for ON events (supports night mode)
+        if (value && this.device.deviceType === Wemo.DEVICE_TYPE.Dimmer) {
+            this.client.getBrightness(function(err, brightness) {
+                if (err) {
+                    this.log("%s - Error ON brightness", this.accessory.displayName);
+                    return;
+                }
+                this.updateBrightness(brightness);
+            }.bind(this));
+        }
 
         if(value === false && this.device.deviceType === Wemo.DEVICE_TYPE.Insight) {
             this.updateOutletInUse(0);
