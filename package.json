@@ -24,9 +24,9 @@
         "url": "https://github.com/homebridge-plugins/homebridge-platform-wemo/issues"
     },
     "engines": {
-        "node": "^12.0.0",
-        "homebridge": "^1.1.2"
-    },
+        "node": ">=12.0.0",
+        "homebridge": ">=1.1.2"
+      },
     "files": [
         "README.md",
         "CHANGELOG.md",
