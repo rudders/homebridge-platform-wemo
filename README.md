@@ -10,22 +10,25 @@
 <p>The <a href="https://wemo.com">Wemo</a> plugin for
   <a href="https://homebridge.io">Homebridge</a>.
 
-  This Plugin allows you to control your Wemo Devices from HomeKit.
+This Plugin allows you to control your Wemo Devices from HomeKit.
+
 </p>
 
 </span>
 
 ## Installation
-* Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
-* Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
-* Click install.
+
+- Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
+- Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
+- Click install.
 
 ## Configuration
-* After plugin is installed, [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) will populate required fields.
-* You will now be able to select optional fields
-* Click Save to save to `config.json`.
-* Restart Homebridge for the changes to take effect.
+
+- After plugin is installed, [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) will populate required fields.
+- You will now be able to select optional fields
+- Click Save to save to `config.json`.
+- Restart Homebridge for the changes to take effect.
 
 ## Manual Setup
 
-  Visit Manual Setup [Wiki](https://github.com/homebridge-plugins/homebridge-platform-wemo/wiki/Manual-Setup).
+Visit Manual Setup [Wiki](https://github.com/homebridge-plugins/homebridge-platform-wemo/wiki/Manual-Setup).

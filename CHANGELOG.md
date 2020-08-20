@@ -2,16 +2,22 @@
 
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/).
 
+## [Version 1.6.1](https://github.com/homebridge-plugins/homebridge-platform-wemo/compare/v1.6.0...1.6.1) (2020-08-20)
+
+#### Changes
+
+- Fix Formatting.
+- Fix warning of node.
+
 ## [Version 1.6.0](https://github.com/homebridge-plugins/homebridge-platform-wemo/compare/v1.5.6...1.6.0) (2020-08-14)
 
 #### Changes
 
 - Dimmer Night mode: Poll Brightness when turning the lights on. Thanks, [@leeliu](https://github.com/leeliu)!
 
-    - This allows night mode to function with homebridge knowing correct night mode brightness value when lights turn on. (Previously if dimmer was set to 80% normal and 20% night mode, at night when turning on dimmers, Home app would report 80% brightness when in fact the dimmer is 20% brightness. This fixes and now correctly shows 20% brightness.)
+  - This allows night mode to function with homebridge knowing correct night mode brightness value when lights turn on. (Previously if dimmer was set to 80% normal and 20% night mode, at night when turning on dimmers, Home app would report 80% brightness when in fact the dimmer is 20% brightness. This fixes and now correctly shows 20% brightness.)
 
 ## [Version 1.5.6](https://github.com/homebridge-plugins/homebridge-platform-wemo/compare/v1.5.5...1.5.6) (2020-05-13)
-
 
 #### Changes
 
