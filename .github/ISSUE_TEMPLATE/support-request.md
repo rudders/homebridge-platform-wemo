@@ -1,35 +1,29 @@
 ---
-name: Bug Report
-about: Create a report to help us improve
+name: Support Request
+about: Need help?
 title: ''
-labels: bug
+labels: question
 assignees: ''
 
 ---
 
-<!-- You must use the issue template below when submitting a bug -->
+<!-- You must use the issue template below when submitting a support request -->
 
-**Describe The Bug:**
-<!-- A clear and concise description of what the bug is. -->
-
-**To Reproduce:**
-<!-- Steps to reproduce the behavior. -->
-
-**Expected behavior:**
-<!-- A clear and concise description of what you expected to happen. -->
+**Describe Your Problem:**
+<!-- A clear and concise description of what problem you are trying to solve. -->
 
 **Logs:**
-<!-- Bug reports that do not contain logs may be closed without warning. -->
+<!-- Support requests that do not contain logs may be closed without warning. -->
 
 ```
 Show the Homebridge logs here.
-Remove any sensitive information.
+Remove any sensative information.
 ```
 
 **Homebridge Config:**
 
 ```json
-Show your homebridge config.json here.
+Show your homebridge config.json here. 
 Remove any sensitive information.
 ```
 
@@ -44,7 +38,7 @@ Remove any sensitive information.
 * **Node.js Version**: <!-- node -v -->
 * **NPM Version**: <!-- npm -v -->
 * **Homebridge Version**: <!-- homebridge -V -->
-* **Homebridge Wemo Version**:
+* **Homebridge Wemo Plugin Version**:
 * **Homebridge Config UI X Plugin Version**:
 * **Operating System**: <!-- Raspbian / Ubuntu / Debian / Windows / macOS / Docker -->
 
