@@ -28,7 +28,6 @@
         "url": "https://github.com/bwp91/homebridge-platform-wemo/issues"
     },
     "dependencies": {
-        "wemo-client": "^0.15.0",
-        "debug": "^4.1.1"
+        "wemo-client": "0.15.0"
     }
 }
