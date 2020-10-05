@@ -1,21 +1,19 @@
-/* jshint node: true */
-// Wemo Platform Plugin for HomeBridge (https://github.com/nfarina/homebridge)
-//
-// Remember to add platform to config.json. Example:
-// "platforms": [
-//      {
-//          "platform": "BelkinWeMo",
-//          "name": "Belkin WeMo",
-//          "noMotionTimer": 60,    // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
-//          "ignoredDevices": [],   // optional: an array of Device serial numbers to ignore
-//          "manualDevices": [],    // optional: an array of config urls for devices to be manually configured eg. "manualDevices": ["http://192.168.1.20:49153/setup.xml"]
-//          "discovery": true,      // optional: turn off device discovery if not required
-//          "discoveryInterval": 30 // optional: the interval in seconds at which to send ssdp-search requests
-//          "wemoClient": {}        // optional: initialisation parameters to be passed to wemo-client
-//      }
-// ],
-
-"use strict";
+/*
+Remember to add platform to config.json. Example:
+"platforms": [
+  {
+    "platform": "BelkinWeMo",
+    "name": "Belkin WeMo",
+    "noMotionTimer": 60,    // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
+    "ignoredDevices": [],   // optional: an array of Device serial numbers to ignore
+    "manualDevices": [],    // optional: an array of config urls for devices to be manually configured eg. "manualDevices": ["http://192.168.1.20:49153/setup.xml"]
+    "discovery": true,      // optional: turn off device discovery if not required
+    "discoveryInterval": 30 // optional: the interval in seconds at which to send ssdp-search requests
+    "wemoClient": {}        // optional: initialisation parameters to be passed to wemo-client
+  }
+],
+*/
+'use strict'
 
 const DEFAULT_DOOR_OPEN_TIME = 20,
   DEFAULT_NO_MOTION_TIME = 60;
