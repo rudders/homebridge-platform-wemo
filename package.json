@@ -4,17 +4,17 @@
     "version": "1.6.1",
     "author": "bwp91",
     "contributors": [
-      "homebridge-plugins"
+        "homebridge-plugins"
     ],
     "description": "Homebridge plugin to control Wemo devices.",
     "license": "ISC",
     "keywords": [
-      "homebridge",
-      "homebridge-plugin",
-      "homekit",
-      "siri",
-      "wemo-client",
-      "wemo"
+        "homebridge",
+        "homebridge-plugin",
+        "homekit",
+        "siri",
+        "wemo-client",
+        "wemo"
     ],
     "engines": {
         "node": ">=12.0.0",
