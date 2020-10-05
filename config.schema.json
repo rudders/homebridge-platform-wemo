@@ -1,8 +1,8 @@
 {
   "pluginAlias": "BelkinWeMo",
   "pluginType": "platform",
-  "headerDisplay": "<p align='center'><img width='150px' src='https://raw.githubusercontent.com/homebridge-plugins/homebridge-platform-wemo/master/wemo/wemo.png'></p>\n\nThe **Homebridge Platform WeMo** plugin allows you to control your WeMo Devices from HomeKit. To get started setup your config below.",
-  "footerDisplay": "</p>\n\nFor Wemo Client see [Manual Setup Wiki](https://github.com/homebridge-plugins/homebridge-platform-wemo/wiki/Manual-Setup).</p>\n\nYour WeMo device is setup.",
+  "headerDisplay": "Homebridge plugin to control Wemo devices.",
+  "footerDisplay": "For help and support please visit our [GitHub Wiki](https://github.com/bwp91/homebridge-platform-wemo/wiki).",
   "singular": true,
   "schema": {
     "type": "object",
@@ -10,7 +10,7 @@
       "name": {
         "type": "string",
         "title": "Name",
-        "description": "The Name that will show up in homebridge log.",
+        "description": "The Name that will show up in Homebridge log.",
         "default": "Belkin WeMo",
         "required": true
       },
