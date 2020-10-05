@@ -1,297 +1,204 @@
-/*
-Remember to add platform to config.json. Example:
-"platforms": [
-  {
-    "platform": "BelkinWeMo",
-    "name": "Belkin WeMo",
-    "noMotionTimer": 60,    // optional: [WeMo Motion only] a timer (in seconds) which is started no motion is detected, defaults to 60
-    "ignoredDevices": [],   // optional: an array of Device serial numbers to ignore
-    "manualDevices": [],    // optional: an array of config urls for devices to be manually configured eg. "manualDevices": ["http://192.168.1.20:49153/setup.xml"]
-    "discovery": true,      // optional: turn off device discovery if not required
-    "discoveryInterval": 30 // optional: the interval in seconds at which to send ssdp-search requests
-    "wemoClient": {}        // optional: initialisation parameters to be passed to wemo-client
-  }
-],
-*/
 'use strict'
 
-const DEFAULT_DOOR_OPEN_TIME = 20,
-  DEFAULT_NO_MOTION_TIME = 60;
-
-const RELAY_MODE_SWITCH = 0,
-  RELAY_MODE_MOMENTARY = 1;
-
-var Wemo = require("wemo-client"),
-  debug = require("debug")("homebridge-platform-wemo");
-
-var Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen;
-var wemo = new Wemo();
-
-var doorOpenTimer, noMotionTimer;
+const Wemo = require('wemo-client')
+let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen
+let doorOpenTimer, noMotionTimer
+let wemo = new Wemo()
 
 module.exports = function (homebridge) {
-  Accessory = homebridge.platformAccessory;
-  Characteristic = homebridge.hap.Characteristic;
-  Service = homebridge.hap.Service;
-  UUIDGen = homebridge.hap.uuid;
+  Accessory = homebridge.platformAccessory
+  Characteristic = homebridge.hap.Characteristic
+  Service = homebridge.hap.Service
+  UUIDGen = homebridge.hap.uuid
 
   Consumption = function () {
     Characteristic.call(
       this,
-      "Consumption",
-      "E863F10D-079E-48FF-8F27-9C2605A29F52"
-    );
-
+      'Consumption',
+      'E863F10D-079E-48FF-8F27-9C2605A29F52'
+    )
     this.setProps({
       format: Characteristic.Formats.UINT16,
-      unit: "W",
-      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY],
-    });
-
-    this.value = this.getDefaultValue();
-  };
-  require("util").inherits(Consumption, Characteristic);
-
-  Consumption.UUID = "E863F10D-079E-48FF-8F27-9C2605A29F52";
+      unit: 'W',
+      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+    })
+    this.value = this.getDefaultValue()
+  }
+  require('util').inherits(Consumption, Characteristic)
+  Consumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52'
 
   TotalConsumption = function () {
     Characteristic.call(
       this,
-      "Total Consumption",
-      "E863F10C-079E-48FF-8F27-9C2605A29F52"
-    );
-
+      'Total Consumption',
+      'E863F10C-079E-48FF-8F27-9C2605A29F52'
+    )
     this.setProps({
       format: Characteristic.Formats.UINT32,
-      unit: "Wh", // change from kWh to Wh to have value significance for low mW draw
-      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY],
-    });
+      unit: 'Wh', // change from kWh to Wh to have value significance for low mW draw
+      perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+    })
+    this.value = this.getDefaultValue()
+  }
+  require('util').inherits(TotalConsumption, Characteristic)
+  TotalConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52'
 
-    this.value = this.getDefaultValue();
-  };
-  require("util").inherits(TotalConsumption, Characteristic);
-
-  TotalConsumption.UUID = "E863F10C-079E-48FF-8F27-9C2605A29F52";
-
-  homebridge.registerPlatform(
-    "homebridge-platform-wemo",
-    "BelkinWeMo",
-    WemoPlatform,
-    true
-  );
-};
-
-function getSupportedMakerServices() {
-  return [Service.GarageDoorOpener, Service.Switch];
+  homebridge.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', WemoPlatform, true)
 }
 
-function getServiceDescription(service) {
-  var name = "Unknown";
+function getSupportedMakerServices () {
+  return [Service.GarageDoorOpener, Service.Switch]
+}
 
+function getServiceDescription (service) {
+  let name = 'Unknown'
   switch (service) {
     case Service.GarageDoorOpener:
-      name = "Garage Door Opener";
-      break;
+      name = 'Garage Door Opener'
+      break
     case Service.Switch:
-      name = "Switch";
-      break;
+      name = 'Switch'
+      break
   }
-
-  return name;
+  return name
 }
 
-function WemoPlatform(log, config, api) {
-  if (!config) {
-    log.warn("Ignoring WeMo Platform setup because it is not configured");
-    this.disabled = true;
-    return;
+function WemoPlatform (log, config, api) {
+  if (!log || !api || !config) return
+
+  this.config = config
+  this.api = api
+  this.log = log
+
+  wemo = new Wemo(this.config.wemoClient || {})
+
+  if (this.config.ignoredDevices && this.config.ignoredDevices.constructor !== Array) {
+    delete this.config.ignoredDevices
   }
 
-  this.config = config;
-
-  wemo = new Wemo(this.config.wemoClient || {});
-
-  if (
-    this.config.ignoredDevices &&
-    this.config.ignoredDevices.constructor !== Array
-  ) {
-    delete this.config.ignoredDevices;
+  if (this.config.manualDevices && this.config.manualDevices.constructor !== Array) {
+    delete this.config.manualDevices
   }
 
-  if (
-    this.config.manualDevices &&
-    this.config.manualDevices.constructor !== Array
-  ) {
-    delete this.config.manualDevices;
-  }
+  this.discovery = this.config.discovery || true
+  this.discoveryInterval = this.config.discoveryInterval || 30
+  this.ignoredDevices = this.config.ignoredDevices || []
+  this.manualDevices = this.config.manualDevices || []
 
-  this.discovery = this.config.discovery || true;
-  this.discoveryInterval = this.config.discoveryInterval || 30;
-  this.ignoredDevices = this.config.ignoredDevices || [];
-  this.manualDevices = this.config.manualDevices || [];
+  const self = this
 
-  var self = this;
+  this.accessories = {}
 
-  this.api = api;
-  this.accessories = {};
-  this.log = log;
+  doorOpenTimer = this.config.doorOpenTimer || 20
+  noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || 60
 
-  doorOpenTimer = this.config.doorOpenTimer || DEFAULT_DOOR_OPEN_TIME;
-  noMotionTimer =
-    this.config.noMotionTimer ||
-    this.config.no_motion_timer ||
-    DEFAULT_NO_MOTION_TIME;
+  const addDiscoveredDevice = function (err, device) {
+    if (!device) return
 
-  var addDiscoveredDevice = function (err, device) {
-    if (!device) {
-      return;
-    }
-
-    var uuid = UUIDGen.generate(device.UDN);
-    var accessory;
+    let uuid = UUIDGen.generate(device.UDN)
+    let accessory
 
     if (device.deviceType === Wemo.DEVICE_TYPE.Bridge) {
-      var client = this.client(device, self.log);
+      const client = this.client(device, self.log)
 
       client.getEndDevices(function (err, enddevices) {
-        for (var i = 0, tot = enddevices.length; i < tot; i++) {
-          uuid = UUIDGen.generate(enddevices[i].deviceId);
-          accessory = self.accessories[uuid];
+        for (let i = 0, tot = enddevices.length; i < tot; i++) {
+          uuid = UUIDGen.generate(enddevices[i].deviceId)
+          accessory = self.accessories[uuid]
 
           if (self.ignoredDevices.indexOf(device.serialNumber) !== -1) {
             if (accessory !== undefined) {
-              self.removeAccessory(accessory);
+              self.removeAccessory(accessory)
             }
-
-            return;
+            return
           }
 
           if (accessory === undefined) {
-            self.addLinkAccessory(device, enddevices[i]);
+            self.addLinkAccessory(device, enddevices[i])
           } else if (accessory instanceof WemoLinkAccessory) {
-            this.setupDevice(device, enddevices[i]);
-            this.observeDevice();
+            this.setupDevice(device, enddevices[i])
+            this.observeDevice()
           } else {
-            self.accessories[uuid] = new WemoLinkAccessory(
-              self.log,
-              accessory,
-              device,
-              enddevices[i]
-            );
+            self.accessories[uuid] = new WemoLinkAccessory(self.log, accessory, device, enddevices[i])
           }
         }
-      });
+      })
     } else {
-      accessory = self.accessories[uuid];
-
+      accessory = self.accessories[uuid]
       if (self.ignoredDevices.indexOf(device.serialNumber) !== -1) {
         if (accessory !== undefined) {
-          self.removeAccessory(accessory);
+          self.removeAccessory(accessory)
         }
-
-        return;
+        return
       }
 
       if (accessory === undefined) {
-        self.addAccessory(device);
+        self.addAccessory(device)
       } else if (accessory instanceof WemoAccessory) {
-        self.log(
-          "Online and can update device: %s [%s]",
-          accessory.displayName,
-          device.macAddress
-        );
-        accessory.setupDevice(device);
-        accessory.observeDevice(device);
+        self.log('Online and can update device: %s [%s]', accessory.displayName, device.macAddress)
+        accessory.setupDevice(device)
+        accessory.observeDevice(device)
       } else {
-        self.log("Online: %s [%s]", accessory.displayName, device.macAddress);
-        self.accessories[uuid] = new WemoAccessory(self.log, accessory, device);
+        self.log('Online: %s [%s]', accessory.displayName, device.macAddress)
+        self.accessories[uuid] = new WemoAccessory(self.log, accessory, device)
       }
     }
-  };
+  }
 
-  this.api.on(
-    "didFinishLaunching",
-    function () {
-      for (var i in this.manualDevices) {
-        wemo.load(this.manualDevices[i], addDiscoveredDevice);
-      }
-
-      if (this.discovery == true) {
-        wemo.discover(addDiscoveredDevice);
-      }
-    }.bind(this)
-  );
-
-  if (this.discovery == true) {
-    setInterval(function () {
-      wemo.discover(addDiscoveredDevice);
-    }, this.discoveryInterval * 1000);
+  this.api
+    .on('didFinishLaunching', () => {
+      this.manualDevices.forEach(device => wemo.load(device, addDiscoveredDevice))
+      if (this.discovery) wemo.discover(addDiscoveredDevice)
+    })
+  if (this.discovery) {
+    setInterval(() => wemo.discover(addDiscoveredDevice), this.discoveryInterval * 1000)
   }
 }
 
 WemoPlatform.prototype.addAccessory = function (device) {
-  var serviceType;
-
+  let serviceType
   switch (device.deviceType) {
     case Wemo.DEVICE_TYPE.Insight:
     case Wemo.DEVICE_TYPE.Switch:
-      serviceType = Service.Outlet;
-      break;
+      serviceType = Service.Outlet
+      break
     case Wemo.DEVICE_TYPE.LightSwitch:
-      serviceType = Service.Switch;
-      break;
+      serviceType = Service.Switch
+      break
     case Wemo.DEVICE_TYPE.Dimmer:
-      serviceType = Service.Lightbulb;
-      break;
+      serviceType = Service.Lightbulb
+      break
     case Wemo.DEVICE_TYPE.Motion:
-    case "urn:Belkin:device:NetCamSensor:1":
-      serviceType = Service.MotionSensor;
-      break;
+    case 'urn:Belkin:device:NetCamSensor:1':
+      serviceType = Service.MotionSensor
+      break
     case Wemo.DEVICE_TYPE.Maker:
-      serviceType = Service.Switch;
-      break;
+      serviceType = Service.Switch
+      break
     default:
-      this.log(
-        "Not Supported: %s [%s]",
-        device.friendlyName,
-        device.deviceType
-      );
+      this.log('Not Supported: %s [%s]', device.friendlyName, device.deviceType)
   }
 
-  if (serviceType === undefined) {
-    return;
-  }
+  if (serviceType === undefined) return
 
-  this.log("Found: %s [%s]", device.friendlyName, device.macAddress);
+  this.log('Found: %s [%s]', device.friendlyName, device.macAddress)
 
-  var accessory = new Accessory(
-    device.friendlyName,
-    UUIDGen.generate(device.UDN)
-  );
-  var service = accessory.addService(serviceType, device.friendlyName);
+  const accessory = new Accessory(device.friendlyName, UUIDGen.generate(device.UDN))
+  const service = accessory.addService(serviceType, device.friendlyName)
 
   switch (device.deviceType) {
     case Wemo.DEVICE_TYPE.Insight:
-      //service.addCharacteristic(Characteristic.OutletInUse);
-      service.addCharacteristic(Consumption);
-      service.addCharacteristic(TotalConsumption);
-      break;
+      service.addCharacteristic(Consumption)
+      service.addCharacteristic(TotalConsumption)
+      break
     case Wemo.DEVICE_TYPE.Dimmer:
-      service.addCharacteristic(Characteristic.Brightness);
-      break;
+      service.addCharacteristic(Characteristic.Brightness)
+      break
   }
 
-  this.accessories[accessory.UUID] = new WemoAccessory(
-    this.log,
-    accessory,
-    device
-  );
-  this.api.registerPlatformAccessories(
-    "homebridge-platform-wemo",
-    "BelkinWeMo",
-    [accessory]
-  );
-};
+  this.accessories[accessory.UUID] = new WemoAccessory(this.log, accessory, device)
+  this.api.registerPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
+}
 
 WemoPlatform.prototype.addLinkAccessory = function (link, device) {
   this.log("Found: %s [%s]", device.friendlyName, device.deviceId);
@@ -421,7 +328,7 @@ WemoPlatform.prototype.configurationRequestHandler = function (
 
       if (
         context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker &&
-        context.accessory.context.switchMode == RELAY_MODE_MOMENTARY
+        context.accessory.context.switchMode == 1
       ) {
         var services = getSupportedMakerServices();
 
@@ -1275,7 +1182,7 @@ WemoAccessory.prototype.updateMotionDetected = function (state) {
 
 WemoAccessory.prototype.updateMakerMode = function () {
   // SwitchMode - Momentary
-  if (this.accessory.context.switchMode == RELAY_MODE_MOMENTARY) {
+  if (this.accessory.context.switchMode == 1) {
     if (this.accessory.context.serviceType === undefined) {
       this.accessory.context.serviceType = Service.GarageDoorOpener.UUID;
     }
@@ -1306,7 +1213,7 @@ WemoAccessory.prototype.updateMakerMode = function () {
     }
   }
   // SwitchMode - Toggle
-  else if (this.accessory.context.switchMode == RELAY_MODE_SWITCH) {
+  else if (this.accessory.context.switchMode == 0) {
     if (this.accessory.getService(Service.Switch) === undefined) {
       this.accessory.addService(Service.Switch, this.accessory.displayName);
       this.addEventHandler(Service.Switch, Characteristic.On);
@@ -1521,7 +1428,7 @@ function WemoLinkAccessory(log, accessory, link, device) {
         .getCharacteristic(Characteristic.On);
       var count = 0;
 
-      if (switchState.value == true) {
+      if (switchState.value) {
         setOff();
       } else {
         setOn();
