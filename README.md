@@ -32,3 +32,5 @@
 ### About
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
 * [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
+### Disclaimer
+I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
