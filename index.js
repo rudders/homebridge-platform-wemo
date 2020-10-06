@@ -201,336 +201,312 @@ WemoPlatform.prototype.addAccessory = function (device) {
 }
 
 WemoPlatform.prototype.addLinkAccessory = function (link, device) {
-  this.log("Found: %s [%s]", device.friendlyName, device.deviceId);
+  this.log('Found: %s [%s]', device.friendlyName, device.deviceId)
 
-  var accessory = new Accessory(
-    device.friendlyName,
-    UUIDGen.generate(device.deviceId)
-  );
-  var service = accessory.addService(Service.Lightbulb, device.friendlyName);
+  const accessory = new Accessory(device.friendlyName, UUIDGen.generate(device.deviceId))
+  const service = accessory.addService(Service.Lightbulb, device.friendlyName)
+  service.addCharacteristic(Characteristic.Brightness)
 
-  service.addCharacteristic(Characteristic.Brightness);
-
-  if (
-    device.capabilities[WemoLinkAccessory.OPTIONS.Temperature] !== undefined
-  ) {
-    service.addCharacteristic(Characteristic.ColorTemperature);
+  if (device.capabilities[WemoLinkAccessory.OPTIONS.Temperature] !== undefined) {
+    service.addCharacteristic(Characteristic.ColorTemperature)
   }
 
-  this.accessories[accessory.UUID] = new WemoLinkAccessory(
-    this.log,
-    accessory,
-    link,
-    device
-  );
-  this.api.registerPlatformAccessories(
-    "homebridge-platform-wemo",
-    "BelkinWeMo",
-    [accessory]
-  );
-};
+  this.accessories[accessory.UUID] = new WemoLinkAccessory(this.log, accessory, link, device)
+  this.api.registerPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
+}
 
 WemoPlatform.prototype.configureAccessory = function (accessory) {
-  this.accessories[accessory.UUID] = accessory;
-};
+  this.accessories[accessory.UUID] = accessory
+}
 
-WemoPlatform.prototype.configurationRequestHandler = function (
-  context,
-  request,
-  callback
-) {
-  var self = this;
-  var respDict = {};
+WemoPlatform.prototype.configurationRequestHandler = function (context, request, callback) {
+  var self = this
+  var respDict = {}
 
-  if (request && request.type === "Terminate") {
-    context.onScreen = null;
+  if (request && request.type === 'Terminate') {
+    context.onScreen = null
   }
 
-  var sortAccessories = function () {
+  const sortAccessories = function () {
     context.sortedAccessories = Object.keys(self.accessories)
       .map(function (k) {
-        return this[k] instanceof Accessory ? this[k] : this[k].accessory;
+        return this[k] instanceof Accessory ? this[k] : this[k].accessory
       }, self.accessories)
       .sort(function (a, b) {
-        if (a.displayName < b.displayName) return -1;
-        if (a.displayName > b.displayName) return 1;
-        return 0;
-      });
+        if (a.displayName < b.displayName) return -1
+        if (a.displayName > b.displayName) return 1
+        return 0
+      })
 
     return Object.keys(context.sortedAccessories).map(function (k) {
-      return this[k].displayName;
-    }, context.sortedAccessories);
-  };
+      return this[k].displayName
+    }, context.sortedAccessories)
+  }
 
+  let items
   switch (context.onScreen) {
-    case "DoRemove":
+    case 'DoRemove':
       if (request.response.selections) {
-        for (var i in request.response.selections.sort()) {
-          this.removeAccessory(
-            context.sortedAccessories[request.response.selections[i]]
-          );
+        for (const i in request.response.selections.sort()) {
+          this.removeAccessory(context.sortedAccessories[request.response.selections[i]])
+        }
+        respDict = {
+          type: 'Interface',
+          interface: 'instruction',
+          title: 'Finished',
+          detail: 'Accessory removal was successful.'
         }
 
-        respDict = {
-          type: "Interface",
-          interface: "instruction",
-          title: "Finished",
-          detail: "Accessory removal was successful.",
-        };
-
-        context.onScreen = null;
-        callback(respDict);
+        context.onScreen = null
+        callback(respDict)
       } else {
-        context.onScreen = null;
-        callback(respDict, "platform", true, this.config);
+        context.onScreen = null
+        callback(respDict, 'platform', true, this.config)
       }
-      break;
-    case "DoModify":
-      context.accessory =
-        context.sortedAccessories[request.response.selections[0]];
-      context.onScreenSelection = [];
-      context.canChangeService = [];
+      break
+    case 'DoModify':
+      context.accessory = context.sortedAccessories[request.response.selections[0]]
+      context.onScreenSelection = []
+      context.canChangeService = []
 
-      var items = [];
+      items = []
 
       if (context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker) {
-        items.push("Change Service");
+        items.push('Change Service')
         context.onScreenSelection.push({
-          action: "change",
-          item: "service",
-          screen: "ChangeService",
-        });
+          action: 'change',
+          item: 'service',
+          screen: 'ChangeService'
+        })
       }
 
       respDict = {
-        type: "Interface",
-        interface: "list",
-        title: "Select action for " + context.accessory.displayName,
+        type: 'Interface',
+        interface: 'list',
+        title: 'Select action for ' + context.accessory.displayName,
         allowMultipleSelection: false,
-        items: items,
-      };
-
-      context.onScreen = "ModifyAccessory";
-
-      callback(respDict);
-      break;
-    case "ModifyAccessory":
-      if (!request.response.selections) {
-        context.onScreen = null;
-        callback(respDict, "platform", true, this.config);
+        items: items
       }
 
-      var selection = context.onScreenSelection[request.response.selections[0]];
+      context.onScreen = 'ModifyAccessory'
 
-      context.onScreen = selection.screen;
+      callback(respDict)
+      break
+    case 'ModifyAccessory': {
+      if (!request.response.selections) {
+        context.onScreen = null
+        callback(respDict, 'platform', true, this.config)
+      }
 
-      var items = [];
+      const selection = context.onScreenSelection[request.response.selections[0]]
+
+      context.onScreen = selection.screen
+
+      items = []
 
       if (
         context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker &&
-        context.accessory.context.switchMode == 1
+        context.accessory.context.switchMode === 1
       ) {
-        var services = getSupportedMakerServices();
+        const services = getSupportedMakerServices()
 
-        for (var index in services) {
-          var service = services[index];
+        for (const index in services) {
+          const service = services[index]
 
           if (service.UUID === context.accessory.context.serviceType) {
-            continue;
+            continue
           }
 
-          context.canChangeService.push(service);
-          items.push(getServiceDescription(service));
+          context.canChangeService.push(service)
+          items.push(getServiceDescription(service))
         }
       }
 
       respDict = {
-        type: "Interface",
-        interface: "list",
-        title: "Select " + selection.item + " to " + selection.action,
+        type: 'Interface',
+        interface: 'list',
+        title: 'Select ' + selection.item + ' to ' + selection.action,
         allowMultipleSelection: false,
-        items: items,
-      };
-
-      callback(respDict);
-      break;
-    case "ChangeService":
-      if (!request.response.selections) {
-        context.onScreen = null;
-        callback(respDict, "platform", true, this.config);
+        items: items
       }
 
-      var item =
-        context["can" + context.onScreen][request.response.selections[0]];
+      callback(respDict)
+      break
+    }
+    case 'ChangeService': {
+      if (!request.response.selections) {
+        context.onScreen = null
+        callback(respDict, 'platform', true, this.config)
+      }
+
+      const item = context['can' + context.onScreen][request.response.selections[0]]
 
       respDict = {
-        type: "Interface",
-        interface: "instruction",
-        title: "Finished",
-        detail: "Accessory service change failed.",
-      };
+        type: 'Interface',
+        interface: 'instruction',
+        title: 'Finished',
+        detail: 'Accessory service change failed.'
+      }
 
       try {
-        var accessory = self.accessories[context.accessory.UUID];
-        accessory.accessory.context.serviceType = item.UUID;
-        accessory.updateMakerMode();
+        const accessory = self.accessories[context.accessory.UUID]
+        accessory.accessory.context.serviceType = item.UUID
+        accessory.updateMakerMode()
 
-        respDict["detail"] = "Accessory service change was successful.";
+        respDict.detail = 'Accessory service change was successful.'
       } catch (e) {}
 
-      context.onScreen = null;
-      callback(respDict);
-      break;
-    case "Menu":
+      context.onScreen = null
+      callback(respDict)
+      break
+    }
+    case 'Menu':
       switch (request.response.selections[0]) {
         case 0:
-          context.onScreen = "Modify";
-          break;
+          context.onScreen = 'Modify'
+          break
         case 1:
-          context.onScreen = "Remove";
-          break;
+          context.onScreen = 'Remove'
+          break
         case 2:
-          context.onScreen = "Configuration";
-          break;
+          context.onScreen = 'Configuration'
+          break
       }
 
-      if (context.onScreen != "Configuration") {
+      if (context.onScreen !== 'Configuration') {
         respDict = {
-          type: "Interface",
-          interface: "list",
-          title: "Select accessory to " + context.onScreen.toLowerCase(),
-          allowMultipleSelection: context.onScreen == "Remove",
-          items: sortAccessories(),
-        };
+          type: 'Interface',
+          interface: 'list',
+          title: 'Select accessory to ' + context.onScreen.toLowerCase(),
+          allowMultipleSelection: context.onScreen === 'Remove',
+          items: sortAccessories()
+        }
 
-        context.onScreen = "Do" + context.onScreen;
-        callback(respDict);
-        break;
+        context.onScreen = 'Do' + context.onScreen
+        callback(respDict)
+        break
       }
 
       respDict = {
-        type: "Interface",
-        interface: "list",
-        title: "Select Option",
+        type: 'Interface',
+        interface: 'list',
+        title: 'Select Option',
         allowMultipleSelection: false,
-        items: ["Ignored Devices"],
-      };
+        items: ['Ignored Devices']
+      }
 
-      callback(respDict);
-      break;
-    case "Configuration":
+      callback(respDict)
+      break
+    case 'Configuration':
       respDict = {
-        type: "Interface",
-        interface: "list",
-        title: "Modify Ignored Devices",
+        type: 'Interface',
+        interface: 'list',
+        title: 'Modify Ignored Devices',
         allowMultipleSelection: false,
-        items:
-          this.ignoredDevices.length > 0
-            ? ["Add Accessory", "Remove Accessory"]
-            : ["Add Accessory"],
-      };
+        items: this.ignoredDevices.length > 0 ? ['Add Accessory', 'Remove Accessory'] : ['Add Accessory']
+      }
 
-      context.onScreen = "IgnoreList";
+      context.onScreen = 'IgnoreList'
 
-      callback(respDict);
-      break;
-    case "IgnoreList":
+      callback(respDict)
+      break
+    case 'IgnoreList':
       context.onScreen =
-        request && request.response && request.response.selections[0] == 1
-          ? "IgnoreListRemove"
-          : "IgnoreListAdd";
+        request && request.response && request.response.selections[0] === 1
+          ? 'IgnoreListRemove'
+          : 'IgnoreListAdd'
 
-      if (context.onScreen == "IgnoreListAdd") {
+      if (context.onScreen === 'IgnoreListAdd') {
         respDict = {
-          type: "Interface",
-          interface: "list",
-          title: "Select accessory to add to Ignored Devices",
+          type: 'Interface',
+          interface: 'list',
+          title: 'Select accessory to add to Ignored Devices',
           allowMultipleSelection: true,
-          items: sortAccessories(),
-        };
+          items: sortAccessories()
+        }
       } else {
-        context.selection = JSON.parse(JSON.stringify(this.ignoredDevices));
+        context.selection = JSON.parse(JSON.stringify(this.ignoredDevices))
 
         respDict = {
-          type: "Interface",
-          interface: "list",
-          title: "Select accessory to remove from Ignored Devices",
+          type: 'Interface',
+          interface: 'list',
+          title: 'Select accessory to remove from Ignored Devices',
           allowMultipleSelection: true,
-          items: context.selection,
-        };
+          items: context.selection
+        }
       }
 
-      callback(respDict);
-      break;
-    case "IgnoreListAdd":
+      callback(respDict)
+      break
+    case 'IgnoreListAdd':
       if (request.response.selections) {
-        for (var i in request.response.selections.sort()) {
+        for (const i in request.response.selections.sort()) {
           var accessory =
-            context.sortedAccessories[request.response.selections[i]];
+            context.sortedAccessories[request.response.selections[i]]
 
           if (
             accessory.context &&
             accessory.context.id &&
-            this.ignoredDevices.indexOf(accessory.context.id) == -1
+            this.ignoredDevices.indexOf(accessory.context.id) === -1
           ) {
-            this.ignoredDevices.push(accessory.context.id);
+            this.ignoredDevices.push(accessory.context.id)
           }
 
-          this.removeAccessory(accessory);
+          this.removeAccessory(accessory)
         }
 
-        this.config.ignoredDevices = this.ignoredDevices;
+        this.config.ignoredDevices = this.ignoredDevices
 
         respDict = {
-          type: "Interface",
-          interface: "instruction",
-          title: "Finished",
-          detail: "Ignore List update was successful.",
-        };
+          type: 'Interface',
+          interface: 'instruction',
+          title: 'Finished',
+          detail: 'Ignore List update was successful.'
+        }
       }
 
-      context.onScreen = null;
-      callback(respDict, "platform", true, this.config);
-      break;
+      context.onScreen = null
+      callback(respDict, 'platform', true, this.config)
+      break
 
-    case "IgnoreListRemove":
+    case 'IgnoreListRemove':
       if (request.response.selections) {
         for (var i in request.response.selections) {
-          var id = context.selection[request.response.selections[i]];
+          var id = context.selection[request.response.selections[i]]
 
-          if (this.ignoredDevices.indexOf(id) != -1) {
-            this.ignoredDevices.splice(this.ignoredDevices.indexOf(id), 1);
+          if (this.ignoredDevices.indexOf(id) !== -1) {
+            this.ignoredDevices.splice(this.ignoredDevices.indexOf(id), 1)
           }
         }
       }
 
-      this.config.ignoredDevices = this.ignoredDevices;
+      this.config.ignoredDevices = this.ignoredDevices
 
       if (this.config.ignoredDevices.length === 0) {
-        delete this.config.ignoredDevices;
+        delete this.config.ignoredDevices
       }
 
-      context.onScreen = null;
-      callback(respDict, "platform", true, this.config);
-      break;
+      context.onScreen = null
+      callback(respDict, 'platform', true, this.config)
+      break
     default:
-      if (request && (request.response || request.type === "Terminate")) {
-        context.onScreen = null;
-        callback(respDict, "platform", true, this.config);
+      if (request && (request.response || request.type === 'Terminate')) {
+        context.onScreen = null
+        callback(respDict, 'platform', true, this.config)
       } else {
         respDict = {
-          type: "Interface",
-          interface: "list",
-          title: "Select option",
+          type: 'Interface',
+          interface: 'list',
+          title: 'Select option',
           allowMultipleSelection: false,
-          items: ["Modify Accessory", "Remove Accessory", "Configuration"],
-        };
+          items: ['Modify Accessory', 'Remove Accessory', 'Configuration']
+        }
 
-        context.onScreen = "Menu";
-        callback(respDict);
+        context.onScreen = 'Menu'
+        callback(respDict)
       }
   }
-};
+}
 
 WemoPlatform.prototype.removeAccessory = function (accessory) {
   this.log("Remove Accessory: %s", accessory.displayName);
