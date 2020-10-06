@@ -15,11 +15,14 @@
 
 </span>
 
-### Installation
+### Setup
 
-- Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
-- Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
-- Click install.
+* Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x).
+* Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) .
+* Click install.
+
+* [Manual Setup](https://github.com/bwp91/homebridge-platform-wemo/wiki/Manual-Setup)
+* [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 
 ### Configuration
 
@@ -28,6 +31,12 @@
 - Click Save to save to `config.json`.
 - Restart Homebridge for the changes to take effect.
 
-### Manual Setup
+### Features
+* [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
 
-Visit Manual Setup [Wiki](https://github.com/homebridge-plugins/homebridge-platform-wemo/wiki/Manual-Setup).
+### How-to Guides
+* [How to change Wemo Maker from GarageDoorOpener to Switch](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-change-Wemo-Maker-from-GarageDoorOpener-to-Switch)
+
+### About
+* [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
+* [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
