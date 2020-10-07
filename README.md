@@ -31,6 +31,7 @@
 ### How-to Guides
 * [How to change Wemo Maker from GarageDoorOpener to Switch](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-change-Wemo-Maker-from-GarageDoorOpener-to-Switch)
 ### About
+* [About Me](https://github.com/sponsors/bwp91)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
 * [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
 ### Disclaimer
