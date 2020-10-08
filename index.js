@@ -509,154 +509,122 @@ WemoPlatform.prototype.configurationRequestHandler = function (context, request,
 }
 
 WemoPlatform.prototype.removeAccessory = function (accessory) {
-  this.log("Remove Accessory: %s", accessory.displayName);
+  this.log('Remove Accessory: %s', accessory.displayName)
 
   if (this.accessories[accessory.UUID]) {
-    delete this.accessories[accessory.UUID];
+    delete this.accessories[accessory.UUID]
   }
 
-  this.api.unregisterPlatformAccessories(
-    "homebridge-platform-wemo",
-    "BelkinWeMo",
-    [accessory]
-  );
-};
+  this.api.unregisterPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
+}
 
-function WemoAccessory(log, accessory, device) {
-  var self = this;
+function WemoAccessory (log, accessory, device) {
+  var self = this
 
-  this.accessory = accessory;
-  this.device = device;
-  this.log = log;
+  this.accessory = accessory
+  this.device = device
+  this.log = log
 
-  this.accessory.context.deviceType = device.deviceType;
+  this.accessory.context.deviceType = device.deviceType
 
-  this.setupDevice(device);
+  this.setupDevice(device)
 
   this.accessory
     .getService(Service.AccessoryInformation)
-    .setCharacteristic(Characteristic.Manufacturer, "Belkin WeMo")
+    .setCharacteristic(Characteristic.Manufacturer, 'Belkin Wemo')
     .setCharacteristic(Characteristic.Model, device.modelName)
     .setCharacteristic(Characteristic.SerialNumber, device.serialNumber)
-    .setCharacteristic(Characteristic.FirmwareRevision, device.firmwareVersion);
+    .setCharacteristic(Characteristic.FirmwareRevision, device.firmwareVersion)
 
-  this.accessory.on("identify", function (paired, callback) {
-    self.log("%s - identify", self.accessory.displayName);
-    callback();
-  });
+  this.accessory.on('identify', function (paired, callback) {
+    self.log('%s - identify', self.accessory.displayName)
+    callback()
+  })
 
-  this.observeDevice(device);
-  this.addEventHandlers();
+  this.observeDevice(device)
+  this.addEventHandlers()
 }
 
-WemoAccessory.prototype.addEventHandler = function (
-  serviceName,
-  characteristic
-) {
-  serviceName = serviceName || Service.Switch;
+WemoAccessory.prototype.addEventHandler = function (serviceName, characteristic) {
+  serviceName = serviceName || Service.Switch
 
-  var service = this.accessory.getService(serviceName);
+  var service = this.accessory.getService(serviceName)
 
   if (service === undefined && serviceName === Service.Switch) {
-    serviceName = Service.Outlet;
-    service = this.accessory.getService(serviceName);
+    serviceName = Service.Outlet
+    service = this.accessory.getService(serviceName)
   }
 
-  if (service === undefined) {
-    return;
-  }
+  if (service === undefined) return
 
-  if (service.testCharacteristic(characteristic) === false) {
-    return;
-  }
+  if (service.testCharacteristic(characteristic) === false) return
 
   switch (characteristic) {
     case Characteristic.On:
       service
         .getCharacteristic(characteristic)
-        .on("set", this.setSwitchState.bind(this));
-      break;
+        .on('set', this.setSwitchState.bind(this))
+      break
     case Characteristic.TargetDoorState:
       service
         .getCharacteristic(characteristic)
-        .on("set", this.setTargetDoorState.bind(this));
-      break;
+        .on('set', this.setTargetDoorState.bind(this))
+      break
     case Characteristic.Brightness:
       service
         .getCharacteristic(characteristic)
-        .on("set", this.setBrightness.bind(this));
-      break;
+        .on('set', this.setBrightness.bind(this))
+      break
   }
-};
+}
 
 WemoAccessory.prototype.addEventHandlers = function () {
-  this.addEventHandler(Service.Switch, Characteristic.On);
-  this.addEventHandler(Service.Lightbulb, Characteristic.On);
-  this.addEventHandler(Service.Lightbulb, Characteristic.Brightness);
-  this.addEventHandler(
-    Service.GarageDoorOpener,
-    Characteristic.TargetDoorState
-  );
-};
+  this.addEventHandler(Service.Switch, Characteristic.On)
+  this.addEventHandler(Service.Lightbulb, Characteristic.On)
+  this.addEventHandler(Service.Lightbulb, Characteristic.Brightness)
+  this.addEventHandler(Service.GarageDoorOpener, Characteristic.TargetDoorState)
+}
 
 WemoAccessory.prototype.getAttributes = function (callback) {
-  callback = callback || function () {};
+  callback = callback || function () {}
 
   this.client.getAttributes(
     function (err, attributes) {
       if (err) {
-        this.log(err);
-        callback();
-        return;
+        this.log(err)
+        callback()
+        return
       }
 
-      this.device.attributes = attributes;
-      this.accessory.context.switchMode = attributes.SwitchMode;
-      this.updateMakerMode();
+      this.device.attributes = attributes
+      this.accessory.context.switchMode = attributes.SwitchMode
+      this.updateMakerMode()
 
-      if (attributes.SensorPresent == 1) {
+      if (attributes.SensorPresent === 1) {
         if (this.accessory.getService(Service.Switch) !== undefined) {
           if (this.accessory.getService(Service.ContactSensor) === undefined) {
-            this.log(
-              "%s - Add Service: %s",
-              this.accessory.displayName,
-              "Service.ContactSensor"
-            );
-            this.accessory.addService(
-              Service.ContactSensor,
-              this.accessory.displayName
-            );
+            this.log('%s - Add Service: %s', this.accessory.displayName, 'Service.ContactSensor')
+            this.accessory.addService(Service.ContactSensor, this.accessory.displayName)
           }
-        } else if (
-          this.accessory.getService(Service.GarageDoorOpener) !== undefined
-        ) {
-          this.sensorPresent = true;
+        } else if (this.accessory.getService(Service.GarageDoorOpener) !== undefined) {
+          this.sensorPresent = true
         }
-
-        this.updateSensorState(attributes.Sensor);
+        this.updateSensorState(attributes.Sensor)
       } else {
-        var contactSensor = this.accessory.getService(Service.ContactSensor);
-
+        const contactSensor = this.accessory.getService(Service.ContactSensor)
         if (contactSensor !== undefined) {
-          this.log(
-            "%s - Remove Service: %s",
-            this.accessory.displayName,
-            "Service.ContactSensor"
-          );
-          this.accessory.removeService(contactSensor);
+          this.log('%s - Remove Service: %s', this.accessory.displayName, 'Service.ContactSensor')
+          this.accessory.removeService(contactSensor)
         }
-
-        delete this.sensorPresent;
+        delete this.sensorPresent
       }
-
       if (this.accessory.getService(Service.Switch) !== undefined) {
-        this.updateSwitchState(attributes.Switch);
+        this.updateSwitchState(attributes.Switch)
       }
-
-      callback();
+      callback()
     }.bind(this)
-  );
-};
+  )
+}
 
 WemoAccessory.prototype.getSwitchState = function (callback) {
   if (this.device.deviceType === Wemo.DEVICE_TYPE.Maker) {
@@ -685,7 +653,7 @@ WemoAccessory.prototype.getSwitchState = function (callback) {
       }.bind(this)
     );
   }
-};
+}
 
 WemoAccessory.prototype.observeDevice = function (device) {
   if (device.deviceType === Wemo.DEVICE_TYPE.Maker) {
