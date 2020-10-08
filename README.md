@@ -1,5 +1,5 @@
 <p align="center">
-   <a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/95106028-de567f00-072f-11eb-9964-176975c7a0f1.png" width="500px"></a>
+   <a href="https://github.com/homebridge/verified/blob/master/verified-plugins.json"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/95106028-de567f00-072f-11eb-9964-176975c7a0f1.png" width="600px"></a>
 </p>
 <span align="center">
   
