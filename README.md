@@ -17,15 +17,9 @@
 </span>
 
 ### Setup
-1. Install [config-ui-x](https://github.com/oznu/homebridge-config-ui-x)
-2. Search for "Platform Wemo" on the plugin screen of [config-ui-x](https://github.com/oznu/homebridge-config-ui-x)
-3. Click install
-4. After plugin is installed, [config-ui-x](https://github.com/oznu/homebridge-config-ui-x) will populate required fields.
-5. You will now be able to select optional fields
-6. Click Save to save to `config.json`.
-7. Restart Homebridge for the changes to take effect.
-
-* [Manual Setup](https://github.com/bwp91/homebridge-platform-wemo/wiki/Manual-Setup)
+* [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
+* [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
+* [Configuration](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration)
 * [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 ### Features
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
