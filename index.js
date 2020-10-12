@@ -114,6 +114,7 @@ function WemoPlatform (log, config, api) {
 
   this.api
     .on('didFinishLaunching', () => {
+      this.log('Plugin has finished initialising. Finding devices to add to Homebridge.')
       this.manualDevices.forEach(device => this.wemoClient.load(device, addDiscoveredDevice))
       if (this.config.discovery) this.wemoClient.discover(addDiscoveredDevice)
     })
