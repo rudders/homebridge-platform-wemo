@@ -71,7 +71,7 @@ function WemoPlatform (log, config, api) {
   this.accessories = {}
   doorOpenTimer = this.config.doorOpenTimer || 20
   noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || 60
-  
+
   const self = this
 
   const addDiscoveredDevice = function (err, device) {
@@ -130,9 +130,9 @@ function WemoPlatform (log, config, api) {
   this.api
     .on('didFinishLaunching', () => {
       this.manualDevices.forEach(device => wemoClient.load(device, addDiscoveredDevice))
-      if (this.config.discovery || true) wemoClient.discover(addDiscoveredDevice)
+      if (this.config.discovery) wemoClient.discover(addDiscoveredDevice)
     })
-  if (this.config.discovery || true) {
+  if (this.config.discovery) {
     setInterval(() => wemoClient.discover(addDiscoveredDevice), (this.config.discoveryInterval || 30) * 1000)
   }
 }
