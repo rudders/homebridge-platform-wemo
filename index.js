@@ -1,5 +1,5 @@
 'use strict'
-let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen, doorOpenTimer, noMotionTimer
+let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen
 const WemoClient = require('wemo-client')
 let wemoClient = new WemoClient()
 module.exports = function (homebridge) {
@@ -41,19 +41,6 @@ module.exports = function (homebridge) {
   homebridge.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', WemoPlatform, true)
 }
 
-function getServiceDescription (service) {
-  let name = 'Unknown'
-  switch (service) {
-    case Service.GarageDoorOpener:
-      name = 'Garage Door Opener'
-      break
-    case Service.Switch:
-      name = 'Switch'
-      break
-  }
-  return name
-}
-
 function WemoPlatform (log, config, api) {
   if (!log || !api || !config) return
   this.config = config
@@ -69,8 +56,8 @@ function WemoPlatform (log, config, api) {
   this.ignoredDevices = this.config.ignoredDevices || []
   this.manualDevices = this.config.manualDevices || []
   this.accessories = {}
-  doorOpenTimer = this.config.doorOpenTimer || 20
-  noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || 60
+  this.config.doorOpenTimer = this.config.doorOpenTimer || 20
+  this.config.noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || 60
 
   const self = this
 
@@ -122,7 +109,7 @@ function WemoPlatform (log, config, api) {
         accessory.observeDevice(device)
       } else {
         self.log('Online: %s [%s]', accessory.displayName, device.macAddress)
-        self.accessories[uuid] = new WemoAccessory(self.log, accessory, device)
+        self.accessories[uuid] = new WemoAccessory(self.config, self.log, accessory, device)
       }
     }
   }
@@ -178,7 +165,7 @@ WemoPlatform.prototype.addAccessory = function (device) {
       break
   }
 
-  this.accessories[accessory.UUID] = new WemoAccessory(this.log, accessory, device)
+  this.accessories[accessory.UUID] = new WemoAccessory(this.config, this.log, accessory, device)
   this.api.registerPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
 }
 
@@ -300,7 +287,19 @@ WemoPlatform.prototype.configurationRequestHandler = function (context, request,
           }
 
           context.canChangeService.push(service)
-          items.push(getServiceDescription(service))
+          let name
+          switch (service) {
+            case Service.GarageDoorOpener:
+              name = 'Garage Door Opener'
+              break
+            case Service.Switch:
+              name = 'Switch'
+              break
+            default:
+              name = 'Unknown'
+              break
+          }
+          items.push(name)
         }
       }
 
@@ -500,10 +499,11 @@ WemoPlatform.prototype.removeAccessory = function (accessory) {
   this.api.unregisterPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
 }
 
-function WemoAccessory (log, accessory, device) {
+function WemoAccessory (config, log, accessory, device) {
   var self = this
 
   this.accessory = accessory
+  this.config = config
   this.device = device
   this.log = log
 
@@ -762,7 +762,7 @@ WemoAccessory.prototype.setDoorMoving = function (targetDoorState, homekitTrigge
       }
       self.getAttributes()
     },
-    doorOpenTimer * 1000,
+    this.config.doorOpenTimer * 1000,
     this
   )
 }
@@ -970,7 +970,7 @@ WemoAccessory.prototype.updateMotionDetected = function (state) {
     return
   }
 
-  if (value === true || noMotionTimer === 0) {
+  if (value === true || this.config.noMotionTimer === 0) {
     if (this.motionTimer) {
       this.log('%s - no motion timer stopped', this.accessory.displayName)
       clearTimeout(this.motionTimer)
@@ -983,7 +983,7 @@ WemoAccessory.prototype.updateMotionDetected = function (state) {
     this.log(
       '%s - no motion timer started [%d secs]',
       this.accessory.displayName,
-      noMotionTimer
+      this.config.noMotionTimer
     )
     clearTimeout(this.motionTimer)
     this.motionTimer = setTimeout(
@@ -995,7 +995,7 @@ WemoAccessory.prototype.updateMotionDetected = function (state) {
           .setValue(false)
         delete self.motionTimer
       },
-      noMotionTimer * 1000,
+      this.config.noMotionTimer * 1000,
       this
     )
   }
