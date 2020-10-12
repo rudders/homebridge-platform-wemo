@@ -1,10 +1,7 @@
 'use strict'
-
-const Wemo = require('wemo-client')
-let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen
-let doorOpenTimer, noMotionTimer
-let wemo = new Wemo()
-
+let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen, doorOpenTimer, noMotionTimer
+const WemoClient = require('wemo-client')
+let wemoClient = new WemoClient()
 module.exports = function (homebridge) {
   Accessory = homebridge.platformAccessory
   Characteristic = homebridge.hap.Characteristic
@@ -24,9 +21,6 @@ module.exports = function (homebridge) {
     })
     this.value = this.getDefaultValue()
   }
-  require('util').inherits(Consumption, Characteristic)
-  Consumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52'
-
   TotalConsumption = function () {
     Characteristic.call(
       this,
@@ -40,14 +34,11 @@ module.exports = function (homebridge) {
     })
     this.value = this.getDefaultValue()
   }
+  require('util').inherits(Consumption, Characteristic)
   require('util').inherits(TotalConsumption, Characteristic)
+  Consumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52'
   TotalConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52'
-
   homebridge.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', WemoPlatform, true)
-}
-
-function getSupportedMakerServices () {
-  return [Service.GarageDoorOpener, Service.Switch]
 }
 
 function getServiceDescription (service) {
@@ -65,12 +56,10 @@ function getServiceDescription (service) {
 
 function WemoPlatform (log, config, api) {
   if (!log || !api || !config) return
-
   this.config = config
   this.api = api
   this.log = log
-
-  wemo = new Wemo(this.config.wemoClient || {})
+  wemoClient = new WemoClient(this.config.wemoClient || {})
 
   if (this.config.ignoredDevices && this.config.ignoredDevices.constructor !== Array) {
     delete this.config.ignoredDevices
@@ -98,7 +87,7 @@ function WemoPlatform (log, config, api) {
     let uuid = UUIDGen.generate(device.UDN)
     let accessory
 
-    if (device.deviceType === Wemo.DEVICE_TYPE.Bridge) {
+    if (device.deviceType === WemoClient.DEVICE_TYPE.Bridge) {
       const client = this.client(device, self.log)
 
       client.getEndDevices(function (err, enddevices) {
@@ -147,32 +136,32 @@ function WemoPlatform (log, config, api) {
 
   this.api
     .on('didFinishLaunching', () => {
-      this.manualDevices.forEach(device => wemo.load(device, addDiscoveredDevice))
-      if (this.discovery) wemo.discover(addDiscoveredDevice)
+      this.manualDevices.forEach(device => wemoClient.load(device, addDiscoveredDevice))
+      if (this.discovery) wemoClient.discover(addDiscoveredDevice)
     })
   if (this.discovery) {
-    setInterval(() => wemo.discover(addDiscoveredDevice), this.discoveryInterval * 1000)
+    setInterval(() => wemoClient.discover(addDiscoveredDevice), this.discoveryInterval * 1000)
   }
 }
 
 WemoPlatform.prototype.addAccessory = function (device) {
   let serviceType
   switch (device.deviceType) {
-    case Wemo.DEVICE_TYPE.Insight:
-    case Wemo.DEVICE_TYPE.Switch:
+    case WemoClient.DEVICE_TYPE.Insight:
+    case WemoClient.DEVICE_TYPE.Switch:
       serviceType = Service.Outlet
       break
-    case Wemo.DEVICE_TYPE.LightSwitch:
+    case WemoClient.DEVICE_TYPE.LightSwitch:
       serviceType = Service.Switch
       break
-    case Wemo.DEVICE_TYPE.Dimmer:
+    case WemoClient.DEVICE_TYPE.Dimmer:
       serviceType = Service.Lightbulb
       break
-    case Wemo.DEVICE_TYPE.Motion:
+    case WemoClient.DEVICE_TYPE.Motion:
     case 'urn:Belkin:device:NetCamSensor:1':
       serviceType = Service.MotionSensor
       break
-    case Wemo.DEVICE_TYPE.Maker:
+    case WemoClient.DEVICE_TYPE.Maker:
       serviceType = Service.Switch
       break
     default:
@@ -187,11 +176,11 @@ WemoPlatform.prototype.addAccessory = function (device) {
   const service = accessory.addService(serviceType, device.friendlyName)
 
   switch (device.deviceType) {
-    case Wemo.DEVICE_TYPE.Insight:
+    case WemoClient.DEVICE_TYPE.Insight:
       service.addCharacteristic(Consumption)
       service.addCharacteristic(TotalConsumption)
       break
-    case Wemo.DEVICE_TYPE.Dimmer:
+    case WemoClient.DEVICE_TYPE.Dimmer:
       service.addCharacteristic(Characteristic.Brightness)
       break
   }
@@ -271,7 +260,7 @@ WemoPlatform.prototype.configurationRequestHandler = function (context, request,
 
       items = []
 
-      if (context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker) {
+      if (context.accessory.context.deviceType === WemoClient.DEVICE_TYPE.Maker) {
         items.push('Change Service')
         context.onScreenSelection.push({
           action: 'change',
@@ -305,10 +294,10 @@ WemoPlatform.prototype.configurationRequestHandler = function (context, request,
       items = []
 
       if (
-        context.accessory.context.deviceType === Wemo.DEVICE_TYPE.Maker &&
+        context.accessory.context.deviceType === WemoClient.DEVICE_TYPE.Maker &&
         context.accessory.context.switchMode === 1
       ) {
-        const services = getSupportedMakerServices()
+        const services = [Service.GarageDoorOpener, Service.Switch]
 
         for (const index in services) {
           const service = services[index]
@@ -627,7 +616,7 @@ WemoAccessory.prototype.getAttributes = function (callback) {
 }
 
 WemoAccessory.prototype.getSwitchState = function (callback) {
-  if (this.device.deviceType === Wemo.DEVICE_TYPE.Maker) {
+  if (this.device.deviceType === WemoClient.DEVICE_TYPE.Maker) {
     this.getAttributes(
       function () {
         callback(
@@ -651,7 +640,7 @@ WemoAccessory.prototype.getSwitchState = function (callback) {
 }
 
 WemoAccessory.prototype.observeDevice = function (device) {
-  if (device.deviceType === Wemo.DEVICE_TYPE.Maker) {
+  if (device.deviceType === WemoClient.DEVICE_TYPE.Maker) {
     this.getAttributes()
     this.client.on(
       'attributeList',
@@ -666,7 +655,7 @@ WemoAccessory.prototype.observeDevice = function (device) {
                   // Triggered through HomeKit
                   delete this.homekitTriggered
                 } else {
-                  // Triggered using the button on the WeMo Maker
+                  // Triggered using the button on the Wemo Maker
                   const targetDoorState = this.accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState)
                   const state = targetDoorState.value ? Characteristic.TargetDoorState.OPEN : Characteristic.TargetDoorState.CLOSED
                   this.log(
@@ -690,7 +679,7 @@ WemoAccessory.prototype.observeDevice = function (device) {
     this.client.on(
       'binaryState',
       function (state) {
-        if (this.device.deviceType === Wemo.DEVICE_TYPE.Motion || this.device.deviceType === 'urn:Belkin:device:NetCamSensor:1') {
+        if (this.device.deviceType === WemoClient.DEVICE_TYPE.Motion || this.device.deviceType === 'urn:Belkin:device:NetCamSensor:1') {
           this.updateMotionDetected(state)
         } else {
           this.updateSwitchState(state)
@@ -699,17 +688,17 @@ WemoAccessory.prototype.observeDevice = function (device) {
     )
   }
 
-  if (device.deviceType === Wemo.DEVICE_TYPE.Insight) {
+  if (device.deviceType === WemoClient.DEVICE_TYPE.Insight) {
     this.client.on('insightParams', this.updateInsightParams.bind(this))
   }
 
-  if (device.deviceType === Wemo.DEVICE_TYPE.Dimmer) {
+  if (device.deviceType === WemoClient.DEVICE_TYPE.Dimmer) {
     this.client.on('brightness', this.updateBrightness.bind(this))
   }
 }
 
 WemoAccessory.prototype.removeMakerServices = function (service) {
-  const services = getSupportedMakerServices()
+  const services = [Service.GarageDoorOpener, Service.Switch]
   for (const index in services) {
     if (services[index] === service) {
       continue
@@ -803,7 +792,7 @@ WemoAccessory.prototype.setSwitchState = function (state, callback) {
           this.log('%s - Set state: %s', this.accessory.displayName, value ? 'On' : 'Off')
           callback(null)
           // for dimmer, poll brightness for ON events (supports night mode)
-          if (value && this.device.deviceType === Wemo.DEVICE_TYPE.Dimmer) {
+          if (value && this.device.deviceType === WemoClient.DEVICE_TYPE.Dimmer) {
             this.client.getBrightness(
               function (err, brightness) {
                 if (err) {
@@ -906,7 +895,7 @@ WemoAccessory.prototype.setTargetDoorState = function (state, callback) {
 
 WemoAccessory.prototype.setupDevice = function (device) {
   this.device = device
-  this.client = wemo.client(device)
+  this.client = wemoClient.client(device)
 
   this.client.on(
     'error',
@@ -1142,7 +1131,7 @@ WemoAccessory.prototype.updateSwitchState = function (state) {
     switchState.updateValue(value)
 
     // for dimmer, poll brightness for ON events (supports night mode)
-    if (value && this.device.deviceType === Wemo.DEVICE_TYPE.Dimmer) {
+    if (value && this.device.deviceType === WemoClient.DEVICE_TYPE.Dimmer) {
       this.client.getBrightness(
         function (err, brightness) {
           if (err) {
@@ -1154,7 +1143,7 @@ WemoAccessory.prototype.updateSwitchState = function (state) {
       )
     }
 
-    if (!value && this.device.deviceType === Wemo.DEVICE_TYPE.Insight) {
+    if (!value && this.device.deviceType === WemoClient.DEVICE_TYPE.Insight) {
       this.updateOutletInUse(0)
       this.updateConsumption(0)
     }
@@ -1187,7 +1176,7 @@ function WemoLinkAccessory (log, accessory, link, device) {
 
   this.accessory
     .getService(Service.AccessoryInformation)
-    .setCharacteristic(Characteristic.Manufacturer, 'Belkin WeMo')
+    .setCharacteristic(Characteristic.Manufacturer, 'Belkin Wemo')
     .setCharacteristic(Characteristic.Model, 'Dimmable Bulb')
     .setCharacteristic(Characteristic.SerialNumber, device.deviceId)
 
@@ -1419,7 +1408,7 @@ WemoLinkAccessory.prototype.setSwitchState = function (state, callback) {
 WemoLinkAccessory.prototype.setupDevice = function (link, device) {
   this.link = link
   this.device = device
-  this.client = wemo.client(link, this.log)
+  this.client = wemoClient.client(link, this.log)
 
   this.client.on(
     'error',
