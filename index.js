@@ -60,26 +60,19 @@ function WemoPlatform (log, config, api) {
   this.api = api
   this.log = log
   wemoClient = new WemoClient(this.config.wemoClient || {})
-
   if (this.config.ignoredDevices && this.config.ignoredDevices.constructor !== Array) {
     delete this.config.ignoredDevices
   }
-
   if (this.config.manualDevices && this.config.manualDevices.constructor !== Array) {
     delete this.config.manualDevices
   }
-
-  this.discovery = this.config.discovery || true
-  this.discoveryInterval = this.config.discoveryInterval || 30
   this.ignoredDevices = this.config.ignoredDevices || []
   this.manualDevices = this.config.manualDevices || []
-
-  const self = this
-
   this.accessories = {}
-
   doorOpenTimer = this.config.doorOpenTimer || 20
   noMotionTimer = this.config.noMotionTimer || this.config.no_motion_timer || 60
+  
+  const self = this
 
   const addDiscoveredDevice = function (err, device) {
     if (!device) return
@@ -137,10 +130,10 @@ function WemoPlatform (log, config, api) {
   this.api
     .on('didFinishLaunching', () => {
       this.manualDevices.forEach(device => wemoClient.load(device, addDiscoveredDevice))
-      if (this.discovery) wemoClient.discover(addDiscoveredDevice)
+      if (this.config.discovery || true) wemoClient.discover(addDiscoveredDevice)
     })
-  if (this.discovery) {
-    setInterval(() => wemoClient.discover(addDiscoveredDevice), this.discoveryInterval * 1000)
+  if (this.config.discovery || true) {
+    setInterval(() => wemoClient.discover(addDiscoveredDevice), (this.config.discoveryInterval || 30) * 1000)
   }
 }
 
