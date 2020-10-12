@@ -1,13 +1,11 @@
 'use strict'
 let Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen
 const WemoClient = require('wemo-client')
-let wemoClient = new WemoClient()
 module.exports = function (homebridge) {
   Accessory = homebridge.platformAccessory
   Characteristic = homebridge.hap.Characteristic
   Service = homebridge.hap.Service
   UUIDGen = homebridge.hap.uuid
-
   Consumption = function () {
     Characteristic.call(
       this,
@@ -46,7 +44,7 @@ function WemoPlatform (log, config, api) {
   this.config = config
   this.api = api
   this.log = log
-  wemoClient = new WemoClient(this.config.wemoClient || {})
+  this.wemoClient = new WemoClient(this.config.wemoClient || {})
   if (this.config.ignoredDevices && this.config.ignoredDevices.constructor !== Array) {
     delete this.config.ignoredDevices
   }
@@ -88,7 +86,7 @@ function WemoPlatform (log, config, api) {
             this.setupDevice(device, enddevices[i])
             this.observeDevice()
           } else {
-            self.accessories[uuid] = new WemoLinkAccessory(self.log, accessory, device, enddevices[i])
+            self.accessories[uuid] = new WemoLinkAccessory(self.log, accessory, device, enddevices[i], this.wemoClient)
           }
         }
       })
@@ -109,18 +107,18 @@ function WemoPlatform (log, config, api) {
         accessory.observeDevice(device)
       } else {
         self.log('Online: %s [%s]', accessory.displayName, device.macAddress)
-        self.accessories[uuid] = new WemoAccessory(self.config, self.log, accessory, device)
+        self.accessories[uuid] = new WemoAccessory(self.config, self.log, accessory, device, self.wemoClient)
       }
     }
   }
 
   this.api
     .on('didFinishLaunching', () => {
-      this.manualDevices.forEach(device => wemoClient.load(device, addDiscoveredDevice))
-      if (this.config.discovery) wemoClient.discover(addDiscoveredDevice)
+      this.manualDevices.forEach(device => this.wemoClient.load(device, addDiscoveredDevice))
+      if (this.config.discovery) this.wemoClient.discover(addDiscoveredDevice)
     })
   if (this.config.discovery) {
-    setInterval(() => wemoClient.discover(addDiscoveredDevice), (this.config.discoveryInterval || 30) * 1000)
+    setInterval(() => this.wemoClient.discover(addDiscoveredDevice), (this.config.discoveryInterval || 30) * 1000)
   }
 }
 
@@ -165,7 +163,7 @@ WemoPlatform.prototype.addAccessory = function (device) {
       break
   }
 
-  this.accessories[accessory.UUID] = new WemoAccessory(this.config, this.log, accessory, device)
+  this.accessories[accessory.UUID] = new WemoAccessory(this.config, this.log, accessory, device, this.wemoClient)
   this.api.registerPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
 }
 
@@ -180,7 +178,7 @@ WemoPlatform.prototype.addLinkAccessory = function (link, device) {
     service.addCharacteristic(Characteristic.ColorTemperature)
   }
 
-  this.accessories[accessory.UUID] = new WemoLinkAccessory(this.log, accessory, link, device)
+  this.accessories[accessory.UUID] = new WemoLinkAccessory(this.log, accessory, link, device, this.wemoClient)
   this.api.registerPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
 }
 
@@ -499,13 +497,14 @@ WemoPlatform.prototype.removeAccessory = function (accessory) {
   this.api.unregisterPlatformAccessories('homebridge-platform-wemo', 'BelkinWeMo', [accessory])
 }
 
-function WemoAccessory (config, log, accessory, device) {
+function WemoAccessory (config, log, accessory, device, wemoClient) {
   var self = this
 
   this.accessory = accessory
   this.config = config
   this.device = device
   this.log = log
+  this.wemoClient = wemoClient
 
   this.accessory.context.deviceType = device.deviceType
 
@@ -888,7 +887,7 @@ WemoAccessory.prototype.setTargetDoorState = function (state, callback) {
 
 WemoAccessory.prototype.setupDevice = function (device) {
   this.device = device
-  this.client = wemoClient.client(device)
+  this.client = this.wemoClient.client(device)
 
   this.client.on(
     'error',
@@ -1159,11 +1158,12 @@ WemoAccessory.prototype.updateTotalConsumption = function (raw, raw2) {
   return value
 }
 
-function WemoLinkAccessory (log, accessory, link, device) {
+function WemoLinkAccessory (log, accessory, link, device, wemoClient) {
   this.accessory = accessory
   this.link = link
   this.device = device
   this.log = log
+  this.wemoClient = wemoClient
 
   this.setupDevice(link, device)
 
@@ -1401,7 +1401,7 @@ WemoLinkAccessory.prototype.setSwitchState = function (state, callback) {
 WemoLinkAccessory.prototype.setupDevice = function (link, device) {
   this.link = link
   this.device = device
-  this.client = wemoClient.client(link, this.log)
+  this.client = this.wemoClient.client(link, this.log)
 
   this.client.on(
     'error',
