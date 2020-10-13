@@ -29,8 +29,7 @@
         "items": {
           "type": "string",
           "title": "Serial Number",
-          "description": "The device serial number you wish Homebridge to ignore.",
-          "pattern": "^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$"
+          "description": "The device serial number you wish Homebridge to ignore."
         }
       },
       "manualDevices": {
@@ -43,10 +42,11 @@
           "description": "Example 'http://192.168.1.20:49153/setup.xml'"
         }
       },
-      "discovery": {
+      "disableDiscovery": {
         "type": "boolean",
-        "title": "Device Discovery",
-        "description": "If disabled, device discovery will be skipped."
+        "title": "Disable Device Discovery",
+        "description": "If enabled, device auto-discovery will be skipped.",
+        "default": false
       },
       "discoveryInterval": {
         "type": "integer",
@@ -55,6 +55,13 @@
         "default": 30,
         "minimum": 30,
         "maximum": 600
+      },
+      "debug": {
+        "title": "Debug Logging",
+        "type": "boolean",
+        "required": true,
+        "description": "If enabled, more information will be added to the Homebridge log.",
+        "default": false
       }
     }
   },
@@ -69,11 +76,12 @@
     },
     {
       "type": "fieldset",
-      "title": "Optional Settings (General)",
+      "title": "Optional Settings",
       "description": "A variety of optional settings for general use of this plugin.",
       "expandable": true,
       "items": [
-        "discovery",
+        "debug",
+        "disableDiscovery",
         "discoveryInterval",
         "noMotionTimer",
         {
