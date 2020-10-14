@@ -59,9 +59,11 @@
       "debug": {
         "title": "Debug Logging",
         "type": "boolean",
-        "required": true,
         "description": "If enabled, more information will be added to the Homebridge log.",
         "default": false
+      },
+      "disablePlugin": {
+        "type": "boolean"
       }
     }
   },
