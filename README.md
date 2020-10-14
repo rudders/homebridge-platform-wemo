@@ -16,6 +16,9 @@
 
 </span>
 
+### Homebridge
+To use this plugin, you will need to already have Homebridge installed. Please refer to the [Homebridge website](https://homebridge.io) for more information and installation instructions.
+
 ### Setup
 * [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
 * [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
