@@ -8,7 +8,7 @@
  Homebridge plugin to control Wemo devices.
  
  [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
- [![hoobs-certified](https://badgen.net/badge/HOOBS/Certified/yellow)](https://plugins.hoobs.org/plugin/homebridge-govee)   
+ [![hoobs-certified](https://badgen.net/badge/HOOBS/Certified/yellow)](https://plugins.hoobs.org/plugin/homebridge-platform-wemo)   
  [![npm](https://img.shields.io/npm/v/homebridge-platform-wemo/latest?label=latest)](https://www.npmjs.com/package/homebridge-platform-wemo)
  [![npm](https://img.shields.io/npm/v/homebridge-platform-wemo/beta?label=beta)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)   
  [![npm](https://img.shields.io/npm/dt/homebridge-platform-wemo)](https://www.npmjs.com/package/homebridge-platform-wemo)
