@@ -1,6 +1,7 @@
-/* jshint -W014, -W033, esversion: 8 */
+/* jshint -W014, -W033, esversion: 9 */
+/* eslint-disable new-cap */
 'use strict'
-module.exports = function (homebridge) {
-  const Wemo = require('./lib/wemo.js')(homebridge)
-  homebridge.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', Wemo, true)
+const wemoPlatform = require('./lib/wemo-platform.js')
+module.exports = function (hb) {
+  hb.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', wemoPlatform, true)
 }
