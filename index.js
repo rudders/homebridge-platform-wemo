@@ -2,6 +2,4 @@
 /* eslint-disable new-cap */
 'use strict'
 const wemoPlatform = require('./lib/wemo-platform.js')
-module.exports = function (hb) {
-  hb.registerPlatform('homebridge-platform-wemo', 'BelkinWeMo', wemoPlatform, true)
-}
+module.exports = hb => hb.registerPlatform('BelkinWeMo', wemoPlatform)
