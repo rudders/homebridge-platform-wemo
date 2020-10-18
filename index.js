@@ -156,6 +156,14 @@ function WemoPlatform(log, config, api) {
       var client = this.client(device, self.log);
 
       client.getEndDevices(function (err, enddevices) {
+        if (err) {
+          self.log.warn("client.getEndDevices error - %s", err);
+          return;
+        }
+        if (!enddevices) {
+          self.log.warn("client.getEndDevices error - enddevices not defined!");
+          return;
+        }
         for (var i = 0, tot = enddevices.length; i < tot; i++) {
           uuid = UUIDGen.generate(enddevices[i].deviceId);
           accessory = self.accessories[uuid];
