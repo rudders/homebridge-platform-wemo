@@ -29,6 +29,6 @@
     },
     "dependencies": {
         "homebridge-lib": "4.7.16",
-        "wemo-client": "0.15.0"
+        "wemo-client": "bwp91/wemo-client"
     }
 }
