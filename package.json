@@ -2,46 +2,33 @@
     "name": "homebridge-platform-wemo",
     "displayName": "Homebridge Wemo",
     "version": "1.6.1",
-    "author": "homebridge-plugins",
-    "description": "A Wemo https://www.wemo.com plugin for Homebridge: https://github.com/homebridge/homebridge",
-    "main": "index.js",
-    "scripts": {
-        "developer": "DEBUG=platform-wemo homebridge -D -U `pwd` -P `pwd`",
-        "lint": "jshint package.json *.js",
-        "watch": "nodemon"
-    },
+    "author": "bwp91",
+    "contributors": [
+        "homebridge-plugins"
+    ],
+    "description": "Homebridge plugin to control Wemo devices.",
     "license": "ISC",
     "keywords": [
+        "homebridge",
         "homebridge-plugin",
+        "homekit",
+        "siri",
         "wemo-client",
         "wemo"
     ],
+    "engines": {
+        "homebridge": ">=1.1.0",
+        "node": ">=12.19.0"
+    },
     "repository": {
         "type": "git",
-        "url": "git://github.com/homebridge-plugins/homebridge-platform-wemo.git"
+        "url": "https://github.com/bwp91/homebridge-platform-wemo"
     },
     "bugs": {
-        "url": "https://github.com/homebridge-plugins/homebridge-platform-wemo/issues"
+        "url": "https://github.com/bwp91/homebridge-platform-wemo/issues"
     },
-    "engines": {
-        "node": ">=12.0.0",
-        "homebridge": ">=1.1.2"
-    },
-    "files": [
-        "README.md",
-        "CHANGELOG.md",
-        "config.schema.json",
-        "package-lock.json",
-        "package.json",
-        "nodemon.json",
-        "LICENSE",
-        "index.js"
-    ],
     "dependencies": {
-        "wemo-client": "^0.15.0",
-        "debug": "^4.1.1"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.2"
+        "homebridge-lib": "4.7.16",
+        "wemo-client": "0.15.0"
     }
 }
