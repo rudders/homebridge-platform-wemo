@@ -29,6 +29,10 @@
     },
     "dependencies": {
         "homebridge-lib": "4.7.16",
-        "wemo-client": "bwp91/wemo-client"
+        "entities": "2.1.0",
+        "ip": "1.1.5",
+        "node-ssdp": "4.0.0",
+        "xml2js": "0.4.23",
+        "xmlbuilder": "15.1.1"
     }
 }
