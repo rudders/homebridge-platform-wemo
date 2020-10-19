@@ -62,6 +62,20 @@
         "description": "If enabled, more information will be added to the Homebridge log.",
         "default": false
       },
+      "makerTypes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string"
+            },
+            "makerType": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "disablePlugin": {
         "type": "boolean"
       }
