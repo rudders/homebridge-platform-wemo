@@ -17,7 +17,7 @@
 
 </span>
 
-### Homebridge
+### Prerequisites
 To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
 
 ### Setup
