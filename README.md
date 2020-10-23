@@ -18,7 +18,7 @@
 </span>
 
 ### Homebridge
-To use this plugin, you will need to already have [Homebridge website](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
+To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
 
 ### Setup
 * [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
