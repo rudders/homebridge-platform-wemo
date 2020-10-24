@@ -102,7 +102,7 @@
         "noMotionTimer",
         {
           "type": "help",
-          "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
+          "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0)\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
         }
       ]
     },
