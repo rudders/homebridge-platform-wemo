@@ -23,7 +23,8 @@ To use this plugin, you will need to already have [Homebridge](https://homebridg
 ### Setup
 * [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
 * [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
-* [Configuration](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration)
+* [Configuration (v1.6)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v1.6))
+* [Configuration (v2.0)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0))
 * [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 ### Features
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
