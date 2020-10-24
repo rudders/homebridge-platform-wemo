@@ -6,14 +6,15 @@
     "contributors": [
         "homebridge-plugins"
     ],
-    "description": "Homebridge plugin to control Wemo devices.",
+    "description": "Homebridge/HOOBS plugin to control Wemo devices.",
     "license": "ISC",
     "keywords": [
         "homebridge",
         "homebridge-plugin",
+        "homebridge-platform-wemo",
+        "hoobs",
         "homekit",
         "siri",
-        "wemo-client",
         "wemo"
     ],
     "engines": {

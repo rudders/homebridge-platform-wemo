@@ -1,7 +1,7 @@
 {
   "pluginAlias": "BelkinWeMo",
   "pluginType": "platform",
-  "headerDisplay": "Homebridge plugin to control Wemo devices.",
+  "headerDisplay": "Homebridge/HOOBS plugin to control Wemo devices.",
   "footerDisplay": "For help and support please visit our [GitHub Wiki](https://github.com/bwp91/homebridge-platform-wemo/wiki).",
   "singular": true,
   "schema": {
