@@ -1,19 +1,20 @@
 {
     "name": "homebridge-platform-wemo",
     "displayName": "Homebridge Wemo",
-    "version": "1.6.2",
+    "version": "2.0.0-21",
     "author": "bwp91",
     "contributors": [
         "homebridge-plugins"
     ],
-    "description": "Homebridge plugin to control Wemo devices.",
+    "description": "Homebridge/HOOBS plugin to control Wemo devices.",
     "license": "ISC",
     "keywords": [
         "homebridge",
         "homebridge-plugin",
+        "homebridge-platform-wemo",
+        "hoobs",
         "homekit",
         "siri",
-        "wemo-client",
         "wemo"
     ],
     "engines": {
@@ -28,7 +29,10 @@
         "url": "https://github.com/bwp91/homebridge-platform-wemo/issues"
     },
     "dependencies": {
-        "homebridge-lib": "4.7.16",
-        "wemo-client": "0.15.0"
+        "entities": "2.1.0",
+        "ip": "1.1.5",
+        "node-ssdp": "4.0.0",
+        "xml2js": "0.4.23",
+        "xmlbuilder": "15.1.1"
     }
 }

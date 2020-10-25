@@ -1,8 +1,8 @@
 {
   "pluginAlias": "BelkinWeMo",
   "pluginType": "platform",
-  "headerDisplay": "<p align='center'><img width='150px' src='https://raw.githubusercontent.com/homebridge-plugins/homebridge-platform-wemo/master/wemo/wemo.png'></p>\n\nThe **Homebridge Platform WeMo** plugin allows you to control your WeMo Devices from HomeKit. To get started setup your config below.",
-  "footerDisplay": "</p>\n\nFor Wemo Client see [Manual Setup Wiki](https://github.com/homebridge-plugins/homebridge-platform-wemo/wiki/Manual-Setup).</p>\n\nYour WeMo device is setup.",
+  "headerDisplay": "Homebridge/HOOBS plugin to control Wemo devices.",
+  "footerDisplay": "For help and support please visit our [GitHub Wiki](https://github.com/bwp91/homebridge-platform-wemo/wiki).",
   "singular": true,
   "schema": {
     "type": "object",
@@ -10,133 +10,129 @@
       "name": {
         "type": "string",
         "title": "Name",
-        "description": "The Name that will show up in homebridge log.",
+        "description": "The plugin name that will show up in Homebridge logs.",
         "default": "Belkin WeMo",
         "required": true
       },
       "noMotionTimer": {
         "type": "integer",
         "title": "No Motion Timer",
-        "description": "It is a timer in seconds for how long after motion is not detected that the state is changed.",
-        "placeholder": 60
+        "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
+        "default": 60,
+        "minimum": 0,
+        "maximum": 300
       },
       "ignoredDevices": {
         "title": "Ignored Devices",
+        "description": "You can use this optional setting to ignore (and remove) devices from Homebridge.",
         "type": "array",
         "items": {
           "type": "string",
-          "pattern": "^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$",
-          "description": "Expects an array of serial numbers, any devices found with matching serial numbers will be skipped or removed from Homebridge."
+          "title": "Serial Number",
+          "description": "The device serial number you wish Homebridge to ignore."
         }
       },
       "manualDevices": {
         "title": "Manual Devices",
+        "description": "You can use this optional setting to define devices that should be configured manually.",
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "title": "Device URL",
+          "description": "Example 'http://192.168.1.20:49153/setup.xml'"
         }
       },
-      "discovery": {
+      "disableDiscovery": {
         "type": "boolean",
-        "title": "Discovery",
-        "description": "default: true. A way to disable device discovery if not required."
+        "title": "Disable Device Discovery",
+        "description": "If enabled, device auto-discovery will be skipped.",
+        "default": false
       },
       "discoveryInterval": {
         "type": "integer",
         "title": "Discovery Interval",
-        "placeholder": "30",
-        "description": "Sets the interval in seconds at which SSDP-SEARCH broadcasts are sent. It will influence the time it takes to discover NEW devices."
+        "description": "An interval (in seconds) in which SSDP-SEARCH broadcasts are sent. This setting will influence the time it takes to discover new devices.",
+        "default": 30,
+        "minimum": 30,
+        "maximum": 600
       },
-      "wemoClient": {
+      "debug": {
+        "title": "Debug Logging",
+        "type": "boolean",
+        "description": "If enabled, more information will be added to the Homebridge log.",
+        "default": false
+      },
+      "makerTypes": {
         "type": "array",
-        "title": "Wemo Client"
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string"
+            },
+            "makerType": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "disablePlugin": {
+        "type": "boolean"
       }
     }
   },
   "layout": [
     {
-      "type": "flex",
-      "flex-flow": "row wrap",
+      "type": "fieldset",
+      "title": "Required Settings",
+      "description": "These are the basic settings that are required for this plugin to work.",
       "items": [
-        {
-          "key": "name",
-          "type": "name"
-        }
+        "name"
       ]
     },
     {
       "type": "fieldset",
-      "title": "Optional Configuration",
+      "title": "Optional Settings",
+      "description": "A variety of optional settings for general use of this plugin.",
       "expandable": true,
       "items": [
-        {
-          "type": "help",
-          "helpvalue": "<h6>Devices To Ignore</h6><em class='primary-text'></em>"
-        },
-        {
-          "key": "ignoredDevices",
-          "add": "Add Another Devices To Ignore",
-          "type": "array",
-          "pattern": "^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$",
-          "nodescription": true,
-          "notitle": true,
-          "items": [
-            {
-              "type": "div",
-              "displayFlex": true,
-              "flex-direction": "row wrap",
-              "nodescription": true,
-              "notitle": true,
-              "items": [
-                {
-                  "key": "ignoredDevices[]",
-                  "placeholder": "Device serial number.",
-                  "notitle": true,
-                  "description": "Devices with matching serial numbers will be skipped or removed from Homebridge."
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "help",
-          "helpvalue": "<h6>Manually Configured Devices</h6><em class='primary-text'></em>"
-        },
-        {
-          "key": "manualDevices",
-          "add": "Add Another Manual Devices",
-          "type": "array",
-          "nodescription": true,
-          "notitle": true,
-          "items": [
-            {
-              "type": "div",
-              "displayFlex": true,
-              "flex-direction": "row wrap",
-              "nodescription": true,
-              "notitle": true,
-              "items": [
-                {
-                  "key": "manualDevices[]",
-                  "placeholder": "\nhttp://192.168.1.20:49153/setup.xml",
-                  "notitle": true,
-                  "description": "Devices to be configured manually outside the device discovery process."
-                }
-              ]
-            }
-          ]
-        },
-        "noMotionTimer",
-        "discovery",
+        "debug",
+        "disableDiscovery",
         "discoveryInterval",
+        "noMotionTimer",
         {
           "type": "help",
-          "helpvalue": "<h6>Wemo Client</h6><em class='primary-text'>See Manual Setup Wiki to manually configure this.</em>"
-        },
+          "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0)\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
+        }
+      ]
+    },
+    {
+      "key": "ignoredDevices",
+      "expandable": true,
+      "title": "Ignored Devices",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
         {
-          "key": "wemoClient",
-          "notitle": true,
-          "type": "object"
+          "type": "fieldset",
+          "items": [
+            "ignoredDevices[]"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "manualDevices",
+      "expandable": true,
+      "title": "Manual Devices",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "manualDevices[]"
+          ]
         }
       ]
     }
