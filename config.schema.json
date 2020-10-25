@@ -56,6 +56,14 @@
         "minimum": 30,
         "maximum": 600
       },
+      "inUsePowerThreshold": {
+        "type": "integer",
+        "title": "Insight 'In Use' Threshold",
+        "description": "Homebridge will set the 'In Use' status of the Wemo Insight to true when the wattage is equal to or above this number.",
+        "default": 0,
+        "minimum": 0,
+        "maximum": 100
+      },
       "debug": {
         "title": "Debug Logging",
         "type": "boolean",
@@ -100,6 +108,7 @@
         "disableDiscovery",
         "discoveryInterval",
         "noMotionTimer",
+        "inUsePowerThreshold",
         {
           "type": "help",
           "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0)\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
