@@ -59,7 +59,7 @@
       "inUsePowerThreshold": {
         "type": "integer",
         "title": "Insight 'In Use' Threshold",
-        "description": "Homebridge will set the 'In Use' status of the Wemo Insight to true when the wattage is equal to or above this number.",
+        "description": "Homebridge will set the 'In Use' status of the Wemo Insight to true when the wattage is above this number.",
         "default": 0,
         "minimum": 0,
         "maximum": 100
