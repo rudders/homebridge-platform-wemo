@@ -70,14 +70,34 @@
       },
       "makerTypes": {
         "type": "array",
+        "title": "Sensors",
+        "description": "You can choose how your Wemo Maker is shown in Homebridge.",
         "items": {
           "type": "object",
           "properties": {
             "serialNumber": {
-              "type": "string"
+              "type": "string",
+              "title": "Maker Serial Number",
+              "description": "Serial number of the Wemo Maker, normally in the format 2*************."
             },
             "makerType": {
-              "type": "string"
+              "type": "string",
+              "title": "Maker Type",
+              "description": "How this Maker should be appear in Homebridge/HomeKit.",
+              "oneOf": [
+                {
+                  "title": "Garage Door",
+                  "enum": [
+                    "garageDoor"
+                  ]
+                },
+                {
+                  "title": "Switch (with contact sensor if exists)",
+                  "enum": [
+                    "switch"
+                  ]
+                }
+              ]
             }
           }
         }
@@ -139,6 +159,22 @@
           "type": "fieldset",
           "items": [
             "manualDevices[]"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "makerTypes",
+      "expandable": true,
+      "title": "Wemo Makers",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "makerTypes[].serialNumber",
+            "makerTypes[].makerType"
           ]
         }
       ]
