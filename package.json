@@ -29,20 +29,20 @@
   },
   "funding": [
     {
-     "type": "github",
-     "url": "https://github.com/sponsors/bwp91"
+      "type": "github",
+      "url": "https://github.com/sponsors/bwp91"
     },
     {
-     "type": "kofi",
-     "url": "https://ko-fi.com/bwp91"
+      "type": "kofi",
+      "url": "https://ko-fi.com/bwp91"
     },
     {
-     "type": "patreon",
-     "url": "https://www.patreon.com/bwp91"
+      "type": "patreon",
+      "url": "https://www.patreon.com/bwp91"
     },
     {
-     "type": "paypal",
-     "url": "https://www.paypal.me/BenPotter"
+      "type": "paypal",
+      "url": "https://www.paypal.me/BenPotter"
     }
   ],
   "dependencies": {
