@@ -14,6 +14,38 @@
         "default": "Belkin WeMo",
         "required": true
       },
+      "debug": {
+        "title": "Debug Logging",
+        "type": "boolean",
+        "description": "If checked, more information will be added to the Homebridge log.",
+        "default": false
+      },
+      "disableDiscovery": {
+        "type": "boolean",
+        "title": "Disable Device Discovery",
+        "description": "If checked, device auto-discovery will be skipped.",
+        "default": false
+      },
+      "discoveryInterval": {
+        "type": "integer",
+        "title": "Discovery Interval",
+        "description": "An interval (in seconds) in which SSDP-SEARCH broadcasts are sent. This setting will influence the time it takes to discover new devices.",
+        "default": 30,
+        "minimum": 30,
+        "maximum": 600
+      },
+      "disableDeviceLogging": {
+        "type": "boolean",
+        "title": "Disable Device Logging",
+        "description": "If checked, device updates will not be added to the Homebridge log.",
+        "default": false
+      },
+      "disablePlugin": {
+        "type": "boolean",
+        "title": "Disable Device Logging",
+        "description": "If checked, the plugin will remove all Wemo accessories from Homebridge and not load the plugin on Homebridge restart.",
+        "default": false
+      },
       "noMotionTimer": {
         "type": "integer",
         "title": "No Motion Timer",
@@ -21,6 +53,14 @@
         "default": 60,
         "minimum": 0,
         "maximum": 300
+      },
+      "doorOpenTimer": {
+        "type": "integer",
+        "title": "Door Open/Close Timer",
+        "description": "Applies only to Wemo Maker in Garage Door mode. The time in seconds for how long it takes the garage door to open/close. It is used to generate the open state after the door has been requested to open, due to only having one input.",
+        "default": 20,
+        "minimum": 1,
+        "maximum": 120
       },
       "ignoredDevices": {
         "title": "Ignored Devices",
@@ -41,32 +81,6 @@
           "title": "Device URL",
           "description": "Example 'http://192.168.1.20:49153/setup.xml'"
         }
-      },
-      "disableDiscovery": {
-        "type": "boolean",
-        "title": "Disable Device Discovery",
-        "description": "If checked, device auto-discovery will be skipped.",
-        "default": false
-      },
-      "discoveryInterval": {
-        "type": "integer",
-        "title": "Discovery Interval",
-        "description": "An interval (in seconds) in which SSDP-SEARCH broadcasts are sent. This setting will influence the time it takes to discover new devices.",
-        "default": 30,
-        "minimum": 30,
-        "maximum": 600
-      },
-      "debug": {
-        "title": "Debug Logging",
-        "type": "boolean",
-        "description": "If checked, more information will be added to the Homebridge log.",
-        "default": false
-      },
-      "disableDeviceLogging": {
-        "type": "boolean",
-        "title": "Disable Device Logging",
-        "description": "If checked, device updates will not be added to the Homebridge log.",
-        "default": false
       },
       "makerTypes": {
         "type": "array",
@@ -101,9 +115,6 @@
             }
           }
         }
-      },
-      "disablePlugin": {
-        "type": "boolean"
       }
     }
   },
@@ -127,6 +138,7 @@
         "disableDiscovery",
         "discoveryInterval",
         "noMotionTimer",
+        "doorOpenTimer",
         {
           "type": "help",
           "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0)\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
