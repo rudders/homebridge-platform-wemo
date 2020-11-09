@@ -26,8 +26,14 @@ To use this plugin, you will need to already have [Homebridge](https://homebridg
 * [Configuration (v1.6)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v1.6))
 * [Configuration (v2.0)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0))
 * [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
+
 ### Features
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
+
+### How-to Guides
+* [How to remove an accessory from the cache](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-remove-an-accessory-from-the-cache)
+* [How to update node](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-update-node)
+
 ### About
 * [About Me](https://github.com/sponsors/bwp91)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
