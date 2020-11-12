@@ -8,10 +8,7 @@
     "properties": {
       "name": {
         "type": "string",
-        "title": "Name",
-        "description": "The plugin name that will show up in Homebridge logs.",
-        "default": "Belkin WeMo",
-        "required": true
+        "default": "Wemo"
       },
       "debug": {
         "title": "Debug Logging",
@@ -120,14 +117,6 @@
   "layout": [
     {
       "type": "fieldset",
-      "title": "Required Settings",
-      "description": "These are the basic settings that are required for this plugin to work.",
-      "items": [
-        "name"
-      ]
-    },
-    {
-      "type": "fieldset",
       "title": "Optional Settings",
       "description": "A variety of optional settings for general use of this plugin.",
       "expandable": true,
@@ -145,21 +134,6 @@
       ]
     },
     {
-      "key": "ignoredDevices",
-      "expandable": true,
-      "title": "Ignored Devices",
-      "add": "Add Another Device",
-      "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "ignoredDevices[]"
-          ]
-        }
-      ]
-    },
-    {
       "key": "manualDevices",
       "expandable": true,
       "title": "Manual Devices",
@@ -170,6 +144,21 @@
           "type": "fieldset",
           "items": [
             "manualDevices[]"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ignoredDevices",
+      "expandable": true,
+      "title": "Ignored Devices",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "ignoredDevices[]"
           ]
         }
       ]
