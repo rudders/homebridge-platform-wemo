@@ -18,7 +18,11 @@
 </span>
 
 ### Prerequisites
-To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
+* To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
+
+### Plugin Information
+* This plugin will attempt to discover and control Wemo devices via your local network (UPnP).
+* This plugin does not require your Wemo credentials.
 
 ### Setup
 * [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
@@ -39,5 +43,6 @@ To use this plugin, you will need to already have [Homebridge](https://homebridg
 * [Changelog](https://github.com/bwp91/homebridge-platform-wemo/releases)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
 * [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
+
 ### Disclaimer
-I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
+* I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
