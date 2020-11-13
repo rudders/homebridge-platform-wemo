@@ -36,6 +36,7 @@ To use this plugin, you will need to already have [Homebridge](https://homebridg
 
 ### About
 * [About Me](https://github.com/sponsors/bwp91)
+* [Changelog](https://github.com/bwp91/homebridge-platform-wemo/releases)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
 * [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
 ### Disclaimer
