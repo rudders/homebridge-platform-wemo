@@ -1,6 +1,6 @@
 {
   "name": "homebridge-platform-wemo",
-  "version": "2.3.0-6",
+  "version": "2.3.0-7",
   "author": "bwp91",
   "contributors": [
     "homebridge-plugins"
