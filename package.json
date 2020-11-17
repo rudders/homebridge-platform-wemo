@@ -17,8 +17,8 @@
     "wemo"
   ],
   "engines": {
-    "homebridge": ">=1.1.0",
-    "node": ">=14.5.0"
+    "homebridge": "^1.1.0",
+    "node": "^14.5.1"
   },
   "repository": {
     "type": "git",
@@ -46,11 +46,11 @@
     }
   ],
   "dependencies": {
-    "axios": "0.21.0",
-    "entities": "2.1.0",
-    "ip": "1.1.5",
-    "node-ssdp": "4.0.0",
-    "xml2js": "0.4.23",
-    "xmlbuilder": "15.1.1"
+    "axios": "^0.21.0",
+    "entities": "^2.1.0",
+    "ip": "^1.1.5",
+    "node-ssdp": "^4.0.0",
+    "xml2js": "^0.4.23",
+    "xmlbuilder": "^15.1.1"
   }
 }
