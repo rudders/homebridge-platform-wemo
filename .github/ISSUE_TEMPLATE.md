@@ -1,15 +1,7 @@
----
-name: 🚨 Problem/Bug Alert
-about: The plugin isn't working as expected or it's showing an error.
-title: ''
-labels: ''
-assignees: ''
-
----
-
 <!-- PLEASE READ BEFORE POSTING A NEW ISSUE
-   → Please use this template as well as you can.
-   → Things that may seem unimportant to you are often helpful in finding the cause of the issue.
+ → If you are giving feedback or requesting a new feature then feel free to ignore this template.
+ → If you are experiencing an issue with the plugin then please use this template as well as you can.
+ → Things that may seem unimportant to you are often helpful in finding the cause of the issue.
 -->
 
 ### What issue do you have? Please be as thorough and explicit as possible.
