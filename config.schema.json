@@ -111,7 +111,7 @@
             },
             "makerTimer": {
               "type": "number",
-              "title": "Maker Serial Number",
+              "title": "Maker Timer",
               "description": "The time in seconds for how long it takes the garage door to open/close.",
               "default": 20,
               "minimum": 1,
