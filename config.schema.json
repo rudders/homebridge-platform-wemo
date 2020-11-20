@@ -23,7 +23,7 @@
         "default": false
       },
       "discoveryInterval": {
-        "type": "integer",
+        "type": "number",
         "title": "Discovery Interval",
         "description": "An interval (in seconds) in which SSDP-SEARCH broadcasts are sent. This setting will influence the time it takes to discover new devices.",
         "default": 30,
@@ -43,7 +43,7 @@
         "default": false
       },
       "noMotionTimer": {
-        "type": "integer",
+        "type": "number",
         "title": "No Motion Timer",
         "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
         "default": 60,
@@ -51,7 +51,7 @@
         "maximum": 300
       },
       "doorOpenTimer": {
-        "type": "integer",
+        "type": "number",
         "title": "Door Open/Close Timer",
         "description": "Applies only to Wemo Maker in Garage Door mode. The time in seconds for how long it takes the garage door to open/close. It is used to generate the open state after the door has been requested to open, due to only having one input.",
         "default": 20,
@@ -108,6 +108,14 @@
                   ]
                 }
               ]
+            },
+            "makerTimer": {
+              "type": "number",
+              "title": "Maker Serial Number",
+              "description": "The time in seconds for how long it takes the garage door to open/close.",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 120
             }
           }
         }
@@ -174,7 +182,8 @@
           "type": "fieldset",
           "items": [
             "makerTypes[].serialNumber",
-            "makerTypes[].makerType"
+            "makerTypes[].makerType",
+            "makerTypes[].makerTimer"
           ]
         }
       ]
