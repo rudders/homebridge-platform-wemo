@@ -29,10 +29,10 @@
 * [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
 * [Configuration (v1)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v1.6))
 * [Configuration (v2)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0))
-* [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 
 ### Features
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
+* [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 
 ### How-to Guides
 * [How to remove an accessory from the cache](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-remove-an-accessory-from-the-cache)
