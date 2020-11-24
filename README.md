@@ -42,7 +42,13 @@
 * [About Me](https://github.com/sponsors/bwp91)
 * [Changelog](https://github.com/bwp91/homebridge-platform-wemo/releases)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
-* [Credits](https://github.com/bwp91/homebridge-platform-wemo/wiki/Credits)
+
+### Credits
+* To the creator of this plugin: [@rudders](https://github.com/rudders), and to [@devbobo](https://github.com/devbobo) for his contributions
+* To the creator of [wemo-client](https://github.com/timonreinhard/wemo-client) (which is now contained within this plugin): [@timonreinhard](https://github.com/timonreinhard)
+* To [Ben Hardill](http://www.hardill.me.uk/wordpress/tag/wemo/) for his research on Wemo devices
+* To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible
+* To all users who have shared their devices to enable functionality
 
 ### Disclaimer
 * I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
