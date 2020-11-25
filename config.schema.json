@@ -1,7 +1,9 @@
 {
   "pluginAlias": "BelkinWeMo",
   "pluginType": "platform",
-  "headerDisplay": "<p align=\"center\"><img width=\"75%\" src=\"https://user-images.githubusercontent.com/43026681/98990449-621b3c80-2522-11eb-9258-7e1f06c76850.png\"></p><p align=\"center\">For help and support please visit our <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki\">GitHub Wiki</a>. We hope you find this plugin useful!</p>",
+  "customUi": true,
+  "customUiPath": "./lib/homebridge-ui",
+  "headerDisplay": "<p align=\"center\"><img width=\"60%\" src=\"https://user-images.githubusercontent.com/43026681/100233760-13a66e80-2f22-11eb-81f1-81e0efdb16e8.png\"></p><p align=\"center\">For help and support please visit our <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki\">GitHub Wiki</a>. We hope you find this plugin useful!</p>",
   "singular": true,
   "schema": {
     "type": "object",
