@@ -1,11 +1,11 @@
 <p align="center">
-   <a href="https://github.com/bwp91/homebridge-platform-wemo"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/98990449-621b3c80-2522-11eb-9258-7e1f06c76850.png" width="600px"></a>
+   <a href="https://github.com/bwp91/homebridge-platform-wemo"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/100233760-13a66e80-2f22-11eb-81f1-81e0efdb16e8.png" width="600px"></a>
 </p>
 <span align="center">
   
 # homebridge-platform-wemo
 
- Homebridge/HOOBS plugin to control Wemo devices.
+ Homebridge/HOOBS plugin to control Wemo devices
  
  [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
  [![hoobs-certified](https://badgen.net/badge/HOOBS/Certified/yellow)](https://plugins.hoobs.org/plugin/homebridge-platform-wemo)   
@@ -44,11 +44,11 @@
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
 
 ### Credits
-* To the creator of this plugin: [@rudders](https://github.com/rudders), and to [@devbobo](https://github.com/devbobo) for his contributions
-* To the creator of [wemo-client](https://github.com/timonreinhard/wemo-client) (which is now contained within this plugin): [@timonreinhard](https://github.com/timonreinhard)
-* To [Ben Hardill](http://www.hardill.me.uk/wordpress/tag/wemo/) for his research on Wemo devices
-* To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible
-* To all users who have helped/tested to enable functionality for new devices
+* To the creator of this plugin: [@rudders](https://github.com/rudders), and to [@devbobo](https://github.com/devbobo) for his contributions.
+* To the creator of [wemo-client](https://github.com/timonreinhard/wemo-client) (which is now contained within this plugin): [@timonreinhard](https://github.com/timonreinhard).
+* To [Ben Hardill](http://www.hardill.me.uk/wordpress/tag/wemo/) for his research on Wemo devices.
+* To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible.
+* To all users who have helped/tested to enable functionality for new devices.
 
 ### Disclaimer
 * I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
