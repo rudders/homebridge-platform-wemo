@@ -15,7 +15,7 @@
       "debug": {
         "title": "Debug Logging",
         "type": "boolean",
-        "description": "If checked, more information will be added to the Homebridge log.",
+        "description": "If checked, more information will be added to the log.",
         "default": false
       },
       "disableDiscovery": {
@@ -27,7 +27,7 @@
       "discoveryInterval": {
         "type": "number",
         "title": "Discovery Interval",
-        "description": "An interval (in seconds) in which SSDP-SEARCH broadcasts are sent. This setting will influence the time it takes to discover new devices.",
+        "description": "An interval (in seconds) in which the plugin will attempt to discover new devices on your local network.",
         "default": 30,
         "minimum": 30,
         "maximum": 600
@@ -35,13 +35,13 @@
       "disableDeviceLogging": {
         "type": "boolean",
         "title": "Disable Device Logging",
-        "description": "If checked, device updates will not be added to the Homebridge log.",
+        "description": "If checked, device updates will not be added to the log.",
         "default": false
       },
       "disablePlugin": {
         "type": "boolean",
         "title": "Disable Device Logging",
-        "description": "If checked, the plugin will remove all Wemo accessories from Homebridge and not load the plugin on Homebridge restart.",
+        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart.",
         "default": false
       },
       "noMotionTimer": {
@@ -55,35 +55,35 @@
       "doorOpenTimer": {
         "type": "number",
         "title": "Door Open/Close Timer",
-        "description": "Applies only to Wemo Maker in Garage Door mode. The time in seconds for how long it takes the garage door to open/close. It is used to generate the open state after the door has been requested to open, due to only having one input.",
+        "description": "Applies only to Wemo Maker in Garage Door mode. The time in seconds for how long it takes the garage door to open/close.",
         "default": 20,
         "minimum": 1,
         "maximum": 120
       },
       "ignoredDevices": {
         "title": "Ignored Devices",
-        "description": "You can use this optional setting to ignore (and remove) devices from Homebridge.",
+        "description": "You can use this setting to ignore (and remove) devices.",
         "type": "array",
         "items": {
           "type": "string",
           "title": "Serial Number",
-          "description": "The device serial number you wish Homebridge to ignore."
+          "description": "The serial number of the device that should be ignored."
         }
       },
       "manualDevices": {
         "title": "Manual Devices",
-        "description": "You can use this optional setting to define devices that should be configured manually.",
+        "description": "You can use this setting to manually configure devices.",
         "type": "array",
         "items": {
           "type": "string",
           "title": "Device URL",
-          "description": "Example 'http://192.168.1.20:49153/setup.xml'"
+          "description": "Example: http://192.168.1.20:49153/setup.xml"
         }
       },
       "makerTypes": {
         "type": "array",
         "title": "Sensors",
-        "description": "You can choose how your Wemo Maker is shown in Homebridge.",
+        "description": "You can define how your Wemo Maker is shown.",
         "items": {
           "type": "object",
           "properties": {
@@ -95,7 +95,7 @@
             "makerType": {
               "type": "string",
               "title": "Maker Type",
-              "description": "How this Maker should be appear in Homebridge/HomeKit.",
+              "description": "How this Wemo Maker should appear.",
               "oneOf": [
                 {
                   "title": "Garage Door",
