@@ -46,7 +46,6 @@
   "dependencies": {
     "@homebridge/plugin-ui-utils": "^0.0.17",
     "axios": "^0.21.0",
-    "entities": "^2.1.0",
     "ip": "^1.1.5",
     "node-ssdp": "^4.0.0",
     "xml2js": "^0.4.23",
