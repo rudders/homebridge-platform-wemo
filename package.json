@@ -2,9 +2,6 @@
   "name": "homebridge-platform-wemo",
   "version": "2.5.1-6",
   "author": "bwp91",
-  "contributors": [
-    "homebridge-plugins"
-  ],
   "description": "Homebridge/HOOBS plugin to control Wemo devices.",
   "license": "ISC",
   "keywords": [
@@ -16,6 +13,7 @@
     "siri",
     "wemo"
   ],
+  "main": "lib/index.js",
   "engines": {
     "homebridge": "^1.1.0",
     "node": "^14.5.1"
