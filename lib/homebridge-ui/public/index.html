@@ -42,6 +42,10 @@
           <td id="ipAddress"></td>
         </tr>
         <tr>
+          <th scope="row">UPnP Info</th>
+          <td id="upnpInfo"></td>
+        </tr>
+        <tr>
           <th scope="row">MAC Address</th>
           <td id="macAddress"></td>
         </tr>
@@ -126,6 +130,10 @@
             : 'No'
           document.getElementById('serialNumber').innerHTML = selectedAccessory.context.serialNumber
           document.getElementById('ipAddress').innerHTML = selectedAccessory.context.ipAddress
+          document.getElementById('upnpInfo').innerHTML =
+            '<a href="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml" target="_blank" style="color: #fff;">'
+            + 'http://'+ selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml'
+            + '</a>'
           document.getElementById('macAddress').innerHTML = selectedAccessory.context.macAddress
           document.getElementById('deviceTable').style.display = 'inline-table'
           homebridge.hideSpinner()
