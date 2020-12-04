@@ -67,7 +67,7 @@
         "items": {
           "type": "string",
           "title": "Serial Number",
-          "description": "The serial number of the device that should be ignored. Please use uppercase letters and no spaces."
+          "description": "The serial number of the device that should be ignored."
         }
       },
       "manualDevices": {
