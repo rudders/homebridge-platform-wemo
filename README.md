@@ -1,5 +1,5 @@
 <p align="center">
-   <a href="https://github.com/bwp91/homebridge-platform-wemo"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/100233760-13a66e80-2f22-11eb-81f1-81e0efdb16e8.png" width="600px"></a>
+   <a href="https://github.com/bwp91/homebridge-platform-wemo"><img alt="Homebridge Verified" src="https://user-images.githubusercontent.com/43026681/101325568-e03ddb00-3863-11eb-8b66-54c6a322840a.png" width="600px"></a>
 </p>
 <span align="center">
   
@@ -47,8 +47,9 @@
 * To the creator of this plugin: [@rudders](https://github.com/rudders), and to [@devbobo](https://github.com/devbobo) for his contributions.
 * To the creator of [wemo-client](https://github.com/timonreinhard/wemo-client) (which is now contained within this plugin): [@timonreinhard](https://github.com/timonreinhard).
 * To [Ben Hardill](http://www.hardill.me.uk/wordpress/tag/wemo/) for his research on Wemo devices.
-* To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible.
 * To all users who have helped/tested to enable functionality for new devices.
+* To the creator of the awesome plugin header logo: [Keryan Belahcene](https://www.instagram.com/keryan.me).
+* To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible.
 
 ### Disclaimer
 * I am in no way affiliated with Belkin/Wemo and this plugin is a personal project that I maintain in my free time.
