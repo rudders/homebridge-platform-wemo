@@ -12,11 +12,13 @@
         "type": "string",
         "default": "Wemo"
       },
-      "debug": {
-        "title": "Debug Logging",
-        "type": "boolean",
-        "description": "If checked, more information will be added to the log.",
-        "default": false
+      "discoveryInterval": {
+        "type": "number",
+        "title": "Discovery Interval",
+        "description": "An interval (in seconds) in which the plugin will attempt to discover new devices on your local network. Set to 0 to disable device discovery.",
+        "placeholder": 30,
+        "minimum": 0,
+        "maximum": 600
       },
       "disableDiscovery": {
         "type": "boolean"
@@ -24,33 +26,37 @@
       "disableDeviceLogging": {
         "type": "boolean",
         "title": "Disable Device Logging",
-        "description": "If checked, device updates will not be added to the log.",
-        "default": false
-      },
-      "discoveryInterval": {
-        "type": "number",
-        "title": "Discovery Interval",
-        "description": "An interval (in seconds) in which the plugin will attempt to discover new devices on your local network. Set to 0 to disable device discovery.",
-        "default": 30,
-        "minimum": 0,
-        "maximum": 600
-      },
-      "disablePlugin": {
-        "type": "boolean",
-        "title": "Disable Plugin",
-        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart.",
-        "default": false
+        "description": "If checked, device updates will not be added to the log."
       },
       "noMotionTimer": {
         "type": "number",
         "title": "No Motion Timer",
-        "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
-        "default": 60,
+        "description": "A timer (in seconds) for how long after motion is not detected that the state is changed. Applies only to Wemo Motion.",
+        "placeholder": 60,
         "minimum": 0,
         "maximum": 300
       },
       "doorOpenTimer": {
         "type": "number"
+      },
+      "debug": {
+        "title": "Debug Logging",
+        "type": "boolean",
+        "description": "If checked, more information will be added to the log."
+      },
+      "disablePlugin": {
+        "type": "boolean",
+        "title": "Disable Plugin",
+        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
+      },
+      "manualDevices": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "title": "Device URL",
+          "placeholder": "http://192.168.1.20:49153/setup.xml",
+          "description": "Port is usually 49153 but can sometimes be 49152 or 49154."
+        }
       },
       "ignoredDevices": {
         "title": "Ignored Devices",
@@ -62,21 +68,8 @@
           "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb and not the serial number of the Wemo Link."
         }
       },
-      "manualDevices": {
-        "title": "Manual Devices",
-        "description": "You can use this setting to manually configure devices.",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "title": "Device URL",
-          "placeholder": "http://192.168.1.20:49153/setup.xml",
-          "description": "Port is usually 49153 but can sometimes be 49152 or 49154."
-        }
-      },
       "makerTypes": {
         "type": "array",
-        "title": "Wemo Makers",
-        "description": "You can define how your Wemo Maker is shown.",
         "items": {
           "type": "object",
           "properties": {
@@ -147,16 +140,11 @@
       "type": "fieldset",
       "title": "Optional Settings",
       "description": "A variety of optional settings for general use of this plugin.",
-      "expandable": true,
       "items": [
-        "debug",
-        "disableDeviceLogging",
         "discoveryInterval",
+        "disableDeviceLogging",
         "noMotionTimer",
-        {
-          "type": "help",
-          "helpvalue": "<label>Wemo Client</label><p class=\"help-block\">Please see <a href=\"https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0)\" target=\"_blank\">the wiki</a> to manually configure this.</p>"
-        },
+        "debug",
         "disablePlugin"
       ]
     },
@@ -164,6 +152,7 @@
       "key": "manualDevices",
       "expandable": true,
       "title": "Manual Devices",
+      "description": "You can use this setting to manually configure devices.",
       "add": "Add Another Device",
       "type": "array",
       "items": [
@@ -194,6 +183,7 @@
       "key": "makerTypes",
       "expandable": true,
       "title": "Wemo Makers",
+      "description": "You can define how your Wemo Maker is shown.",
       "add": "Add Another Device",
       "type": "array",
       "items": [
