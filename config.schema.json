@@ -121,6 +121,31 @@
             }
           }
         }
+      },
+      "wemoClient": {
+        "type": "object",
+        "properties": {
+          "port": {
+            "type": "integer"
+          },
+          "discover_opts": {
+            "type": "object",
+            "properties": {
+              "unicastBindPort": {
+                "type": "integer"
+              },
+              "interfaces": {
+                "type": "string"
+              },
+              "explicitSocketBind": {
+                "type": "boolean"
+              }
+            }
+          },
+          "listen_interface": {
+            "type": "string"
+          }
+        }
       }
     }
   },
