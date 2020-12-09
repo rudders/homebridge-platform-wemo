@@ -135,9 +135,7 @@
           document.getElementById('serialNumber').innerHTML = selectedAccessory.context.serialNumber || 'Not Available'
           document.getElementById('ipAddress').innerHTML = selectedAccessory.context.ipAddress || 'Not Available'
           document.getElementById('upnpInfo').innerHTML = selectedAccessory.context.ipAddress && selectedAccessory.context.port
-             ? '<a href="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml" target="_blank" class="primary-text">'
-              + 'http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml'
-              + '</a>'
+             ? '<a href="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml" target="_blank" class="primary-text">Visit XML &rarr;</a>'
             : 'Not Available'
           document.getElementById('macAddress').innerHTML = selectedAccessory.context.macAddress || 'Not Available'
           document.getElementById('imgIcon').innerHTML = selectedAccessory.context.icon
