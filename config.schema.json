@@ -28,6 +28,11 @@
         "title": "Disable Device Logging",
         "description": "If checked, device updates will not be added to the log."
       },
+      "outletAsSwitch": {
+        "type": "string",
+        "title": "Outlet As Switch",
+        "description": "A list of outlet devices (except Insight) to show as switches by serial number. For example '221000A0000C2B' or multiple separated with a comma '221000A0000C2A,221000A0000C2B' (without the quotes)."
+      },
       "noMotionTimer": {
         "type": "number",
         "title": "No Motion Timer",
@@ -143,6 +148,7 @@
       "items": [
         "discoveryInterval",
         "disableDeviceLogging",
+        "outletAsSwitch",
         "noMotionTimer",
         "debug",
         "disablePlugin"
