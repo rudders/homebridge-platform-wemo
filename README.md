@@ -49,6 +49,7 @@
 * To the creator of [wemo-client](https://github.com/timonreinhard/wemo-client) (which is now contained within this plugin): [@timonreinhard](https://github.com/timonreinhard).
 * To [Ben Hardill](http://www.hardill.me.uk/wordpress/tag/wemo/) for his research on Wemo devices.
 * To all users who have helped/tested to enable functionality for new devices.
+* To the creators/contributors of [Fakegato](https://github.com/simont77/fakegato-history): [@simont77](https://github.com/simont77) and [@NorthernMan54](https://github.com/NorthernMan54).
 * To the creator of the awesome plugin header logo: [Keryan Belahcene](https://www.instagram.com/keryan.me).
 * To the creators/contributors of [Homebridge](https://homebridge.io) who make this plugin possible.
 
