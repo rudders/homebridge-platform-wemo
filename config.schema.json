@@ -116,15 +116,15 @@
       "wemoClient": {
         "type": "object",
         "properties": {
+          "listen_interface": {
+            "type": "string"
+          },
           "port": {
             "type": "integer"
           },
           "discover_opts": {
             "type": "object",
             "properties": {
-              "unicastBindPort": {
-                "type": "integer"
-              },
               "interfaces": {
                 "type": "string"
               },
@@ -132,9 +132,6 @@
                 "type": "boolean"
               }
             }
-          },
-          "listen_interface": {
-            "type": "string"
           }
         }
       }
