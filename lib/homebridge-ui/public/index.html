@@ -46,6 +46,10 @@
           <td id="ipAddress"></td>
         </tr>
         <tr>
+          <th scope="row">Port</th>
+          <td id="port"></td>
+        </tr>
+        <tr>
           <th scope="row">UPnP Info</th>
           <td id="upnpInfo"></td>
         </tr>
@@ -135,13 +139,15 @@
             : 'No'
           document.getElementById('serialNumber').innerHTML = selectedAccessory.context.serialNumber || 'Not Available'
           document.getElementById('ipAddress').innerHTML = selectedAccessory.context.ipAddress || 'Not Available'
+          document.getElementById('port').innerHTML = selectedAccessory.context.port || 'Not Available'
           document.getElementById('upnpInfo').innerHTML = selectedAccessory.context.ipAddress && selectedAccessory.context.port
              ? '<a href="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/setup.xml" target="_blank" class="primary-text">Visit XML &rarr;</a>'
             : 'Not Available'
           document.getElementById('macAddress').innerHTML = selectedAccessory.context.macAddress || 'Not Available'
-          document.getElementById('imgIcon').innerHTML = selectedAccessory.context.icon
-            ? '<img src="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/' + selectedAccessory.context.icon + '" style="width: 100px;">'
-            : ''
+          document.getElementById('imgIcon').innerHTML =
+            selectedAccessory.context.icon && selectedAccessory.context.ipAddress && selectedAccessory.context.port
+              ? '<img src="http://' + selectedAccessory.context.ipAddress + ':' + selectedAccessory.context.port + '/' + selectedAccessory.context.icon + '" style="width: 100px;">'
+              : ''
           document.getElementById('deviceTable').style.display = 'inline-table'
           homebridge.hideSpinner()
         }
