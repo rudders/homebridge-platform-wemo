@@ -144,9 +144,9 @@
       "description": "A variety of optional settings for general use of this plugin.",
       "items": [
         "discoveryInterval",
-        "disableDeviceLogging",
         "outletAsSwitch",
         "noMotionTimer",
+        "disableDeviceLogging",
         "debug",
         "disablePlugin"
       ]
