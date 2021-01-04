@@ -5,7 +5,7 @@
   
 # homebridge-platform-wemo
 
- Homebridge/HOOBS plugin to control Wemo devices
+ Homebridge plugin to control Wemo devices
  
  [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
  [![hoobs-certified](https://badgen.net/badge/HOOBS/Certified/yellow)](https://plugins.hoobs.org/plugin/homebridge-platform-wemo)   
@@ -18,12 +18,13 @@
 
 </span>
 
+### Plugin Information
+* This plugin allows you to view and control your Wemo devices within HomeKit. The plugin:
+  * will attempt to discover and control Wemo devices via your local network (UPnP)
+  * does not require your Wemo credentials
+
 ### Prerequisites
 * To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
-
-### Plugin Information
-* This plugin will attempt to discover and control Wemo devices via your local network (UPnP).
-* This plugin does not require your Wemo credentials.
 
 ### Setup
 * [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
