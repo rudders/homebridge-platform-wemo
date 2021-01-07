@@ -22,6 +22,7 @@
 * This plugin allows you to view and control your Wemo devices within HomeKit. The plugin:
   * will attempt to discover and control Wemo devices via your local network (UPnP)
   * does not require your Wemo credentials
+* ⚠️ You must make sure your Homebridge instance has an allocated IP from the same IP network or VLAN as your Wemo devices.
 
 ### Prerequisites
 * To use this plugin, you will need to already have [Homebridge](https://homebridge.io) or [HOOBS](https://hoobs.org) installed. Please refer to the links for more information and installation instructions.
