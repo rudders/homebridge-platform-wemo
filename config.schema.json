@@ -15,7 +15,7 @@
       "discoveryInterval": {
         "type": "number",
         "title": "Discovery Interval",
-        "description": "An interval (in seconds) in which the plugin will attempt to discover new devices on your local network. Set to 0 to disable device discovery.",
+        "description": "An interval (in seconds) in which the plugin will attempt to discover devices on your network. Set to 0 to disable discovery.",
         "placeholder": 30,
         "minimum": 0,
         "maximum": 600
@@ -70,7 +70,6 @@
       },
       "ignoredDevices": {
         "title": "Ignored Devices",
-        "description": "You can use this setting to ignore (and remove) devices.",
         "type": "array",
         "items": {
           "type": "string",
@@ -146,7 +145,7 @@
     {
       "type": "fieldset",
       "title": "Optional Settings",
-      "description": "A variety of optional settings for general use of this plugin.",
+      "expandable": true,
       "items": [
         "discoveryInterval",
         "disableDeviceLogging",
@@ -156,8 +155,7 @@
     },
     {
       "type": "fieldset",
-      "title": "Device Specific Settings",
-      "description": "Further optional settings for specific devices.",
+      "title": "Device Settings",
       "expandable": true,
       "items": [
         "removeByName",
@@ -169,7 +167,6 @@
       "key": "manualDevices",
       "expandable": true,
       "title": "Manual Devices",
-      "description": "You can use this setting to manually configure devices.",
       "add": "Add Another Device",
       "type": "array",
       "items": [
@@ -200,7 +197,6 @@
       "key": "makerTypes",
       "expandable": true,
       "title": "Wemo Makers",
-      "description": "You can define how your Wemo Maker is shown.",
       "add": "Add Another Device",
       "type": "array",
       "items": [
