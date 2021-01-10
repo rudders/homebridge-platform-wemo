@@ -38,11 +38,6 @@
         "title": "Disable Plugin",
         "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
       },
-      "removeByName": {
-        "type": "string",
-        "title": "Remove By Name",
-        "description": "A list of devices to remove from the cache by name. For example My Lights or multiple separated by a comma."
-      },
       "outletAsSwitch": {
         "type": "string",
         "title": "Outlet As Switch",
@@ -55,6 +50,11 @@
         "placeholder": 60,
         "minimum": 0,
         "maximum": 300
+      },
+      "removeByName": {
+        "type": "string",
+        "title": "Remove By Name",
+        "description": "A list of devices to remove from the cache by name. For example My Lights or multiple separated by a comma."
       },
       "doorOpenTimer": {
         "type": "number"
@@ -158,9 +158,9 @@
       "title": "Device Settings",
       "expandable": true,
       "items": [
-        "removeByName",
         "outletAsSwitch",
-        "noMotionTimer"
+        "noMotionTimer",
+        "removeByName"
       ]
     },
     {
