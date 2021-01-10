@@ -28,10 +28,25 @@
         "title": "Disable Device Logging",
         "description": "If checked, device updates will not be added to the log."
       },
+      "debug": {
+        "title": "Debug Logging",
+        "type": "boolean",
+        "description": "If checked, more information will be added to the log."
+      },
+      "disablePlugin": {
+        "type": "boolean",
+        "title": "Disable Plugin",
+        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
+      },
+      "removeByName": {
+        "type": "string",
+        "title": "Remove By Name",
+        "description": "A list of devices to remove from the cache by name. For example My Lights or multiple separated by a comma."
+      },
       "outletAsSwitch": {
         "type": "string",
         "title": "Outlet As Switch",
-        "description": "A list of outlet devices (except Insight) to show as switches by serial number. For example '221000A0000C2B' or multiple separated with a comma '221000A0000C2A,221000A0000C2B' (without the quotes)."
+        "description": "A list of outlet devices (except Insight) to show as switches by serial number. For example 221000A0000C2B or multiple separated by a comma."
       },
       "noMotionTimer": {
         "type": "number",
@@ -43,16 +58,6 @@
       },
       "doorOpenTimer": {
         "type": "number"
-      },
-      "debug": {
-        "title": "Debug Logging",
-        "type": "boolean",
-        "description": "If checked, more information will be added to the log."
-      },
-      "disablePlugin": {
-        "type": "boolean",
-        "title": "Disable Plugin",
-        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
       },
       "manualDevices": {
         "type": "array",
@@ -144,11 +149,20 @@
       "description": "A variety of optional settings for general use of this plugin.",
       "items": [
         "discoveryInterval",
-        "outletAsSwitch",
-        "noMotionTimer",
         "disableDeviceLogging",
         "debug",
         "disablePlugin"
+      ]
+    },
+    {
+      "type": "fieldset",
+      "title": "Device Specific Settings",
+      "description": "Further optional settings for specific devices.",
+      "expandable": true,
+      "items": [
+        "removeByName",
+        "outletAsSwitch",
+        "noMotionTimer"
       ]
     },
     {
