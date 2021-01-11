@@ -1,6 +1,6 @@
 {
   "name": "homebridge-platform-wemo",
-  "version": "2.8.2-3",
+  "version": "2.8.2-4",
   "author": "bwp91",
   "description": "Homebridge plugin to control Wemo devices.",
   "license": "ISC",
