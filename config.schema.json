@@ -17,8 +17,7 @@
         "title": "Discovery Interval",
         "description": "An interval (in seconds) in which the plugin will attempt to discover devices on your network. Set to 0 to disable discovery.",
         "placeholder": 30,
-        "minimum": 0,
-        "maximum": 600
+        "minimum": 0
       },
       "disableDiscovery": {
         "type": "boolean"
@@ -108,10 +107,9 @@
             "makerTimer": {
               "type": "number",
               "title": "Open/Close Time",
-              "description": "The time in seconds for how long it takes the garage door to open/close.",
+              "description": "The time in seconds for how long it takes the garage door to open/close. Must be 1 or more.",
               "placeholder": 20,
-              "minimum": 1,
-              "maximum": 120
+              "minimum": 1
             }
           }
         }
