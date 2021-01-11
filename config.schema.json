@@ -48,8 +48,7 @@
         "title": "No Motion Timer",
         "description": "A timer (in seconds) for how long after motion is not detected that the state is changed. Applies only to Wemo Motion.",
         "placeholder": 60,
-        "minimum": 0,
-        "maximum": 300
+        "minimum": 0
       },
       "removeByName": {
         "type": "string",
