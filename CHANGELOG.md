@@ -10,7 +10,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * Created CHANGELOG.md
 
 ### Changes
-* Clean up of the plugin settings screen
+* Modifications to the layout of the plugin settings screen
 * Removal of maximum value for `number` types on plugin settings screen
 * Remove `renewing subscription` log entries which appeared repetitively in plugin `debug` mode
 * `subscription error` log entries will now always appear, not just when in plugin `debug` mode
