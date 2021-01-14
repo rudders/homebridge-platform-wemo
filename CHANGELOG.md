@@ -2,7 +2,7 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.9.0 (2021-01-14)
 
 ### New
 * New configuration option `removeByName` to remove 'orphan' accessories from the cache
