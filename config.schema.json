@@ -116,12 +116,12 @@
       },
       "wemoClient": {
         "type": "object",
-        "options": {
-          "hidden": true
-        },
         "properties": {
           "listen_interface": {
-            "type": "string"
+            "type": "string",
+            "options": {
+              "hidden": true
+            }
           },
           "port": {
             "type": "integer"
