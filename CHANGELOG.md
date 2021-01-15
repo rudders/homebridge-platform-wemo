@@ -2,6 +2,13 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+## Changes
+
+* Fakegato debugging will now appear with plugin `debug` on rather then Homebridge `debug` on
+* Fakegato (Eve History Service Library) code formatting to StandardJS
+
 ## 2.9.0 (2021-01-14)
 
 ### New
