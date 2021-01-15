@@ -118,10 +118,7 @@
         "type": "object",
         "properties": {
           "listen_interface": {
-            "type": "string",
-            "options": {
-              "hidden": true
-            }
+            "type": "string"
           },
           "port": {
             "type": "integer"
