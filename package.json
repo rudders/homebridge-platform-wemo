@@ -50,5 +50,10 @@
     "node-ssdp": "^4.0.1",
     "xml2js": "^0.4.23",
     "xmlbuilder": "^15.1.1"
+  },
+  "standard": {
+    "ignore": [
+      "/lib/fakegato/"
+    ]
   }
 }
