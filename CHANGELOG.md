@@ -6,8 +6,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## Changes
 
-* Fakegato debugging will now appear with plugin `debug` on rather then Homebridge `debug` on
-* Fakegato (Eve History Service Library) code formatting to StandardJS
+* Fakegato logging disabled in Homebridge `debug` mode, can be explicitly enabled with `debugFakegato`
 
 ## 2.9.0 (2021-01-14)
 
