@@ -2,11 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.9.1 (2021-01-21)
 
 ### Changes
 
-* Minimum Homebridge beta needed for Adaptive Lighting bumped to beta-46.
+* Minimum Homebridge beta needed for Adaptive Lighting bumped to beta-46
+* Fixes a 'multiple callback' issue with Fakegato history service
 * Fakegato logging disabled in Homebridge `debug` mode, can be explicitly enabled with `debugFakegato`
 * Unsupported device types to show urn in logs
 
