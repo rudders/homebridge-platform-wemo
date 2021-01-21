@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### New
+
+* Initial support for the Wemo outdoor plug
+
 ## 2.9.1 (2021-01-21)
 
 ### Changes
