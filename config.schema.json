@@ -114,6 +114,26 @@
           }
         }
       },
+      "wemoMotions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Motion Serial Number",
+              "description": "Serial number of the Wemo Motion."
+            },
+            "noMotionTimer": {
+              "type": "number",
+              "title": "No Motion Timer",
+              "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
+              "placeholder": 60,
+              "minimum": 0
+            }
+          }
+        }
+      },
       "wemoClient": {
         "type": "object",
         "properties": {
@@ -203,6 +223,22 @@
             "makerTypes[].serialNumber",
             "makerTypes[].makerType",
             "makerTypes[].makerTimer"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wemoMotions",
+      "expandable": true,
+      "title": "Wemo Motions",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoMotions[].serialNumber",
+            "wemoMotions[].noMotionTimer"
           ]
         }
       ]
