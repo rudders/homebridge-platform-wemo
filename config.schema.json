@@ -12,12 +12,32 @@
         "type": "string",
         "default": "Wemo"
       },
+      "mode": {
+        "type": "string",
+        "title": "Device Detection",
+        "description": "This setting defines how the plugin finds your devices.",
+        "default": "auto",
+        "oneOf": [
+          {
+            "title": "Auto (Discovery + Manual Devices)",
+            "enum": [
+              "auto"
+            ]
+          },
+          {
+            "title": "Manual (Only Manual Devices)",
+            "enum": [
+              "manual"
+            ]
+          }
+        ]
+      },
       "discoveryInterval": {
         "type": "number",
-        "title": "Discovery Interval",
-        "description": "An interval (in seconds) in which the plugin will attempt to discover devices on your network. Set to 0 to disable discovery.",
+        "title": "Refresh Interval",
+        "description": "An interval (in seconds) in which the plugin will initally find and continually check device connections. Must be 15 or more.",
         "placeholder": 30,
-        "minimum": 0
+        "minimum": 15
       },
       "disableDiscovery": {
         "type": "boolean"
