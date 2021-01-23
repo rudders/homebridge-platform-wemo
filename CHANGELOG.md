@@ -6,7 +6,12 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### New
 
-* Initial support for the Wemo outdoor plug
+* Support for the Wemo outdoor plug
+* Custom 'noMotionTimer' per Wemo motion device (NetCam/Motion Sensor)
+
+### Changes
+
+* Logging for manual devices that cause errors when loading (e.g. IP/port change)
 
 ## 2.9.1 (2021-01-21)
 
