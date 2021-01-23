@@ -184,6 +184,7 @@
       "title": "Optional Settings",
       "expandable": true,
       "items": [
+        "mode",
         "discoveryInterval",
         "disableDeviceLogging",
         "debug",
