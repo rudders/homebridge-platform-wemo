@@ -6,7 +6,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### New
 
-* Support for the Wemo outdoor plug
+* Support for the Wemo Outdoor Plug
 * Custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
   * If this is not configured then the plugin will continue to use the global `noMotionTimer` setting per motion device
   * If the global setting is not configured then the plugin will use the default of 60 seconds
