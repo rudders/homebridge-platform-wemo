@@ -4,6 +4,11 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## BETA
 
+### ⚠️ Notable Change
+
+* Changes to the discovery process
+  * Description coming soon...
+
 ### New
 
 * Support for the Wemo Outdoor Plug
