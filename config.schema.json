@@ -154,6 +154,24 @@
           }
         }
       },
+      "wemoInsights": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Motion Serial Number",
+              "description": "Serial number of the Wemo Motion."
+            },
+            "showTodayTC": {
+              "type": "boolean",
+              "title": "Show Today's Consumption",
+              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+            }
+          }
+        }
+      },
       "wemoClient": {
         "type": "object",
         "properties": {
@@ -227,6 +245,22 @@
           "type": "fieldset",
           "items": [
             "ignoredDevices[]"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "wemoInsights",
+      "expandable": true,
+      "title": "Wemo Insights",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoInsights[].serialNumber",
+            "wemoInsights[].showTodayTC"
           ]
         }
       ]
