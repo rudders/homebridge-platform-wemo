@@ -86,15 +86,6 @@
           "description": "Port is usually 49153 but can sometimes be 49152 or 49154."
         }
       },
-      "ignoredDevices": {
-        "title": "Ignored Devices",
-        "type": "array",
-        "items": {
-          "type": "string",
-          "title": "Serial Number",
-          "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb and not the serial number of the Wemo Link."
-        }
-      },
       "makerTypes": {
         "type": "array",
         "items": {
@@ -161,8 +152,15 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Motion Serial Number",
-              "description": "Serial number of the Wemo Motion."
+              "title": "Insight Serial Number",
+              "description": "Serial number of the Wemo Insight."
+            },
+            "inUseThreshold": {
+              "type": "number",
+              "title": "'In Use' Threshold",
+              "description": "HomeKit will set the 'In Use' status of this device to true when the wattage is above this number. Must be 0 or more.",
+              "placeholder": 0,
+              "minimum": 0
             },
             "showTodayTC": {
               "type": "boolean",
@@ -170,6 +168,15 @@
               "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
             }
           }
+        }
+      },
+      "ignoredDevices": {
+        "title": "Ignored Devices",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "title": "Serial Number",
+          "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb and not the serial number of the Wemo Link."
         }
       },
       "wemoClient": {
@@ -235,21 +242,6 @@
       ]
     },
     {
-      "key": "ignoredDevices",
-      "expandable": true,
-      "title": "Ignored Devices",
-      "add": "Add Another Device",
-      "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "ignoredDevices[]"
-          ]
-        }
-      ]
-    },
-    {
       "key": "wemoInsights",
       "expandable": true,
       "title": "Wemo Insights",
@@ -260,6 +252,7 @@
           "type": "fieldset",
           "items": [
             "wemoInsights[].serialNumber",
+            "wemoInsights[].inUseThreshold",
             "wemoInsights[].showTodayTC"
           ]
         }
@@ -294,6 +287,21 @@
           "items": [
             "wemoMotions[].serialNumber",
             "wemoMotions[].noMotionTimer"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ignoredDevices",
+      "expandable": true,
+      "title": "Ignored Devices",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "ignoredDevices[]"
           ]
         }
       ]

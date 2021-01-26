@@ -12,7 +12,11 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### New
 
 * Support for the Wemo Outdoor Plug
-* Custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
+* Cumulative `TotalConsumption` for Insight devices
+  * This changes the current method of resetting each day
+  * This can be reverted back to resetting each day in the plugin settings with the `showTodayTC` config option
+* Set a custom `OutletInUse` wattage threshold per Insight device
+* Set a custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
   * If this is not configured then the plugin will continue to use the global `noMotionTimer` setting per motion device
   * If the global setting is not configured then the plugin will use the default of 60 seconds
 
