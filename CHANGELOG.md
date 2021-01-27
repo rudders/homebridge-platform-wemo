@@ -4,13 +4,20 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## BETA
 
-### ⚠️ Notable Change
+### Notable Changes
 
-* Changes to the discovery process
-  * Description coming soon...
+* New configuration option `mode` to choose between:
+  * `mode: "auto"` the plugin will auto-discover devices **and** configure manual devices (default if option not set)
+  * `mode: "manual"` the plugin will **only** configure manual devices
+* `discoveryInterval` now needs a minimum value of `15` and discovery cannot be disabled
+  * Existing configurations with lower value will be disregarded and `15` will be used
+  * The option of disabling the discovery interval has been removed as this interval is essential for correcting connection issues for all your Wemo devices
 
 ### New
 
+* Automatic port scan for manual devices
+  * Use a full address `http://192.168.1.X:49153/setup.xml` as before to fully configure a manual device
+  * Use an IP `192.168.1.X` to let the plugin scan between ports 49152, 49153, 49154 and choose the correct port
 * Support for the Wemo Outdoor Plug
 * Cumulative `TotalConsumption` for Insight devices
   * This changes the current method of resetting each day
