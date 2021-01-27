@@ -29,6 +29,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Logging for manual devices that cause errors when loading (e.g. IP/port change)
+* Fixes an issue where the Insight would consistently log outlet-in-use between true and false
 * More consistent and clearer error logging
 
 ## 2.9.1 (2021-01-21)
