@@ -17,7 +17,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 * Automatic port scan for manual devices
   * Use a full address `http://192.168.1.X:49153/setup.xml` as before to fully configure a manual device
-  * Use an IP `192.168.1.X` to let the plugin scan between ports 49152, 49153, 49154 and choose the correct port
+  * Use an IP `192.168.1.X` to let the plugin scan between ports 49152 - 49155 and choose the correct port
 * Support for the Wemo Outdoor Plug
 * Cumulative `TotalConsumption` for Insight devices
   * This changes the current method of resetting each day
