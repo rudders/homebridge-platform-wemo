@@ -4,7 +4,7 @@
   "version": "2.9.2-8",
   "author": "bwp91",
   "description": "Homebridge plugin to control Wemo devices.",
-  "license": "ISC",
+  "license": "MIT",
   "keywords": [
     "homebridge",
     "homebridge-plugin",
