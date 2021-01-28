@@ -159,6 +159,13 @@
               "type": "boolean",
               "title": "Show Today's Consumption",
               "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+            },
+            "wattDiff": {
+              "type": "number",
+              "title": "Wattage Logging",
+              "description": "The plugin will not log device wattage is the difference from the previous value is less than this number. Must be 0 or more.",
+              "placeholder": 5,
+              "minimum": 0
             }
           }
         }
@@ -245,7 +252,8 @@
           "type": "fieldset",
           "items": [
             "wemoInsights[].serialNumber",
-            "wemoInsights[].showTodayTC"
+            "wemoInsights[].showTodayTC",
+            "wemoInsights[].wattDiff"
           ]
         }
       ]
