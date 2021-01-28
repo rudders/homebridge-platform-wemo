@@ -164,7 +164,7 @@
               "type": "number",
               "title": "Wattage Logging",
               "description": "The plugin will not log device wattage is the difference from the previous value is less than this number. Must be 0 or more.",
-              "placeholder": 5,
+              "placeholder": 0,
               "minimum": 0
             }
           }

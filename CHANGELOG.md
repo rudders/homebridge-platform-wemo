@@ -25,7 +25,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * Set a custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
   * If this is not configured then the plugin will continue to use the global `noMotionTimer` setting per motion device
   * If the global setting is not configured then the plugin will use the default of 60 seconds
-* Set a custom `wattDiff` (wattage difference) for Insight devices - the plugin will not log consecutive wattage updates if the difference from the previous is less than this value (default: `5`)
+* Set a custom `wattDiff` (wattage difference) for Insight devices - the plugin will not log consecutive wattage updates if the difference from the previous is less than this value (default: `0`)
 
 ### Changes
 
