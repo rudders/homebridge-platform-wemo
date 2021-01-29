@@ -32,6 +32,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * Logging for manual devices that cause errors when loading (e.g. IP/port change)
 * Fixes an issue where the Insight would consistently log outlet-in-use between true and false
 * More consistent and clearer error logging
+* Updated plugin-ui-utils dep and use new method to get cached accessories
 
 ## 2.9.1 (2021-01-21)
 
