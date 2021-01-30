@@ -86,6 +86,31 @@
           "description": "Port is usually 49153 but can sometimes be 49152 or 49154."
         }
       },
+      "wemoInsights": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Insight Serial Number",
+              "description": "Serial number of the Wemo Insight."
+            },
+            "showTodayTC": {
+              "type": "boolean",
+              "title": "Show Today's Consumption",
+              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+            },
+            "wattDiff": {
+              "type": "number",
+              "title": "Wattage Logging",
+              "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 0 or more.",
+              "placeholder": 0,
+              "minimum": 0
+            }
+          }
+        }
+      },
       "makerTypes": {
         "type": "array",
         "items": {
@@ -140,31 +165,6 @@
               "title": "No Motion Timer",
               "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
               "placeholder": 60,
-              "minimum": 0
-            }
-          }
-        }
-      },
-      "wemoInsights": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "serialNumber": {
-              "type": "string",
-              "title": "Insight Serial Number",
-              "description": "Serial number of the Wemo Insight."
-            },
-            "showTodayTC": {
-              "type": "boolean",
-              "title": "Show Today's Consumption",
-              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
-            },
-            "wattDiff": {
-              "type": "number",
-              "title": "Wattage Logging",
-              "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 0 or more.",
-              "placeholder": 0,
               "minimum": 0
             }
           }
