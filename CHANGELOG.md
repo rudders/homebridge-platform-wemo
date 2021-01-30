@@ -15,10 +15,10 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### New
 
-* Automatic port scan for manual devices
+* Support for the Wemo Outdoor Plug
+* [Experimental] Automatic port scan for manual devices
   * Use a full address `http://192.168.1.X:49153/setup.xml` as before to fully configure a manual device
   * Use an IP `192.168.1.X` to let the plugin scan between ports 49152 - 49155 and choose the correct port
-* Support for the Wemo Outdoor Plug
 * Set a custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
   * If this is not configured then the plugin will continue to use the global `noMotionTimer` setting per motion device
   * If the global setting is not configured then the plugin will use the default of 60 seconds
