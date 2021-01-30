@@ -83,7 +83,7 @@
           "type": "string",
           "title": "Device URL",
           "placeholder": "http://192.168.1.20:49153/setup.xml",
-          "description": "Port is usually 49153 but can sometimes be 49152 or 49154."
+          "description": "Port is usually 49153 but can sometimes be 49152 or 49154. Enter just an IP to let the plugin try and obtain the port automatically (experimental!)."
         }
       },
       "wemoInsights": {
