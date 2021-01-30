@@ -2,7 +2,7 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.10.0 (2021-01-30)
 
 ### Notable Changes
 
