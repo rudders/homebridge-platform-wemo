@@ -19,12 +19,12 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
   * Use a full address `http://192.168.1.X:49153/setup.xml` as before to fully configure a manual device
   * Use an IP `192.168.1.X` to let the plugin scan between ports 49152 - 49155 and choose the correct port
 * Support for the Wemo Outdoor Plug
-* Cumulative `TotalConsumption` for Insight devices
-  * This changes the current method of resetting each day
-  * This can be reverted back to resetting each day in the plugin settings with the `showTodayTC` config option
 * Set a custom `noMotionTimer` per Wemo motion device (NetCam/Motion Sensor)
   * If this is not configured then the plugin will continue to use the global `noMotionTimer` setting per motion device
   * If the global setting is not configured then the plugin will use the default of 60 seconds
+* Cumulative `TotalConsumption` for Insight devices
+  * This changes the current method of resetting each day
+  * This can be reverted back to resetting each day in the plugin settings with the `showTodayTC` config option
 * Set a custom `wattDiff` (wattage difference) for Insight devices - the plugin will not log consecutive wattage updates if the difference from the previous is less than this value (default: `0`)
 
 ### Changes
