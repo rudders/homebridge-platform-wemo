@@ -163,7 +163,7 @@
             "wattDiff": {
               "type": "number",
               "title": "Wattage Logging",
-              "description": "The plugin will not log device wattage is the difference from the previous value is less than this number. Must be 0 or more.",
+              "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 0 or more.",
               "placeholder": 0,
               "minimum": 0
             }
