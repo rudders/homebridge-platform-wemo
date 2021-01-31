@@ -73,8 +73,7 @@
             },
             "showAsSwitch": {
               "type": "boolean",
-              "title": "Expose As Switch",
-              "description": "If checked, this device will appear as a HomeKit switch."
+              "title": "Show As Switch"
             }
           }
         }
@@ -115,15 +114,14 @@
             "makerType": {
               "type": "string",
               "title": "Show As",
-              "description": "How this Wemo Maker should appear in HomeKit.",
               "oneOf": [{
-                  "title": "Garage Door",
+                  "title": "A Garage Door",
                   "enum": [
                     "garageDoor"
                   ]
                 },
                 {
-                  "title": "Switch (with contact sensor if exists)",
+                  "title": "A Switch (with contact sensor if exists)",
                   "enum": [
                     "switch"
                   ]
