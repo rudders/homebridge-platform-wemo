@@ -69,8 +69,7 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Outlet Serial Number",
-              "description": "Serial number of the Wemo Insight."
+              "title": "Outlet Serial Number"
             },
             "showAsSwitch": {
               "type": "boolean",
@@ -87,8 +86,7 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Insight Serial Number",
-              "description": "Serial number of the Wemo Insight."
+              "title": "Insight Serial Number"
             },
             "showTodayTC": {
               "type": "boolean",
@@ -112,8 +110,7 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Maker Serial Number",
-              "description": "Serial number of the Wemo Maker."
+              "title": "Maker Serial Number"
             },
             "makerType": {
               "type": "string",
@@ -150,8 +147,7 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Motion Serial Number",
-              "description": "Serial number of the Wemo Motion."
+              "title": "Motion Serial Number"
             },
             "noMotionTimer": {
               "type": "number",
