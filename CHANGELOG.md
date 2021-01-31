@@ -2,6 +2,20 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changes
+
+* **Configuration Changes**
+  * These changes are backwards compatible with existing setups
+  * New 'Wemo Outlets' section to define outlets to show as switches
+  * Removal of `removeByName` from the UI, this setting is still available manually
+  * Deprecation of the following settings:
+    * `disableDiscovery` - now has no effect
+    * `doorOpenTimer` - now configured per Wemo Maker device in the 'Wemo Makers' section
+    * `noMotionTimer` - now configured per Wemo Motion device in the 'Wemo Motions' section
+    * `outletAsSwitch` - now configured per Wemo Outlet device in the 'Wemo Outlets' section
+
 ## 2.10.0 (2021-01-30)
 
 ### Notable Changes
