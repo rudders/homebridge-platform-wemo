@@ -17,8 +17,7 @@
         "title": "Device Detection",
         "description": "This setting defines how the plugin finds your devices.",
         "default": "auto",
-        "oneOf": [
-          {
+        "oneOf": [{
             "title": "Auto (Discovery + Manual Devices)",
             "enum": [
               "auto"
@@ -39,9 +38,6 @@
         "placeholder": 30,
         "minimum": 15
       },
-      "disableDiscovery": {
-        "type": "boolean"
-      },
       "disableDeviceLogging": {
         "type": "boolean",
         "title": "Disable Device Logging",
@@ -57,26 +53,6 @@
         "title": "Disable Plugin",
         "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
       },
-      "outletAsSwitch": {
-        "type": "string",
-        "title": "Outlet As Switch",
-        "description": "A list of outlet devices (except Insight) to show as switches by serial number. For example 221000A0000C2B or multiple separated by a comma."
-      },
-      "noMotionTimer": {
-        "type": "number",
-        "title": "No Motion Timer",
-        "description": "A timer (in seconds) for how long after motion is not detected that the state is changed. Applies only to Wemo Motion.",
-        "placeholder": 60,
-        "minimum": 0
-      },
-      "removeByName": {
-        "type": "string",
-        "title": "Remove By Name",
-        "description": "A list of devices to remove from the cache by name. For example My Lights or multiple separated by a comma."
-      },
-      "doorOpenTimer": {
-        "type": "number"
-      },
       "manualDevices": {
         "type": "array",
         "items": {
@@ -84,6 +60,24 @@
           "title": "Device URL",
           "placeholder": "http://192.168.1.20:49153/setup.xml",
           "description": "Port is usually 49153 but can sometimes be 49152 or 49154. Enter just an IP to let the plugin try and obtain the port automatically (experimental!)."
+        }
+      },
+      "wemoOutlets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Insight Serial Number",
+              "description": "Serial number of the Wemo Insight."
+            },
+            "showAsSwitch": {
+              "type": "boolean",
+              "title": "Expose As Switch",
+              "description": "If checked, this device will appear as a switch in HomeKit."
+            }
+          }
         }
       },
       "wemoInsights": {
@@ -123,10 +117,9 @@
             },
             "makerType": {
               "type": "string",
-              "title": "Type",
-              "description": "How this Wemo Maker should appear.",
-              "oneOf": [
-                {
+              "title": "Show As",
+              "description": "How this Wemo Maker should appear in HomeKit.",
+              "oneOf": [{
                   "title": "Garage Door",
                   "enum": [
                     "garageDoor"
@@ -176,8 +169,28 @@
         "items": {
           "type": "string",
           "title": "Serial Number",
-          "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb and not the serial number of the Wemo Link."
+          "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb."
         }
+      },
+      "removeByName": {
+        "type": "string"
+      },
+      "doorOpenTimer": {
+        "type": "number",
+        "title": "Door Open Timer",
+        "description": "This setting is now configured per Wemo Maker device in the 'Wemo Makers' section.",
+        "minimum": 1
+      },
+      "noMotionTimer": {
+        "type": "number",
+        "title": "No Motion Timer",
+        "description": "This setting is now configured per Wemo Motion device in the 'Wemo Motions' section.",
+        "minimum": 0
+      },
+      "outletAsSwitch": {
+        "type": "string",
+        "title": "Outlet As Switch",
+        "description": "This setting is now configured per Wemo Outlet device in the 'Wemo Outlets' section."
       },
       "wemoClient": {
         "type": "object",
@@ -203,8 +216,7 @@
       }
     }
   },
-  "layout": [
-    {
+  "layout": [{
       "type": "fieldset",
       "title": "Optional Settings",
       "expandable": true,
@@ -217,29 +229,31 @@
       ]
     },
     {
-      "type": "fieldset",
-      "title": "Device Settings",
-      "expandable": true,
-      "items": [
-        "outletAsSwitch",
-        "noMotionTimer",
-        "removeByName"
-      ]
-    },
-    {
       "key": "manualDevices",
       "expandable": true,
       "title": "Manual Devices",
       "add": "Add Another Device",
       "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "manualDevices[]"
-          ]
-        }
-      ]
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "manualDevices[]"
+        ]
+      }]
+    },
+    {
+      "key": "wemoOutlets",
+      "expandable": true,
+      "title": "Wemo Outlets",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "wemoOutlets[].serialNumber",
+          "wemoOutlets[].showAsSwitch"
+        ]
+      }]
     },
     {
       "key": "wemoInsights",
@@ -247,16 +261,14 @@
       "title": "Wemo Insights",
       "add": "Add Another Device",
       "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "wemoInsights[].serialNumber",
-            "wemoInsights[].showTodayTC",
-            "wemoInsights[].wattDiff"
-          ]
-        }
-      ]
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "wemoInsights[].serialNumber",
+          "wemoInsights[].showTodayTC",
+          "wemoInsights[].wattDiff"
+        ]
+      }]
     },
     {
       "key": "makerTypes",
@@ -264,16 +276,14 @@
       "title": "Wemo Makers",
       "add": "Add Another Device",
       "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "makerTypes[].serialNumber",
-            "makerTypes[].makerType",
-            "makerTypes[].makerTimer"
-          ]
-        }
-      ]
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "makerTypes[].serialNumber",
+          "makerTypes[].makerType",
+          "makerTypes[].makerTimer"
+        ]
+      }]
     },
     {
       "key": "wemoMotions",
@@ -281,15 +291,13 @@
       "title": "Wemo Motions",
       "add": "Add Another Device",
       "type": "array",
-      "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "wemoMotions[].serialNumber",
-            "wemoMotions[].noMotionTimer"
-          ]
-        }
-      ]
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "wemoMotions[].serialNumber",
+          "wemoMotions[].noMotionTimer"
+        ]
+      }]
     },
     {
       "key": "ignoredDevices",
@@ -297,13 +305,21 @@
       "title": "Ignored Devices",
       "add": "Add Another Device",
       "type": "array",
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "ignoredDevices[]"
+        ]
+      }]
+    },
+    {
+      "type": "fieldset",
+      "title": "Deprecated Settings",
+      "expandable": true,
       "items": [
-        {
-          "type": "fieldset",
-          "items": [
-            "ignoredDevices[]"
-          ]
-        }
+        "doorOpenTimer",
+        "noMotionTimer",
+        "outletAsSwitch"
       ]
     }
   ]
