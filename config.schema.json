@@ -69,13 +69,13 @@
           "properties": {
             "serialNumber": {
               "type": "string",
-              "title": "Insight Serial Number",
+              "title": "Outlet Serial Number",
               "description": "Serial number of the Wemo Insight."
             },
             "showAsSwitch": {
               "type": "boolean",
               "title": "Expose As Switch",
-              "description": "If checked, this device will appear as a switch in HomeKit."
+              "description": "If checked, this device will appear as a HomeKit switch."
             }
           }
         }
