@@ -2,7 +2,7 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.11.0 (2021-02-01)
 
 ### Changes
 
@@ -15,7 +15,9 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     * `doorOpenTimer` - now configured per Wemo Maker device in the 'Wemo Makers' section
     * `noMotionTimer` - now configured per Wemo Motion device in the 'Wemo Motions' section
     * `outletAsSwitch` - now configured per Wemo Outlet device in the 'Wemo Outlets' section
+  * These deprecated settings have their own section in the plugin UI
 * Clean up the plugin-ui by removing unnecessary descriptions
+* Fixes a bug when initialising Garage Doors
 
 ## 2.10.0 (2021-01-30)
 
