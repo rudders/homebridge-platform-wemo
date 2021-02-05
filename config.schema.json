@@ -166,43 +166,38 @@
           "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb."
         }
       },
-      "removeByName": {
+      "debugFakegato": {
         "type": "string"
       },
-      "doorOpenTimer": {
-        "type": "number",
-        "title": "Door Open Timer",
-        "description": "This setting is now configured per Wemo Maker device in the 'Wemo Makers' section.",
-        "minimum": 1
-      },
-      "noMotionTimer": {
-        "type": "number",
-        "title": "No Motion Timer",
-        "description": "This setting is now configured per Wemo Motion device in the 'Wemo Motions' section.",
-        "minimum": 0
-      },
-      "outletAsSwitch": {
-        "type": "string",
-        "title": "Outlet As Switch",
-        "description": "This setting is now configured per Wemo Outlet device in the 'Wemo Outlets' section."
+      "removeByName": {
+        "type": "string"
       },
       "wemoClient": {
         "type": "object",
         "properties": {
           "listen_interface": {
-            "type": "string"
+            "type": "string",
+            "title": "Listener Interface",
+            "description": "This can be used to specify which network interface to listen on. If blank then by default the server will listen on all interfaces, however, Wemo subscription messages will only be sent to the first non-internal IPv4 address returned by os.networkInterfaces() after being sorted by compatible network which may or may not be what you want."
           },
           "port": {
-            "type": "integer"
+            "type": "integer",
+            "title": "Listener Port",
+            "description": "This can be used to specify a port to bind to for listening to UPnP events. If blank or 0 then the plugin will listen on any available randomly selected port.",
+            "placeholder": 0
           },
           "discover_opts": {
             "type": "object",
             "properties": {
               "interfaces": {
-                "type": "string"
+                "type": "string",
+                "title": "SSDP Interfaces",
+                "description": "A comma separated list of interfaces to explicitly bind to. If blank then bind to all available interfaces."
               },
               "explicitSocketBind": {
-                "type": "boolean"
+                "type": "boolean",
+                "title": "SSDP Explicit Socket Bind",
+                "description": "Bind sockets to each discovered interface explicitly instead of relying on the system. Might help with issues with multiple NICs."
               }
             }
           }
@@ -221,19 +216,6 @@
         "debug",
         "disablePlugin"
       ]
-    },
-    {
-      "key": "manualDevices",
-      "expandable": true,
-      "title": "Manual Devices",
-      "add": "Add Another Device",
-      "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "manualDevices[]"
-        ]
-      }]
     },
     {
       "key": "wemoOutlets",
@@ -294,6 +276,19 @@
       }]
     },
     {
+      "key": "manualDevices",
+      "expandable": true,
+      "title": "Manual Devices",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "manualDevices[]"
+        ]
+      }]
+    },
+    {
       "key": "ignoredDevices",
       "expandable": true,
       "title": "Ignored Devices",
@@ -308,12 +303,13 @@
     },
     {
       "type": "fieldset",
-      "title": "Deprecated Settings",
+      "title": "Network Settings",
       "expandable": true,
       "items": [
-        "doorOpenTimer",
-        "noMotionTimer",
-        "outletAsSwitch"
+        "wemoClient.listen_interface",
+        "wemoClient.port",
+        "wemoClient.discover_opts.interfaces",
+        "wemoClient.discover_opts.explicitSocketBind"
       ]
     }
   ]
