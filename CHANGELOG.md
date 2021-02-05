@@ -11,6 +11,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Changes
 
+* ⚠️ `disableDiscovery`, `noMotionTimer` and `doorOpenTimer` settings no longer have any effect
 * Error messages refactored to show the most useful information
 * [Backend] Code refactoring
 
