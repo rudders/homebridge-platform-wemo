@@ -2,6 +2,18 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Added
+
+* Configuration checks to highlight any unnecessary or incorrectly formatted settings you have
+* Link to 'Configuration' wiki page in the plugin-ui
+
+### Changes
+
+* Error messages refactored to show the most useful information
+* [Backend] Code refactoring
+
 ## 2.11.0 (2021-02-01)
 
 ### Changes
