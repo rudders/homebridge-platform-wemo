@@ -1,7 +1,7 @@
 {
   "name": "homebridge-platform-wemo",
   "alias": "BelkinWeMo",
-  "version": "2.11.0",
+  "version": "2.12.0-0",
   "author": "bwp91",
   "description": "Homebridge plugin to control Wemo devices.",
   "license": "MIT",
