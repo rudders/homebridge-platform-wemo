@@ -6,6 +6,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
+* A queue for device loading to improve reliability for users with a lot of Wemo devices
 * Configuration checks to highlight any unnecessary or incorrectly formatted settings you have
 * Link to 'Configuration' wiki page in the plugin-ui
 
