@@ -48,59 +48,13 @@
         "type": "boolean",
         "description": "If checked, more information will be added to the log."
       },
+      "debugFakegato": {
+        "type": "string"
+      },
       "disablePlugin": {
         "type": "boolean",
         "title": "Disable Plugin",
         "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
-      },
-      "manualDevices": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "title": "Device URL",
-          "placeholder": "http://192.168.1.20:49153/setup.xml",
-          "description": "Port is usually 49153 but can sometimes be 49152 or 49154. Enter just an IP to let the plugin try and obtain the port automatically (experimental!)."
-        }
-      },
-      "wemoOutlets": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "serialNumber": {
-              "type": "string",
-              "title": "Outlet Serial Number"
-            },
-            "showAsSwitch": {
-              "type": "boolean",
-              "title": "Show As Switch"
-            }
-          }
-        }
-      },
-      "wemoInsights": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "serialNumber": {
-              "type": "string",
-              "title": "Insight Serial Number"
-            },
-            "showTodayTC": {
-              "type": "boolean",
-              "title": "Show Today's Consumption",
-              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
-            },
-            "wattDiff": {
-              "type": "number",
-              "title": "Wattage Logging",
-              "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 1 or more.",
-              "placeholder": 1,
-              "minimum": 1
-            }
-          }
-        }
       },
       "makerTypes": {
         "type": "array",
@@ -138,6 +92,30 @@
           }
         }
       },
+      "wemoInsights": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Insight Serial Number"
+            },
+            "showTodayTC": {
+              "type": "boolean",
+              "title": "Show Today's Consumption",
+              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+            },
+            "wattDiff": {
+              "type": "number",
+              "title": "Wattage Logging",
+              "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 1 or more.",
+              "placeholder": 1,
+              "minimum": 1
+            }
+          }
+        }
+      },
       "wemoMotions": {
         "type": "array",
         "items": {
@@ -157,6 +135,31 @@
           }
         }
       },
+      "wemoOutlets": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "serialNumber": {
+              "type": "string",
+              "title": "Outlet Serial Number"
+            },
+            "showAsSwitch": {
+              "type": "boolean",
+              "title": "Show As Switch"
+            }
+          }
+        }
+      },
+      "manualDevices": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "title": "Device URL",
+          "placeholder": "http://192.168.1.20:49153/setup.xml",
+          "description": "Port is usually 49153 but can sometimes be 49152 or 49154. Enter just an IP to let the plugin try and obtain the port automatically (experimental!)."
+        }
+      },
       "ignoredDevices": {
         "title": "Ignored Devices",
         "type": "array",
@@ -165,9 +168,6 @@
           "title": "Serial Number",
           "description": "The serial number of the device that should be ignored. If you wish to ignore a bulb connected through a Wemo Link, please use the device ID of the bulb."
         }
-      },
-      "debugFakegato": {
-        "type": "string"
       },
       "removeByName": {
         "type": "string"
@@ -218,16 +218,17 @@
       ]
     },
     {
-      "key": "wemoOutlets",
+      "key": "makerTypes",
       "expandable": true,
-      "title": "Wemo Outlets",
+      "title": "Wemo Makers",
       "add": "Add Another Device",
       "type": "array",
       "items": [{
         "type": "fieldset",
         "items": [
-          "wemoOutlets[].serialNumber",
-          "wemoOutlets[].showAsSwitch"
+          "makerTypes[].serialNumber",
+          "makerTypes[].makerType",
+          "makerTypes[].makerTimer"
         ]
       }]
     },
@@ -247,21 +248,6 @@
       }]
     },
     {
-      "key": "makerTypes",
-      "expandable": true,
-      "title": "Wemo Makers",
-      "add": "Add Another Device",
-      "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "makerTypes[].serialNumber",
-          "makerTypes[].makerType",
-          "makerTypes[].makerTimer"
-        ]
-      }]
-    },
-    {
       "key": "wemoMotions",
       "expandable": true,
       "title": "Wemo Motions",
@@ -272,6 +258,20 @@
         "items": [
           "wemoMotions[].serialNumber",
           "wemoMotions[].noMotionTimer"
+        ]
+      }]
+    },
+    {
+      "key": "wemoOutlets",
+      "expandable": true,
+      "title": "Wemo Outlets",
+      "add": "Add Another Device",
+      "type": "array",
+      "items": [{
+        "type": "fieldset",
+        "items": [
+          "wemoOutlets[].serialNumber",
+          "wemoOutlets[].showAsSwitch"
         ]
       }]
     },
