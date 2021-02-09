@@ -15,6 +15,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * Adapted port scanning method which now checks the reachability of the `setup.xml` file
 * ⚠️ `disableDiscovery`, `noMotionTimer` and `doorOpenTimer` settings no longer have any effect
 * Error messages refactored to show the most useful information
+* Updated minimum node to v14.15.5
 * [Backend] Code refactoring
 
 ## 2.11.0 (2021-02-01)
