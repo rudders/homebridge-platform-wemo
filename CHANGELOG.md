@@ -32,6 +32,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     * `noMotionTimer` - now configured per Wemo Motion device in the 'Wemo Motions' section
     * `outletAsSwitch` - now configured per Wemo Outlet device in the 'Wemo Outlets' section
   * These deprecated settings have their own section in the plugin UI
+* Properly catch exceptions on SSDP search errors
 * Clean up the plugin-ui by removing unnecessary descriptions
 * Fixes a bug when initialising Garage Doors
 
