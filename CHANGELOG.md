@@ -18,6 +18,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * Error messages refactored to show the most useful information
 * Updated minimum Homebridge to v1.1.7
 * Updated minimum Node to v14.15.5
+* Fakegato library formatting and simplification
 * [Backend] Code refactoring
 
 ## 2.11.0 (2021-02-01)
