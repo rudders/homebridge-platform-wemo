@@ -41,12 +41,12 @@
       "disableDeviceLogging": {
         "type": "boolean",
         "title": "Disable Device Logging",
-        "description": "If checked, device updates will not be added to the log."
+        "description": "If true, updates for all devices will not be added to the log when they are controlled."
       },
       "debug": {
         "title": "Debug Logging",
         "type": "boolean",
-        "description": "If checked, more information will be added to the log."
+        "description": "If true, more information will be added to the log."
       },
       "debugFakegato": {
         "type": "string"
@@ -54,7 +54,7 @@
       "disablePlugin": {
         "type": "boolean",
         "title": "Disable Plugin",
-        "description": "If checked, the plugin will remove all accessories and not load the plugin on restart."
+        "description": "If true, the plugin will remove all accessories and not load the plugin on restart."
       },
       "makerTypes": {
         "type": "array",
@@ -104,7 +104,7 @@
             "showTodayTC": {
               "type": "boolean",
               "title": "Show Today's Consumption",
-              "description": "If checked, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+              "description": "If true, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
             },
             "wattDiff": {
               "type": "number",
