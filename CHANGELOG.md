@@ -12,8 +12,8 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Changes
 
-* Adapted port scanning method which now checks the reachability of the `setup.xml` file
 * ⚠️ `disableDiscovery`, `noMotionTimer` and `doorOpenTimer` settings no longer have any effect
+* Adapted port scanning method which now checks the reachability of the `setup.xml` file
 * Hide unused modes for `HeaterCooler` services for Wemo Heater, Dehumidifier, Purifier and Crockpot
 * Error messages refactored to show the most useful information
 * Updated minimum Homebridge to v1.1.7
