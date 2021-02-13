@@ -2,7 +2,7 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.12.0 (2021-02-13)
 
 ### Added
 
@@ -12,7 +12,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Changes
 
-* ⚠️ `disableDiscovery`, `noMotionTimer` and `doorOpenTimer` settings no longer have any effect
+* ⚠️ `disableDiscovery`, `noMotionTimer`, `doorOpenTimer` and `outletAsSwitch` settings no longer have any effect
 * Adapted port scanning method which now checks the reachability of the `setup.xml` file
 * Hide unused modes for `HeaterCooler` services for Wemo Heater, Dehumidifier, Purifier and Crockpot
 * Error messages refactored to show the most useful information
