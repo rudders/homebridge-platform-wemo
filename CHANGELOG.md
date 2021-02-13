@@ -8,6 +8,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 * A queue for device loading to improve reliability for users with a lot of Wemo devices
 * Configuration checks to highlight any unnecessary or incorrectly formatted settings you have
+* Network Settings section to the Homebridge UI where you can configure the settings that were the `wemoClient` settings
 * Links to 'Configuration' and 'Uninstall' wiki pages in the plugin-ui
 
 ### Changes
