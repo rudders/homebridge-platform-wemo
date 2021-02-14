@@ -142,15 +142,22 @@
               "title": "Serial Number",
               "description": "In the case of a Wemo Bulb (via Link) please use the device ID of the bulb, not the serial number of the Link."
             },
+            "adaptiveLightingShift": {
+              "title": "Adaptive Lighting Shift",
+              "type": "number",
+              "description": "An adjustment factor for Adaptive Lighting. The mired value for each update will be increased by this setting, making the light appear warmer. A value in the range 50-200 should be appropriate. Must be 0 or more.",
+              "placeholder": 0,
+              "minimum": 0
+            },
             "overrideDisabledLogging": {
               "type": "boolean",
               "title": "Override Disabled Logging",
-              "description": "If true, updates for this device will be added to the log, even if the general 'Disable Device Logging' setting is true."
+              "description": "If true, updates for this device will be added to the log, even if the general 'Disable Device Logging' setting is true.",
+              "condition": {
+                "functionBody": "return model.disableDeviceLogging;"
+              }
             }
           }
-        },
-        "condition": {
-          "functionBody": "return model.disableDeviceLogging;"
         }
       },
       "wemoMotions": {
@@ -335,6 +342,7 @@
         "type": "fieldset",
         "items": [
           "wemoLights[].serialNumber",
+          "wemoLights[].adaptiveLightingShift",
           "wemoLights[].overrideDisabledLogging"
         ]
       }]
