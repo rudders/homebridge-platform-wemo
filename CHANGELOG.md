@@ -7,7 +7,8 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Added
 
 * The ability to explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
-* New `adaptiveLightingShift` option to offset the Adaptive Lighting values to make the light appear warmer
+* New `brightnessStep` option to specify a minimum brightness step in the Home app per Wemo Dimmer/Bulb
+* New `adaptiveLightingShift` option to offset the Adaptive Lighting values per Wemo Bulb
 
 ### Changes
 
