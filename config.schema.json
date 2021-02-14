@@ -142,6 +142,13 @@
               "title": "Serial Number",
               "description": "In the case of a Wemo Bulb (via Link) please use the device ID of the bulb, not the serial number of the Link."
             },
+            "brightnessStep": {
+              "title": "Brightness Step",
+              "type": "number",
+              "description": "A minimum step for the brightness slider in the Home app. Must be 1 or more.",
+              "placeholder": 1,
+              "minimum": 1
+            },
             "adaptiveLightingShift": {
               "title": "Adaptive Lighting Shift",
               "type": "number",
@@ -342,6 +349,7 @@
         "type": "fieldset",
         "items": [
           "wemoLights[].serialNumber",
+          "wemoLights[].brightnessStep",
           "wemoLights[].adaptiveLightingShift",
           "wemoLights[].overrideDisabledLogging"
         ]
