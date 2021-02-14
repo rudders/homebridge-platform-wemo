@@ -8,6 +8,10 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 * The ability to explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
 
+### Changes
+
+* Disable Adaptive Lighting if the plugin detects a significant colour change (i.e. controlled externally)
+
 ## 2.12.0 (2021-02-13)
 
 ### Added
