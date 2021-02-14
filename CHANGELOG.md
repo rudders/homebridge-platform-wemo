@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Added
+
+* The ability to explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
+
 ## 2.12.0 (2021-02-13)
 
 ### Added
