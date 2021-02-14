@@ -7,6 +7,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Added
 
 * The ability to explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
+* New `adaptiveLightingShift` option to offset the Adaptive Lighting values to make the light appear warmer
 
 ### Changes
 
