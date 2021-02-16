@@ -13,6 +13,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Disable Adaptive Lighting if the plugin detects a significant colour change (i.e. controlled externally)
+* Fixes an issue when adding Insights to Homebridge
 
 ## 2.12.0 (2021-02-13)
 
