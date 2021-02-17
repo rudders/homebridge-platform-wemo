@@ -32,8 +32,7 @@
 * [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
 
 ### Features
-* [Configuration (v1)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v1.6))
-* [Configuration (v2)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration-(v2.0))
+* [Configuration](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration)
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
 * [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
 
