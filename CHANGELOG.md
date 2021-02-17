@@ -11,6 +11,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
   * `brightnessStep` option to specify a brightness step in the Home app per Wemo Dimmer/Bulb
   * `adaptiveLightingShift` option to offset the Adaptive Lighting values per Wemo Bulb
 * Plugin-UI shows an status icon next to the reachability + shows device firmware
+* In debug mode, the plugin will log each device's customised options when initialised
 
 ### Changes
 
