@@ -2,18 +2,21 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 2.13.0 (2021-02-17)
 
 ### Added
 
-* The ability to explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
-* New `brightnessStep` option to specify a minimum brightness step in the Home app per Wemo Dimmer/Bulb
-* New `adaptiveLightingShift` option to offset the Adaptive Lighting values per Wemo Bulb
+* **Configuration**
+  * Explicitly enable device logging *per* device if you have `disableDeviceLogging` set to `true`
+  * `brightnessStep` option to specify a brightness step in the Home app per Wemo Dimmer/Bulb
+  * `adaptiveLightingShift` option to offset the Adaptive Lighting values per Wemo Bulb
+* Plugin-UI shows an status icon next to the reachability + shows device firmware
 
 ### Changes
 
+* Raised minimum Homebridge beta required for Adaptive Lighting to 1.3.0-beta.58
 * Disable Adaptive Lighting if the plugin detects a significant colour change (i.e. controlled externally)
-* Fixes an issue when adding Insights to Homebridge
+* Fixes a uuid error when adding Insights to Homebridge
 
 ## 2.12.0 (2021-02-13)
 
