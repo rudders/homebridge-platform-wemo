@@ -82,6 +82,14 @@
                 }
               ]
             },
+            "exposeContactSensor": {
+              "type": "boolean",
+              "title": "Expose Contact Sensor",
+              "description": "Expose a contact sensor which can be useful to view history in the Eve app.",
+              "condition": {
+                "functionBody": "return (model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor')"
+              }
+            },
             "makerTimer": {
               "type": "number",
               "title": "Open/Close Time",
@@ -316,6 +324,7 @@
         "items": [
           "makerTypes[].serialNumber",
           "makerTypes[].makerType",
+          "makerTypes[].exposeContactSensor",
           "makerTypes[].makerTimer",
           "makerTypes[].overrideDisabledLogging"
         ]
