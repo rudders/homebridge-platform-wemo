@@ -65,6 +65,11 @@
               "type": "string",
               "title": "Serial Number"
             },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+            },
             "makerType": {
               "type": "string",
               "title": "Show As",
@@ -117,6 +122,11 @@
               "type": "string",
               "title": "Serial Number"
             },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+            },
             "showTodayTC": {
               "type": "boolean",
               "title": "Show Today's Consumption",
@@ -149,6 +159,11 @@
               "type": "string",
               "title": "Serial Number",
               "description": "In the case of a Wemo Bulb (via Link) please use the device ID of the bulb, not the serial number of the Link."
+            },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
             },
             "brightnessStep": {
               "title": "Brightness Step",
@@ -184,6 +199,11 @@
               "type": "string",
               "title": "Serial Number"
             },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+            },
             "noMotionTimer": {
               "type": "number",
               "title": "No Motion Timer",
@@ -211,6 +231,11 @@
               "type": "string",
               "title": "Serial Number"
             },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+            },
             "showAsSwitch": {
               "type": "boolean",
               "title": "Show As Switch"
@@ -235,15 +260,20 @@
               "type": "string",
               "title": "Serial Number"
             },
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+            },
             "overrideDisabledLogging": {
               "type": "boolean",
               "title": "Override Disabled Logging",
-              "description": "If true, updates for this device will be added to the log, even if the general 'Disable Device Logging' setting is true."
+              "description": "If true, updates for this device will be added to the log, even if the general 'Disable Device Logging' setting is true.",
+              "condition": {
+                "functionBody": "return model.disableDeviceLogging;"
+              }
             }
           }
-        },
-        "condition": {
-          "functionBody": "return model.disableDeviceLogging;"
         }
       },
       "manualDevices": {
@@ -323,6 +353,7 @@
         "type": "fieldset",
         "items": [
           "makerTypes[].serialNumber",
+          "makerTypes[].label",
           "makerTypes[].makerType",
           "makerTypes[].exposeContactSensor",
           "makerTypes[].makerTimer",
@@ -341,6 +372,7 @@
         "type": "fieldset",
         "items": [
           "wemoInsights[].serialNumber",
+          "wemoInsights[].label",
           "wemoInsights[].showTodayTC",
           "wemoInsights[].wattDiff",
           "wemoInsights[].overrideDisabledLogging"
@@ -358,6 +390,7 @@
         "type": "fieldset",
         "items": [
           "wemoLights[].serialNumber",
+          "wemoLights[].label",
           "wemoLights[].brightnessStep",
           "wemoLights[].adaptiveLightingShift",
           "wemoLights[].overrideDisabledLogging"
@@ -375,6 +408,7 @@
         "type": "fieldset",
         "items": [
           "wemoMotions[].serialNumber",
+          "wemoMotions[].label",
           "wemoMotions[].noMotionTimer",
           "wemoMotions[].overrideDisabledLogging"
         ]
@@ -391,6 +425,7 @@
         "type": "fieldset",
         "items": [
           "wemoOutlets[].serialNumber",
+          "wemoOutlets[].label",
           "wemoOutlets[].showAsSwitch",
           "wemoOutlets[].overrideDisabledLogging"
         ]
@@ -407,6 +442,7 @@
         "type": "fieldset",
         "items": [
           "wemoOthers[].serialNumber",
+          "wemoOthers[].label",
           "wemoOthers[].overrideDisabledLogging"
         ]
       }]
