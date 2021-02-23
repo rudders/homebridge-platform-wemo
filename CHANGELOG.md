@@ -12,6 +12,10 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
   * for how long the garage door was open each time
 * Plugin will now check if a device is ignored by the device USN at an earlier stage of being discovered
 
+### Changes
+
+* Updated minimum Node to v14.16.0
+
 ## 2.13.0 (2021-02-17)
 
 ### Added
