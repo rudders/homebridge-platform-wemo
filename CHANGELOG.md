@@ -2,6 +2,16 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Added
+
+* Expose a Contact Sensor service for your Wemo Maker (when configured as a Garage Door) to show more information in the Eve app, including:
+  * when the door was last open
+  * how many times it's been opened
+  * for how long the garage door was open each time
+* Plugin will now check if a device is ignored by the device USN at an earlier stage of being discovered
+
 ## 2.13.0 (2021-02-17)
 
 ### Added
