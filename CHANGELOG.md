@@ -6,6 +6,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
+* A `label` setting per device group which has no effect except to help identify the device when editing the configuration
 * Expose a Contact Sensor service for your Wemo Maker (when configured as a Garage Door) to show more information in the Eve app, including:
   * when the door was last open
   * how many times it's been opened
