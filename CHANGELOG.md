@@ -7,14 +7,14 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Added
 
 * A `label` setting per device group which has no effect except to help identify the device when editing the configuration
-* Expose a Contact Sensor service for your Wemo Maker (when configured as a Garage Door) to show more information in the Eve app, including:
+* [experimental] Expose a Contact Sensor service for your Wemo Maker (via the plugin settings, when configured as a Garage Door) to show more information in the Eve app, including:
   * when the door was last open
   * how many times it's been opened
   * for how long the garage door was open each time
-* Plugin will now check if a device is ignored by the device USN at an earlier stage of being discovered
 
 ### Changes
 
+* Plugin will now check if a device is ignored by the device USN at an earlier stage of being discovered
 * Updated minimum Node to v14.16.0
 
 ## 2.13.0 (2021-02-17)
