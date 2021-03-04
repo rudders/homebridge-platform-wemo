@@ -92,7 +92,7 @@
               "title": "Expose Contact Sensor",
               "description": "If true, a contact sensor will be exposed which can be useful to view history in the Eve app.",
               "condition": {
-                "functionBody": "return (model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor')"
+                "functionBody": "return (model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor');"
               }
             },
             "makerTimer": {
