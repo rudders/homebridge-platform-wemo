@@ -139,6 +139,13 @@
               "placeholder": 1,
               "minimum": 1
             },
+            "timeDiff": {
+              "type": "number",
+              "title": "Wattage Logging",
+              "description": "The plugin will not log device wattage if the time difference (in seconds) from the previous value is less than this number. Must be 1 or more.",
+              "placeholder": 1,
+              "minimum": 1
+            },
             "overrideDisabledLogging": {
               "type": "boolean",
               "title": "Override Disabled Logging",
@@ -375,6 +382,7 @@
           "wemoInsights[].label",
           "wemoInsights[].showTodayTC",
           "wemoInsights[].wattDiff",
+          "wemoInsights[].timeDiff",
           "wemoInsights[].overrideDisabledLogging"
         ]
       }]
