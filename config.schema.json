@@ -134,14 +134,14 @@
             },
             "wattDiff": {
               "type": "number",
-              "title": "Wattage Logging",
+              "title": "Limit Wattage Logging (by wattage)",
               "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
               "minimum": 1
             },
             "timeDiff": {
               "type": "number",
-              "title": "Wattage Logging",
+              "title": "Limit Wattage Logging (by time)",
               "description": "The plugin will not log device wattage if the time difference (in seconds) from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
               "minimum": 1
