@@ -6,8 +6,12 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
-* **Wemo Insights**
-  * Configure a 'timeout' between wattage log entries via the plugin settings
+* Device's current state will be requested immediately when initialised into Homebridge
+* Configure a 'timeout' between wattage log entries via the plugin settings for the Wemo Insight
+
+### Changes
+
+* Open/close time setting for Wemo Makers will be hidden if device is set to expose as switch
 
 ## 2.14.0 (2021-03-02)
 
