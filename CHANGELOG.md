@@ -12,6 +12,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Open/close time setting for Wemo Makers will be hidden if device is set to expose as switch
+* Wemo Makers no longer need 'dummy' contact sensor to view Eve history
 * Adaptive Lighting now requires Homebridge 1.3 release
 
 ## 2.14.0 (2021-03-02)
