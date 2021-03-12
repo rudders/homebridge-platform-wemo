@@ -7,12 +7,13 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Added
 
 * Device's current state will be requested immediately when initialised into Homebridge
-* Configure a 'timeout' between wattage log entries via the plugin settings for the Wemo Insight
+* Optional polling setting for newer **Wemo Dimmers** that don't automatically notify the plugin when the brightness is changed externally
+* Optional 'timeout' setting for **Wemo Insight** to configure a minimum time between wattage log entries
 
 ### Changes
 
-* Open/close time setting for Wemo Makers will be hidden if device is set to expose as switch
-* Wemo Makers no longer need 'dummy' contact sensor to view Eve history
+* Open/close time setting for **Wemo Makers** will be hidden if device is set to expose as switch
+* **Wemo Makers** no longer need 'dummy' contact sensor to view Eve history
   * For this reason, the `exposeContactSensor` setting is now redundant and so has been removed
 * Adaptive Lighting now requires Homebridge 1.3 release
 
