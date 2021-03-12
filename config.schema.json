@@ -181,6 +181,13 @@
               "placeholder": 0,
               "minimum": 0
             },
+            "pollingInterval": {
+              "type": "number",
+              "title": "Polling Interval",
+              "description": "Newer models of the Wemo Dimmer may require polling (in seconds) for brightness updates. Must be 15 or more.",
+              "placeholder": 30,
+              "minimum": 15
+            },
             "overrideDisabledLogging": {
               "type": "boolean",
               "title": "Override Disabled Logging",
@@ -395,6 +402,7 @@
           "wemoLights[].label",
           "wemoLights[].brightnessStep",
           "wemoLights[].adaptiveLightingShift",
+          "wemoLights[].pollingInterval",
           "wemoLights[].overrideDisabledLogging"
         ]
       }]
