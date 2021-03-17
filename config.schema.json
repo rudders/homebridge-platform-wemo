@@ -9,6 +9,7 @@
     "type": "object",
     "properties": {
       "name": {
+        "title": "Plugin Name",
         "type": "string",
         "default": "Wemo"
       },
@@ -49,6 +50,8 @@
         "description": "If true, more information will be added to the log."
       },
       "debugFakegato": {
+        "title": "Debug Fakegato",
+        "description": "If true, the included Fakegato library will debug to the log.",
         "type": "string"
       },
       "disablePlugin": {
@@ -57,6 +60,8 @@
         "description": "If true, the plugin will remove all accessories and not load the plugin on restart."
       },
       "makerTypes": {
+        "title": "Wemo Makers",
+        "description": "Specific settings for Wemo Makers.",
         "type": "array",
         "items": {
           "type": "object",
@@ -109,6 +114,8 @@
         }
       },
       "wemoInsights": {
+        "title": "Wemo Insights",
+        "description": "Specific settings for Wemo Insights.",
         "type": "array",
         "items": {
           "type": "object",
@@ -153,6 +160,8 @@
         }
       },
       "wemoLights": {
+        "title": "Wemo Lights",
+        "description": "Specific settings for Wemo Light Switches, Dimmers and Bulbs",
         "type": "array",
         "items": {
           "type": "object",
@@ -200,6 +209,8 @@
         }
       },
       "wemoMotions": {
+        "title": "Wemo Motions",
+        "description": "Specific settings for Wemo Motions",
         "type": "array",
         "items": {
           "type": "object",
@@ -232,6 +243,8 @@
         }
       },
       "wemoOutlets": {
+        "title": "Wemo Outlets",
+        "description": "Specific settings for Wemo WiFi Outlets and Outdoor Plugs.",
         "type": "array",
         "items": {
           "type": "object",
@@ -261,6 +274,8 @@
         }
       },
       "wemoOthers": {
+        "title": "Wemo Others",
+        "description": "Specific settings for Wemo Heater, Dehumidifier, Air Purifier and Crockpot.",
         "type": "array",
         "items": {
           "type": "object",
@@ -286,6 +301,7 @@
         }
       },
       "manualDevices": {
+        "title": "Manual Devices",
         "type": "array",
         "items": {
           "type": "string",
@@ -304,9 +320,11 @@
         }
       },
       "removeByName": {
+        "title": "Remove By Name",
         "type": "string"
       },
       "wemoClient": {
+        "title": "Network Settings",
         "type": "object",
         "properties": {
           "listen_interface": {
