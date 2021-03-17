@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## 2.15.1 (2021-03-17)
+
+### Changes
+
+* Modified config schema to show titles/descriptions for non Homebridge UI users
+
 ## 2.15.0 (2021-03-14)
 
 ### Added
