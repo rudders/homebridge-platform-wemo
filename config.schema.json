@@ -52,7 +52,7 @@
       "debugFakegato": {
         "title": "Debug Fakegato",
         "description": "If true, the included Fakegato library will debug to the log.",
-        "type": "string"
+        "type": "boolean"
       },
       "disablePlugin": {
         "type": "boolean",
