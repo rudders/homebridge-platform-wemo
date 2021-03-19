@@ -7,6 +7,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Correct `debugFakegato` setting to type boolean
+* More welcome messages
 
 ## 2.15.1 (2021-03-17)
 
