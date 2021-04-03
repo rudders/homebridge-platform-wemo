@@ -2,6 +2,16 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Requirements
+
+* **Homebridge Users**
+  * This plugin has a minimum requirement of Homebridge v1.3.3
+
+* **HOOBS Users**
+  * This plugin has a minimum requirement of HOOBS v3.3.4
+
 ## 2.15.2 (2021-03-21)
 
 ### Changes
