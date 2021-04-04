@@ -12,6 +12,16 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 * **HOOBS Users**
   * This plugin has a minimum requirement of HOOBS v3.3.4
 
+### Added
+
+* **The following two points only apply to: Switches, Outlets, Insights and Motion so far**
+* On Homebridge restart, devices will show as 'No Response' until discovered
+* 'No Response' messages for devices if controlled and unsuccessful (and this status will be reverted after 5 seconds)
+
+### Changes
+
+* Use the new `.onGet`/`.onSet` methods available in Homebridge v1.3
+
 ## 2.15.2 (2021-03-21)
 
 ### Changes
