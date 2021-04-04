@@ -16,7 +16,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 * On Homebridge restart, devices will show as 'No Response' until discovered
 * 'No Response' messages for devices if controlled and unsuccessful (and this status will be reverted after 5 seconds)
-  * **TODO:** Apply this to the Heater, Humidifier and Air Purifier
+* Debug log messages showing data sent to devices when controlled
 
 ### Changes
 
