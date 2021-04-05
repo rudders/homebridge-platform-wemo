@@ -14,6 +14,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
+* For auto-discovered devices and devices manually-defined with a full address for which the given port does not work, the port scanner will now check to see if a different port is working and setup the device using this new port
 * On Homebridge restart, devices will show as 'No Response' until discovered
 * 'No Response' messages for devices if controlled and unsuccessful (and this status will be reverted after 5 seconds)
 * Debug log messages showing data sent to devices when controlled
@@ -21,6 +22,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Use the new `.onGet`/`.onSet` methods available in Homebridge v1.3
+* Logs will show IP and port on device initiation instead of mac address 
 
 ## 2.15.2 (2021-03-21)
 
