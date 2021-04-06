@@ -23,6 +23,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 * Use the new `.onGet`/`.onSet` methods available in Homebridge v1.3
 * Logs will show IP and port on device initiation instead of mac address 
+* Updated README to reflect minimum supported Homebridge/HOOBS and Node versions
 
 ## 2.15.2 (2021-03-21)
 
