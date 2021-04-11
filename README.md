@@ -42,10 +42,11 @@
 * [How to update node](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-update-node)
 * [How to uninstall correctly](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-uninstall-correctly)
 
-### About
-* [About Me](https://github.com/sponsors/bwp91)
-* [Changelog](https://github.com/bwp91/homebridge-platform-wemo/releases)
+### Help/About
+* [Common Errors](https://github.com/bwp91/homebridge-platform-wemo/wiki/Common-Errors)
 * [Support Request](https://github.com/bwp91/homebridge-platform-wemo/issues/new/choose)
+* [Changelog](https://github.com/bwp91/homebridge-platform-wemo/blob/latest/CHANGELOG.md)
+* [About Me](https://github.com/sponsors/bwp91)
 
 ### Credits
 * To the creator of this plugin: [@rudders](https://github.com/rudders), and to [@devbobo](https://github.com/devbobo) for his contributions.
