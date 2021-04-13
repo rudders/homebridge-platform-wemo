@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## 3.0.2 (2021-04-13)
+
+### Changes
+
+* Fix for `Cannot read property 'updateCharacteristic' of undefined` on plugin startup
+
 ## 3.0.1 (2021-04-13)
 
 ### Requirements
