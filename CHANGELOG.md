@@ -2,7 +2,7 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## 3.0.0 (2021-04-13)
+## 3.0.1 (2021-04-13)
 
 ### Requirements
 
