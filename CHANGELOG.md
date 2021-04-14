@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changes
+
+* Ensure 'No Response' is removed from Wemo Makers when discovered
+
 ## 3.0.3 (2021-04-14)
 
 ### Changes
