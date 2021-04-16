@@ -29,18 +29,14 @@
 * It is recommended to use the current LTS version of Node, currently v14, however Node v10 and v12 are also supported.
 
 ### Setup
-* [Installation (Homebridge)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(Homebridge))
-* [Installation (HOOBS)](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation-(HOOBS))
+* [Installation](https://github.com/bwp91/homebridge-platform-wemo/wiki/Installation)
+* [Configuration](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration)
+* [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
+* [Node Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Node-Version)
+* [Uninstallation](https://github.com/bwp91/homebridge-platform-wemo/wiki/Uninstallation)
 
 ### Features
-* [Configuration](https://github.com/bwp91/homebridge-platform-wemo/wiki/Configuration)
 * [Supported Devices](https://github.com/bwp91/homebridge-platform-wemo/wiki/Supported-Devices)
-* [Beta Version](https://github.com/bwp91/homebridge-platform-wemo/wiki/Beta-Version)
-
-### How-to Guides
-* [How to remove an accessory from the cache](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-remove-an-accessory-from-the-cache)
-* [How to update node](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-update-node)
-* [How to uninstall correctly](https://github.com/bwp91/homebridge-platform-wemo/wiki/How-to-uninstall-correctly)
 
 ### Help/About
 * [Common Errors](https://github.com/bwp91/homebridge-platform-wemo/wiki/Common-Errors)
