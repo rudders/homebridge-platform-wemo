@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changes
+
+* Update wiki links in the Homebridge plugin-ui
+
 ## 3.0.4 (2021-04-14)
 
 ### Changes
