@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changes
+
+* Attempt to fix a power logging issue with Wemo Insights
+
 ## 3.0.5 (2021-04-16)
 
 ### Changes
