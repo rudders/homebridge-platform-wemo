@@ -2,11 +2,11 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
-## BETA
+## 3.0.7 (2021-04-27)
 
 ### Changes
 
-* Display 'on time' as HH:MM:SS in logs
+* Display Wemo Insight 'on time' as HH:MM:SS in logs
 * More consistent logging on device errors, and helpful info for common errors
 
 ## 3.0.6 (2021-04-24)
