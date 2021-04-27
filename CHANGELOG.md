@@ -7,6 +7,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Display 'on time' as HH:MM:SS in logs
+* More consistent logging on device errors
 
 ## 3.0.6 (2021-04-24)
 
