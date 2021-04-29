@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## UNRELEASED
+
+### Changes
+
+* Update config schema title and description for 'Manual Devices'
+
 ## 3.0.7 (2021-04-27)
 
 ### Changes
