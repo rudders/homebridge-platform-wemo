@@ -7,6 +7,8 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Update config schema title and description for 'Manual Devices'
+* Accessory 'identify' function will now add an entry to the log
+* Backend refactoring, function and variable name changes
 
 ## 3.0.7 (2021-04-27)
 
