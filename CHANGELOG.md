@@ -7,6 +7,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changes
 
 * Reduce 'No Response' timeout to 2 seconds
+* Update the correct corresponding characteristic after the 'No Response' timeout
 * Ensure user is using at least Homebridge v1.3.0
 
 ## 3.0.8 (2021-05-04)
