@@ -18,17 +18,14 @@
         "title": "Device Detection",
         "description": "This setting defines how the plugin finds your devices.",
         "default": "auto",
-        "oneOf": [{
+        "oneOf": [
+          {
             "title": "Auto (Discovery + Manual Devices)",
-            "enum": [
-              "auto"
-            ]
+            "enum": ["auto"]
           },
           {
             "title": "Manual (Only Manual Devices)",
-            "enum": [
-              "manual"
-            ]
+            "enum": ["manual"]
           }
         ]
       },
@@ -78,17 +75,14 @@
             "makerType": {
               "type": "string",
               "title": "Show As",
-              "oneOf": [{
+              "oneOf": [
+                {
                   "title": "A Garage Door",
-                  "enum": [
-                    "garageDoor"
-                  ]
+                  "enum": ["garageDoor"]
                 },
                 {
                   "title": "A Switch (with contact sensor if exists)",
-                  "enum": [
-                    "switch"
-                  ]
+                  "enum": ["switch"]
                 }
               ]
             },
@@ -357,17 +351,12 @@
       }
     }
   },
-  "layout": [{
+  "layout": [
+    {
       "type": "fieldset",
       "title": "Optional Settings",
       "expandable": true,
-      "items": [
-        "mode",
-        "discoveryInterval",
-        "disableDeviceLogging",
-        "debug",
-        "disablePlugin"
-      ]
+      "items": ["mode", "discoveryInterval", "disableDeviceLogging", "debug", "disablePlugin"]
     },
     {
       "key": "makerTypes",
@@ -376,16 +365,18 @@
       "description": "Specific settings for Wemo Makers.",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "makerTypes[].serialNumber",
-          "makerTypes[].label",
-          "makerTypes[].makerType",
-          "makerTypes[].makerTimer",
-          "makerTypes[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "makerTypes[].serialNumber",
+            "makerTypes[].label",
+            "makerTypes[].makerType",
+            "makerTypes[].makerTimer",
+            "makerTypes[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "wemoInsights",
@@ -394,17 +385,19 @@
       "description": "Specific settings for Wemo Insights.",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "wemoInsights[].serialNumber",
-          "wemoInsights[].label",
-          "wemoInsights[].showTodayTC",
-          "wemoInsights[].wattDiff",
-          "wemoInsights[].timeDiff",
-          "wemoInsights[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoInsights[].serialNumber",
+            "wemoInsights[].label",
+            "wemoInsights[].showTodayTC",
+            "wemoInsights[].wattDiff",
+            "wemoInsights[].timeDiff",
+            "wemoInsights[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "wemoLights",
@@ -413,17 +406,19 @@
       "description": "Specific settings for Wemo Light Switches, Dimmers and Bulbs",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "wemoLights[].serialNumber",
-          "wemoLights[].label",
-          "wemoLights[].brightnessStep",
-          "wemoLights[].adaptiveLightingShift",
-          "wemoLights[].pollingInterval",
-          "wemoLights[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoLights[].serialNumber",
+            "wemoLights[].label",
+            "wemoLights[].brightnessStep",
+            "wemoLights[].adaptiveLightingShift",
+            "wemoLights[].pollingInterval",
+            "wemoLights[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "wemoMotions",
@@ -432,15 +427,17 @@
       "description": "Specific settings for Wemo Motions",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "wemoMotions[].serialNumber",
-          "wemoMotions[].label",
-          "wemoMotions[].noMotionTimer",
-          "wemoMotions[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoMotions[].serialNumber",
+            "wemoMotions[].label",
+            "wemoMotions[].noMotionTimer",
+            "wemoMotions[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "wemoOutlets",
@@ -449,15 +446,17 @@
       "description": "Specific settings for Wemo WiFi Outlets and Outdoor Plugs.",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "wemoOutlets[].serialNumber",
-          "wemoOutlets[].label",
-          "wemoOutlets[].showAsSwitch",
-          "wemoOutlets[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoOutlets[].serialNumber",
+            "wemoOutlets[].label",
+            "wemoOutlets[].showAsSwitch",
+            "wemoOutlets[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "wemoOthers",
@@ -466,14 +465,16 @@
       "description": "Specific settings for Wemo Heater, Dehumidifier, Air Purifier and Crockpot.",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "wemoOthers[].serialNumber",
-          "wemoOthers[].label",
-          "wemoOthers[].overrideDisabledLogging"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": [
+            "wemoOthers[].serialNumber",
+            "wemoOthers[].label",
+            "wemoOthers[].overrideDisabledLogging"
+          ]
+        }
+      ]
     },
     {
       "key": "manualDevices",
@@ -481,12 +482,12 @@
       "title": "Manual Devices",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "manualDevices[]"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": ["manualDevices[]"]
+        }
+      ]
     },
     {
       "key": "ignoredDevices",
@@ -494,12 +495,12 @@
       "title": "Ignored Devices",
       "add": "Add Another Device",
       "type": "array",
-      "items": [{
-        "type": "fieldset",
-        "items": [
-          "ignoredDevices[]"
-        ]
-      }]
+      "items": [
+        {
+          "type": "fieldset",
+          "items": ["ignoredDevices[]"]
+        }
+      ]
     },
     {
       "type": "fieldset",
