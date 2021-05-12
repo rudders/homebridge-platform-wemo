@@ -2,6 +2,13 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changes
+
+- [Backend] Use `standard-prettier` code formatting
+- Recommended node version bump to v14.17.0
+
 ## 3.0.9 (2021-05-10)
 
 ### Changes
