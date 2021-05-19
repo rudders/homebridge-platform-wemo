@@ -77,11 +77,11 @@
               "title": "Show As",
               "oneOf": [
                 {
-                  "title": "A Garage Door",
+                  "title": "Garage Door",
                   "enum": ["garageDoor"]
                 },
                 {
-                  "title": "A Switch (with contact sensor if exists)",
+                  "title": "Switch (with contact sensor if exists)",
                   "enum": ["switch"]
                 }
               ]
@@ -255,6 +255,24 @@
             "showAsSwitch": {
               "type": "boolean",
               "title": "Show As Switch"
+            },
+            "showAsType": {
+              "type": "string",
+              "title": "Show As",
+              "oneOf": [
+                {
+                  "title": "Outlet",
+                  "enum": ["outlet"]
+                },
+                {
+                  "title": "Switch",
+                  "enum": ["switch"]
+                },
+                {
+                  "title": "Air Purifier",
+                  "enum": ["purifier"]
+                }
+              ]
             },
             "overrideDisabledLogging": {
               "type": "boolean",
@@ -453,6 +471,7 @@
             "wemoOutlets[].serialNumber",
             "wemoOutlets[].label",
             "wemoOutlets[].showAsSwitch",
+            "wemoOutlets[].showAsType",
             "wemoOutlets[].overrideDisabledLogging"
           ]
         }
