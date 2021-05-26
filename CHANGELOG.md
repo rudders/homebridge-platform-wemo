@@ -4,9 +4,13 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## BETA
 
+### Added
+
+- Expose a Wemo Outlet as a *AirPurifier* accessory type [[#257](https://github.com/bwp91/homebridge-platform-wemo/issues/257)]
+
 ### Changes
 
-- [Backend] Use `standard-prettier` code formatting
+- Use `standard-prettier` code formatting
 - Recommended node version bump to v14.17.0
 
 ## 3.0.9 (2021-05-10)
