@@ -254,7 +254,8 @@
             },
             "showAsSwitch": {
               "type": "boolean",
-              "title": "Show As Switch"
+              "title": "Show As Switch",
+              "description": "This option will be deprecated soon and will be replaced with the below 'Show As' setting. This must be unchecked for the below setting to take effect."
             },
             "showAsType": {
               "type": "string",
