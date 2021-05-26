@@ -6,7 +6,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
-- Expose a Wemo Outlet as a *AirPurifier* accessory type [[#257](https://github.com/bwp91/homebridge-platform-wemo/issues/257)]
+- Expose a Wemo Outlet as a _AirPurifier_ accessory type [[#257](https://github.com/bwp91/homebridge-platform-wemo/issues/257)]
 
 ### Changes
 
