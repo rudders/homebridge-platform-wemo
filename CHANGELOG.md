@@ -4,6 +4,10 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## BETA
 
+### Added
+
+- Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
+
 ### Changes
 
 - Recommended node version bump to v14.17.1
