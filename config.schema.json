@@ -187,7 +187,7 @@
             "transitionTime": {
               "title": "Transition Time",
               "type": "number",
-              "description": "Must be 0 or more.",
+              "description": "Transition time (in seconds?) for brightness and colour temperature changes. Applies to Wemo Bulb (not Dimmer). Must be 0 or more.",
               "placeholder": 0,
               "minimum": 0
             },
