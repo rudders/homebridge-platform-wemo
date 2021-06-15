@@ -184,6 +184,13 @@
               "placeholder": 0,
               "minimum": 0
             },
+            "transitionTime": {
+              "title": "Transition Time",
+              "type": "number",
+              "description": "Must be 0 or more.",
+              "placeholder": 0,
+              "minimum": 0
+            },
             "pollingInterval": {
               "type": "number",
               "title": "Polling Interval",
@@ -433,6 +440,7 @@
             "wemoLights[].label",
             "wemoLights[].brightnessStep",
             "wemoLights[].adaptiveLightingShift",
+            "wemoLights[].transitionTime",
             "wemoLights[].pollingInterval",
             "wemoLights[].overrideDisabledLogging"
           ]
