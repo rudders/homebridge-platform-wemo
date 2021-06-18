@@ -235,42 +235,33 @@
         })
         showDeviceInfo = async serialNumber => {
           homebridge.showSpinner()
-          const selectedAccessory = cachedAccessories.find(
-            x => x.context.serialNumber === serialNumber
-          )
-          console.log(selectedAccessory)
-          document.getElementById('displayName').innerHTML = selectedAccessory.displayName
-          document.getElementById('controllable').innerHTML = selectedAccessory.context.controllable
+          const thisAcc = cachedAccessories.find(x => x.context.serialNumber === serialNumber)
+          const context = thisAcc.context
+          document.getElementById('displayName').innerHTML = thisAcc.displayName
+          document.getElementById('controllable').innerHTML = context.controllable
             ? '<i class="fas fa-circle mr-1 green-text"></i> Yes'
             : '<i class="fas fa-circle mr-1 red-text"></i> No'
-          document.getElementById('ipAddress').innerHTML =
-            selectedAccessory.context.ipAddress || 'Not Available'
-          document.getElementById('port').innerHTML =
-            selectedAccessory.context.port || 'Not Available'
+          document.getElementById('ipAddress').innerHTML = context.ipAddress || 'N/A'
+          document.getElementById('port').innerHTML = context.port || 'N/A'
           document.getElementById('upnpInfo').innerHTML =
-            selectedAccessory.context.ipAddress && selectedAccessory.context.port
+            context.ipAddress && context.port
               ? '<a href="http://' +
-                selectedAccessory.context.ipAddress +
+                context.ipAddress +
                 ':' +
-                selectedAccessory.context.port +
+                context.port +
                 '/setup.xml" target="_blank" class="primary-text">Visit XML &rarr;</a>'
-              : 'Not Available'
-          document.getElementById('serialNumber').innerHTML =
-            selectedAccessory.context.serialNumber || 'Not Available'
-          document.getElementById('macAddress').innerHTML =
-            selectedAccessory.context.macAddress || 'Not Available'
-          document.getElementById('firmware').innerHTML =
-            selectedAccessory.context.firmware || 'Not Available'
+              : 'N/A'
+          document.getElementById('serialNumber').innerHTML = context.serialNumber || 'N/A'
+          document.getElementById('macAddress').innerHTML = context.macAddress || 'N/A'
+          document.getElementById('firmware').innerHTML = context.firmware || 'N/A'
           document.getElementById('imgIcon').innerHTML =
-            selectedAccessory.context.icon &&
-            selectedAccessory.context.ipAddress &&
-            selectedAccessory.context.port
+            context.icon && context.ipAddress && context.port
               ? '<img src="http://' +
-                selectedAccessory.context.ipAddress +
+                context.ipAddress +
                 ':' +
-                selectedAccessory.context.port +
+                context.port +
                 '/' +
-                selectedAccessory.context.icon +
+                context.icon +
                 '" style="width: 150px;">'
               : ''
           document.getElementById('deviceTable').style.display = 'inline-table'
