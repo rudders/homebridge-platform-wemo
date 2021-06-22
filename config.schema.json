@@ -259,11 +259,6 @@
               "type": "string",
               "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
             },
-            "showAsSwitch": {
-              "type": "boolean",
-              "title": "Show As Switch",
-              "description": "This option will be deprecated soon and will be replaced with the below 'Show As' setting. This must be unchecked for the below setting to take effect."
-            },
             "showAsType": {
               "type": "string",
               "title": "Show As",
@@ -479,7 +474,6 @@
           "items": [
             "wemoOutlets[].serialNumber",
             "wemoOutlets[].label",
-            "wemoOutlets[].showAsSwitch",
             "wemoOutlets[].showAsType",
             "wemoOutlets[].overrideDisabledLogging"
           ]
