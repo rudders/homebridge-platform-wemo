@@ -51,6 +51,11 @@
         "description": "If true, the included Fakegato library will debug to the log.",
         "type": "boolean"
       },
+      "debugNodeSSDP": {
+        "title": "Debug Fakegato",
+        "description": "If true, the included node-ssdp library will debug to the log.",
+        "type": "boolean"
+      },
       "disablePlugin": {
         "type": "boolean",
         "title": "Disable Plugin",
