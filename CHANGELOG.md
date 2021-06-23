@@ -6,12 +6,24 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Added
 
-- Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
+- **Accessory Logging**
+  - `overrideLogging` setting per device type (to replace the removed `overrideDisabledLogging`), which can be set to (and will override the global device logging and debug logging settings):
+    - `"default"` to follow the global device update and debug logging setting for this accessory (default if setting not set)
+    - `"standard"` to enable device update logging but disable debug logging for this accessory
+    - `"debug"` to enable device update and debug logging for this accessory
+    - `"disable"` to disable device update and debug logging for this accessory
+- **Wemo Bulbs**
+  - Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
 
-### Changes
+### Changed
 
 - Small changes to the startup logging
 - Recommended node version bump to v14.17.1
+
+### Removed
+
+- `overrideDisabledLogging` setting for each accessory type (replaced with `overrideLogging` setting)
+- `showAsSwitch` setting for Wemo Outlets (replaced with `showAsType` setting)
 
 ## 3.1.0 (2021-05-26)
 
@@ -19,14 +31,14 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 - Expose a Wemo Outlet as a _AirPurifier_ accessory type [[#257](https://github.com/bwp91/homebridge-platform-wemo/issues/257)]
 
-### Changes
+### Changed
 
 - Use `standard-prettier` code formatting
 - Recommended node version bump to v14.17.0
 
 ## 3.0.9 (2021-05-10)
 
-### Changes
+### Changed
 
 - Reduce 'No Response' timeout to 2 seconds
 - Update the correct corresponding characteristic after the 'No Response' timeout
@@ -34,7 +46,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## 3.0.8 (2021-05-04)
 
-### Changes
+### Changed
 
 - Update config schema title and description for 'Manual Devices'
 - Accessory 'identify' function will now add an entry to the log
@@ -42,39 +54,42 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## 3.0.7 (2021-04-27)
 
-### Changes
+### Changed
 
 - Display Wemo Insight 'on time' as HH:MM:SS in logs
 - More consistent logging on device errors, and helpful info for common errors
 
 ## 3.0.6 (2021-04-24)
 
-### Changes
+### Fixed
 
 - Fix 'time on' and 'total consumption' calculations for Wemo Insights
 
 ## 3.0.5 (2021-04-16)
 
-### Changes
+### Changed
+
+- Update wiki links in the Homebridge plugin-ui
+
+### Fixed
 
 - Fix characteristic NaN warning for `LastActivation`
-- Update wiki links in the Homebridge plugin-ui
 
 ## 3.0.4 (2021-04-14)
 
-### Changes
+### Fixed
 
 - Ensure 'No Response' is removed from Wemo Makers when discovered
 
 ## 3.0.3 (2021-04-14)
 
-### Changes
+### Fixed
 
 - Fixes a characteristic issue with Wemo Maker devices
 
 ## 3.0.2 (2021-04-13)
 
-### Changes
+### Fixed
 
 - Fix for `Cannot read property 'updateCharacteristic' of undefined` on plugin startup
 
@@ -83,9 +98,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Requirements
 
 - **Homebridge Users**
-
   - This plugin has a minimum requirement of Homebridge v1.3.3
-
 - **HOOBS Users**
   - This plugin has a minimum requirement of HOOBS v3.3.4
 
@@ -96,7 +109,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 - 'No Response' messages for devices if controlled and unsuccessful (and this status will be reverted after 5 seconds)
 - Debug log messages showing data sent to devices when controlled
 
-### Changes
+### Changed
 
 - Use the new `.onGet`/`.onSet` methods available in Homebridge v1.3
 - Logs will show IP and port on device initiation instead of mac address
@@ -106,15 +119,18 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## 2.15.2 (2021-03-21)
 
-### Changes
+### Changed
 
-- Correct `debugFakegato` setting to type boolean
 - More welcome messages
 - Updated `plugin-ui-utils` dependency
 
+### Fixed
+
+- Correct `debugFakegato` setting to type boolean
+
 ## 2.15.1 (2021-03-17)
 
-### Changes
+### Changed
 
 - Modified config schema to show titles/descriptions for non Homebridge UI users
 
@@ -126,7 +142,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 - Optional polling setting for newer **Wemo Dimmers** that don't automatically notify the plugin when the brightness is changed externally
 - Optional 'timeout' setting for **Wemo Insight** to configure a minimum time between wattage log entries
 
-### Changes
+### Changed
 
 - Open/close time setting for **Wemo Makers** will be hidden if device is set to expose as switch
 - **Wemo Makers** no longer need 'dummy' contact sensor to view Eve history
@@ -144,7 +160,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
   - how many times it's been opened
   - for how long the garage door was open each time
 
-### Changes
+### Changed
 
 - Plugin will now check if a device is ignored by the device USN at an earlier stage of being discovered
 - Updated minimum Node to v14.16.0
@@ -160,10 +176,13 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 - Plugin-UI shows an status icon next to the reachability + shows device firmware
 - In debug mode, the plugin will log each device's customised options when initialised
 
-### Changes
+### Changed
 
 - Raised minimum Homebridge beta required for Adaptive Lighting to 1.3.0-beta.58
 - Disable Adaptive Lighting if the plugin detects a significant colour change (i.e. controlled externally)
+
+### Fixed
+
 - Fixes a uuid error when adding Insights to Homebridge
 
 ## 2.12.0 (2021-02-13)
@@ -175,7 +194,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 - Network Settings section to the Homebridge UI where you can configure the settings that were the `wemoClient` settings
 - Links to 'Configuration' and 'Uninstall' wiki pages in the plugin-ui
 
-### Changes
+### Changed
 
 - ⚠️ `disableDiscovery`, `noMotionTimer`, `doorOpenTimer` and `outletAsSwitch` settings no longer have any effect
 - Adapted port scanning method which now checks the reachability of the `setup.xml` file
@@ -188,7 +207,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ## 2.11.0 (2021-02-01)
 
-### Changes
+### Changed
 
 - **Configuration Changes**
   - These changes are backwards compatible with existing setups
@@ -200,23 +219,20 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     - `noMotionTimer` - now configured per Wemo Motion device in the 'Wemo Motions' section
     - `outletAsSwitch` - now configured per Wemo Outlet device in the 'Wemo Outlets' section
   - These deprecated settings have their own section in the plugin UI
-- Properly catch exceptions on SSDP search errors
 - Clean up the plugin-ui by removing unnecessary descriptions
+
+### Fixed
+
+- Properly catch exceptions on SSDP search errors
 - Fixes a bug when initialising Garage Doors
 
 ## 2.10.0 (2021-01-30)
 
-### Notable Changes
+### Added
 
 - New configuration option `mode` to choose between:
   - `mode: "auto"` the plugin will auto-discover devices **and** configure manual devices (default if option not set)
   - `mode: "manual"` the plugin will **only** configure manual devices
-- `discoveryInterval` now needs a minimum value of `15` and discovery cannot be disabled
-  - Existing configurations with lower value will be disregarded and `15` will be used
-  - The option of disabling the discovery interval has been removed as this interval is essential for correcting connection issues for all your Wemo devices
-
-### New
-
 - Support for the Wemo Outdoor Plug
 - [Experimental] Automatic port scan for manual devices
   - Use a full address `http://192.168.1.X:49153/setup.xml` as before to fully configure a manual device
@@ -229,31 +245,40 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
   - This can be reverted back to resetting each day in the plugin settings with the `showTodayTC` config option
 - Set a custom `wattDiff` (wattage difference) for Insight devices - the plugin will not log consecutive wattage updates if the difference from the previous is less than this value (default: `0`)
 
-### Changes
+### Changed
 
+- `discoveryInterval` now needs a minimum value of `15` and discovery cannot be disabled
+  - Existing configurations with lower value will be disregarded and `15` will be used
+  - The option of disabling the discovery interval has been removed as this interval is essential for correcting connection issues for all your Wemo devices
 - Logging for manual devices that cause errors when loading (e.g. IP/port change)
-- Fixes an issue where the Insight would consistently log outlet-in-use between true and false
 - More consistent and clearer error logging
 - Updated plugin-ui-utils dep and use new method to get cached accessories
 
+### Fixed
+
+- Fixes an issue where the Insight would consistently log outlet-in-use between true and false
+
 ## 2.9.1 (2021-01-21)
 
-### Changes
+### Changed
 
 - Minimum Homebridge beta needed for Adaptive Lighting bumped to beta-46
-- Fixes a 'multiple callback' issue with Fakegato history service
 - Fakegato logging disabled in Homebridge `debug` mode, can be explicitly enabled with `debugFakegato`
 - Unsupported device types to show urn in logs
 
+### Fixed
+
+- Fixes a 'multiple callback' issue with Fakegato history service
+
 ## 2.9.0 (2021-01-14)
 
-### New
+### Added
 
 - New configuration option `removeByName` to remove 'orphan' accessories from the cache
 - (Backend) Gracefully close listener server and ssdp client on Homebridge shutdown
 - Created CHANGELOG.md
 
-### Changes
+### Changed
 
 - Modifications to the layout of the plugin settings screen
 - Removal of maximum value for `number` types on plugin settings screen
