@@ -22,6 +22,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Removed
 
+- `ContactSensorState` and other unused characteristics removed from Wemo Maker's `GarageDoorOpener` service
 - `overrideDisabledLogging` setting for each accessory type (replaced with `overrideLogging` setting)
 - `showAsSwitch` setting for Wemo Outlets (replaced with `showAsType` setting)
 
