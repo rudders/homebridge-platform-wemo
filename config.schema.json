@@ -162,6 +162,20 @@
               "placeholder": 1,
               "minimum": 1
             },
+            "showAsType": {
+              "type": "string",
+              "title": "Show As",
+              "oneOf": [
+                {
+                  "title": "Outlet",
+                  "enum": ["outlet"]
+                },
+                {
+                  "title": "Air Purifier",
+                  "enum": ["purifier"]
+                }
+              ]
+            },
             "overrideLogging": {
               "type": "string",
               "title": "Override Logging Setting",
@@ -510,6 +524,7 @@
             "wemoInsights[].showTodayTC",
             "wemoInsights[].wattDiff",
             "wemoInsights[].timeDiff",
+            "wemoInsights[].showAsType",
             "wemoInsights[].overrideLogging"
           ]
         }
