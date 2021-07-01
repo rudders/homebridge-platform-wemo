@@ -20,7 +20,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 ### Changed
 
 - Small changes to the startup logging
-- Recommended node version bump to v14.17.1
+- Recommended node version bump to v14.17.2
 
 ### Removed
 
