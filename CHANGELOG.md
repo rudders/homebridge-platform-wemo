@@ -14,6 +14,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     - `"disable"` to disable device update and debug logging for this accessory
 - **Wemo Bulbs**
   - Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
+  - Remove Adaptive Lighting feature from a device by setting the `adaptiveLightingShift` to `-1`
 - **Node-SSDP**
   - Added option to enable node-ssdp library debugging
 
