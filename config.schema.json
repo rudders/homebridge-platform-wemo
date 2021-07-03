@@ -75,7 +75,10 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "makerType": {
               "type": "string",
@@ -89,7 +92,10 @@
                   "title": "Switch (with contact sensor if exists)",
                   "enum": ["switch"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "makerTimer": {
               "type": "number",
@@ -98,7 +104,7 @@
               "placeholder": 20,
               "minimum": 1,
               "condition": {
-                "functionBody": "return (model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor');"
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor');"
               }
             },
             "overrideLogging": {
@@ -122,7 +128,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
@@ -141,26 +150,38 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "showTodayTC": {
               "type": "boolean",
               "title": "Show Today's Consumption",
-              "description": "If true, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value."
+              "description": "If true, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value.",
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "wattDiff": {
               "type": "number",
               "title": "Limit Wattage Logging (by wattage)",
               "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
-              "minimum": 1
+              "minimum": 1,
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "timeDiff": {
               "type": "number",
               "title": "Limit Wattage Logging (by time)",
               "description": "The plugin will not log device wattage if the time difference (in seconds) from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
-              "minimum": 1
+              "minimum": 1,
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "showAsType": {
               "type": "string",
@@ -174,7 +195,10 @@
                   "title": "Air Purifier",
                   "enum": ["purifier"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "overrideLogging": {
               "type": "string",
@@ -197,7 +221,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
@@ -217,35 +244,50 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "brightnessStep": {
               "title": "Brightness Step",
               "type": "number",
               "description": "A minimum step for the brightness slider in the Home app. Must be 1 or more.",
               "placeholder": 1,
-              "minimum": 1
+              "minimum": 1,
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "adaptiveLightingShift": {
               "title": "Adaptive Lighting Shift",
               "type": "number",
               "description": "The mired for each Adaptive Lighting update will be increased by this value, making the light appear warmer. Set to -1 to remove Adaptive Lighting feature. Must be -1 or more.",
               "placeholder": 0,
-              "minimum": -1
+              "minimum": -1,
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "transitionTime": {
               "title": "Transition Time",
               "type": "number",
               "description": "Transition time (in seconds?) for brightness and colour temperature changes. Applies to Wemo Bulb (not Dimmer). Must be 0 or more.",
               "placeholder": 0,
-              "minimum": 0
+              "minimum": 0,
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "pollingInterval": {
               "type": "number",
               "title": "Polling Interval",
               "description": "Newer models of the Wemo Dimmer may require polling (in seconds) for brightness updates. Must be 15 or more.",
               "placeholder": 30,
-              "minimum": 15
+              "minimum": 15,
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "overrideLogging": {
               "type": "string",
@@ -268,7 +310,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
@@ -287,14 +332,20 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "noMotionTimer": {
               "type": "number",
               "title": "No Motion Timer",
               "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
               "placeholder": 60,
-              "minimum": 0
+              "minimum": 0,
+              "condition": {
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "overrideLogging": {
               "type": "string",
@@ -317,7 +368,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
@@ -336,7 +390,10 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "showAsType": {
               "type": "string",
@@ -354,7 +411,10 @@
                   "title": "Air Purifier",
                   "enum": ["purifier"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "overrideLogging": {
               "type": "string",
@@ -377,7 +437,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
@@ -396,7 +459,10 @@
             "label": {
               "title": "Label",
               "type": "string",
-              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration."
+              "description": "This setting has no effect except to be a helpful label for identifying which device this is when editing the configuration.",
+              "condition": {
+                "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0);"
+              }
             },
             "overrideLogging": {
               "type": "string",
@@ -419,7 +485,10 @@
                   "title": "Disable All Logging",
                   "enum": ["disable"]
                 }
-              ]
+              ],
+              "condition": {
+                "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0);"
+              }
             }
           }
         }
