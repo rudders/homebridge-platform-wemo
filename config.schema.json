@@ -30,7 +30,7 @@
         ]
       },
       "discoveryInterval": {
-        "type": "number",
+        "type": "integer",
         "title": "Refresh Interval",
         "description": "An interval (in seconds) in which the plugin will initally find and continually check device connections. Must be 15 or more.",
         "placeholder": 30,
@@ -98,7 +98,7 @@
               }
             },
             "makerTimer": {
-              "type": "number",
+              "type": "integer",
               "title": "Open/Close Time",
               "description": "The time in seconds for how long it takes the garage door to open/close. Must be 1 or more.",
               "placeholder": 20,
@@ -164,7 +164,7 @@
               }
             },
             "wattDiff": {
-              "type": "number",
+              "type": "integer",
               "title": "Limit Wattage Logging (by wattage)",
               "description": "The plugin will not log device wattage if the difference from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
@@ -174,7 +174,7 @@
               }
             },
             "timeDiff": {
-              "type": "number",
+              "type": "integer",
               "title": "Limit Wattage Logging (by time)",
               "description": "The plugin will not log device wattage if the time difference (in seconds) from the previous value is less than this number. Must be 1 or more.",
               "placeholder": 1,
@@ -251,7 +251,7 @@
             },
             "brightnessStep": {
               "title": "Brightness Step",
-              "type": "number",
+              "type": "integer",
               "description": "A minimum step for the brightness slider in the Home app. Must be 1 or more.",
               "placeholder": 1,
               "minimum": 1,
@@ -261,7 +261,7 @@
             },
             "adaptiveLightingShift": {
               "title": "Adaptive Lighting Shift",
-              "type": "number",
+              "type": "integer",
               "description": "The mired for each Adaptive Lighting update will be increased by this value, making the light appear warmer. Set to -1 to remove Adaptive Lighting feature. Must be -1 or more.",
               "placeholder": 0,
               "minimum": -1,
@@ -271,7 +271,7 @@
             },
             "transitionTime": {
               "title": "Transition Time",
-              "type": "number",
+              "type": "integer",
               "description": "Transition time (in seconds?) for brightness and colour temperature changes. Applies to Wemo Bulb (not Dimmer). Must be 0 or more.",
               "placeholder": 0,
               "minimum": 0,
@@ -280,7 +280,7 @@
               }
             },
             "pollingInterval": {
-              "type": "number",
+              "type": "integer",
               "title": "Polling Interval",
               "description": "Newer models of the Wemo Dimmer may require polling (in seconds) for brightness updates. Must be 15 or more.",
               "placeholder": 30,
@@ -338,7 +338,7 @@
               }
             },
             "noMotionTimer": {
-              "type": "number",
+              "type": "integer",
               "title": "No Motion Timer",
               "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
               "placeholder": 60,
