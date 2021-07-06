@@ -183,13 +183,17 @@
                 "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
               }
             },
-            "showAsType": {
+            "showAs": {
               "type": "string",
               "title": "Show As",
               "oneOf": [
                 {
-                  "title": "Outlet",
-                  "enum": ["outlet"]
+                  "title": "Outlet (Default)",
+                  "enum": ["default"]
+                },
+                {
+                  "title": "Switch",
+                  "enum": ["switch"]
                 },
                 {
                   "title": "Air Purifier",
@@ -395,13 +399,13 @@
                 "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
               }
             },
-            "showAsType": {
+            "showAs": {
               "type": "string",
               "title": "Show As",
               "oneOf": [
                 {
-                  "title": "Outlet",
-                  "enum": ["outlet"]
+                  "title": "Outlet (Default)",
+                  "enum": ["default"]
                 },
                 {
                   "title": "Switch",
@@ -593,7 +597,7 @@
             "wemoInsights[].showTodayTC",
             "wemoInsights[].wattDiff",
             "wemoInsights[].timeDiff",
-            "wemoInsights[].showAsType",
+            "wemoInsights[].showAs",
             "wemoInsights[].overrideLogging"
           ]
         }
@@ -653,7 +657,7 @@
           "items": [
             "wemoOutlets[].serialNumber",
             "wemoOutlets[].label",
-            "wemoOutlets[].showAsType",
+            "wemoOutlets[].showAs",
             "wemoOutlets[].overrideLogging"
           ]
         }
