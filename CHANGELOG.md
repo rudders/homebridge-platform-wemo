@@ -12,6 +12,8 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     - `"standard"` to enable device update logging but disable debug logging for this accessory
     - `"debug"` to enable device update and debug logging for this accessory
     - `"disable"` to disable device update and debug logging for this accessory
+- **Wemo Outlets & Insights**
+  - More consistent settings to expose these devices as an *Outlet* (default), *Switch* or *AirPurifier* accessory types
 - **Wemo Bulbs**
   - Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
   - Remove Adaptive Lighting feature from a device by setting the `adaptiveLightingShift` to `-1`
@@ -32,7 +34,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 - `ContactSensorState` and other unused characteristics removed from Wemo Maker's `GarageDoorOpener` service
 - `overrideDisabledLogging` setting for each accessory type (replaced with `overrideLogging` setting)
-- `showAsSwitch` setting for Wemo Outlets (replaced with `showAsType` setting)
+- `showAsSwitch` setting for Wemo Outlets (replaced with `showAs` setting)
 
 ## 3.1.0 (2021-05-26)
 
