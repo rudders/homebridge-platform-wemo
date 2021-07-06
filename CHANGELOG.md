@@ -13,7 +13,7 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
     - `"debug"` to enable device update and debug logging for this accessory
     - `"disable"` to disable device update and debug logging for this accessory
 - **Wemo Outlets & Insights**
-  - More consistent settings to expose these devices as an *Outlet* (default), *Switch* or *AirPurifier* accessory types
+  - More consistent settings to expose these devices as an _Outlet_ (default), _Switch_ or _AirPurifier_ accessory types
 - **Wemo Bulbs**
   - Transition time config option for brightness and colour temperature changes for Wemo Bulbs (via Link)
   - Remove Adaptive Lighting feature from a device by setting the `adaptiveLightingShift` to `-1`
