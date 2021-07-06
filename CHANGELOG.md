@@ -24,6 +24,10 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 - Small changes to the startup logging
 - Recommended node version bump to v14.17.3
 
+### Fixed
+
+- A `device.serviceList.service.forEach is not a function` log warning
+
 ### Removed
 
 - `ContactSensorState` and other unused characteristics removed from Wemo Maker's `GarageDoorOpener` service
