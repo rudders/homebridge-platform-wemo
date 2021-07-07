@@ -2,6 +2,12 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## 3.2.1 (2021-07-07)
+
+### Fixed
+
+- An issue initialising Wemo light switch devices ([#262](https://github.com/bwp91/homebridge-platform-wemo/issues/262))
+
 ## 3.2.0 (2021-07-07)
 
 ### Added
