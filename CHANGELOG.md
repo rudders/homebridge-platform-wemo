@@ -22,9 +22,13 @@ All notable changes to this homebridge-platform-wemo will be documented in this 
 
 ### Changed
 
-- More interactive Homebridge UI - device configuration will expand once device ID entered
-- Small changes to the startup logging
-- Recommended node version bump to v14.17.3
+- **Homebridge UI**
+  - More interactive Homebridge UI - device configuration will expand once device ID entered
+- **Wemo Crockpot**
+  - Changed the cooking-time-remaining format in logs to HH:MM
+- **Other**
+  - Small changes to the startup logging
+  - Recommended node version bump to v14.17.3
 
 ### Fixed
 
