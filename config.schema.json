@@ -68,14 +68,19 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number"
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
               }
@@ -94,7 +99,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0 && !model.makerTypes[arrayIndices].ignoreDevice);"
               }
             },
             "makerTimer": {
@@ -104,7 +109,7 @@
               "placeholder": 20,
               "minimum": 1,
               "condition": {
-                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor');"
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor' && !model.makerTypes[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -130,7 +135,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0 && !model.makerTypes[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -143,14 +148,19 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number"
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
               }
@@ -160,7 +170,7 @@
               "title": "Show Today's Consumption",
               "description": "If true, today's consumption will show in the Eve app's Total Consumption field instead of the cumulative value.",
               "condition": {
-                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             },
             "wattDiff": {
@@ -170,7 +180,7 @@
               "placeholder": 1,
               "minimum": 1,
               "condition": {
-                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             },
             "timeDiff": {
@@ -180,7 +190,7 @@
               "placeholder": 1,
               "minimum": 1,
               "condition": {
-                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             },
             "showAs": {
@@ -201,7 +211,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -227,7 +237,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -240,15 +250,20 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number",
               "description": "In the case of a Wemo Bulb (via Link) please use the device ID of the bulb, not the serial number of the Link."
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
               }
@@ -260,7 +275,7 @@
               "placeholder": 1,
               "minimum": 1,
               "condition": {
-                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             },
             "adaptiveLightingShift": {
@@ -270,7 +285,7 @@
               "placeholder": 0,
               "minimum": -1,
               "condition": {
-                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             },
             "transitionTime": {
@@ -280,7 +295,7 @@
               "placeholder": 0,
               "minimum": 0,
               "condition": {
-                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             },
             "pollingInterval": {
@@ -290,7 +305,7 @@
               "placeholder": 30,
               "minimum": 15,
               "condition": {
-                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -316,7 +331,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -329,14 +344,19 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number"
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
               }
@@ -348,7 +368,7 @@
               "placeholder": 60,
               "minimum": 0,
               "condition": {
-                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0 && !model.wemoMotions[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -374,7 +394,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0 && !model.wemoMotions[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -387,14 +407,19 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number"
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
               }
@@ -417,7 +442,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0 && !model.wemoOutlets[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -443,7 +468,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0 && !model.wemoOutlets[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -456,14 +481,19 @@
         "items": {
           "type": "object",
           "properties": {
+            "label": {
+              "title": "Label",
+              "type": "string",
+              "description": "This setting has no effect except to help identify this device."
+            },
             "serialNumber": {
               "type": "string",
               "title": "Serial Number"
             },
-            "label": {
-              "title": "Label",
-              "type": "string",
-              "description": "This setting has no effect except to help identify this device.",
+            "ignoreDevice": {
+              "type": "boolean",
+              "title": "Hide From HomeKit",
+              "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0);"
               }
@@ -491,7 +521,7 @@
                 }
               ],
               "condition": {
-                "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0);"
+                "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0 && !model.wemoOthers[arrayIndices].ignoreDevice);"
               }
             }
           }
@@ -572,8 +602,9 @@
         {
           "type": "fieldset",
           "items": [
-            "makerTypes[].serialNumber",
             "makerTypes[].label",
+            "makerTypes[].serialNumber",
+            "makerTypes[].ignoreDevice",
             "makerTypes[].makerType",
             "makerTypes[].makerTimer",
             "makerTypes[].overrideLogging"
@@ -592,8 +623,9 @@
         {
           "type": "fieldset",
           "items": [
-            "wemoInsights[].serialNumber",
             "wemoInsights[].label",
+            "wemoInsights[].serialNumber",
+            "wemoInsights[].ignoreDevice",
             "wemoInsights[].showTodayTC",
             "wemoInsights[].wattDiff",
             "wemoInsights[].timeDiff",
@@ -614,8 +646,9 @@
         {
           "type": "fieldset",
           "items": [
-            "wemoLights[].serialNumber",
             "wemoLights[].label",
+            "wemoLights[].serialNumber",
+            "wemoLights[].ignoreDevice",
             "wemoLights[].brightnessStep",
             "wemoLights[].adaptiveLightingShift",
             "wemoLights[].transitionTime",
@@ -636,8 +669,9 @@
         {
           "type": "fieldset",
           "items": [
-            "wemoMotions[].serialNumber",
             "wemoMotions[].label",
+            "wemoMotions[].serialNumber",
+            "wemoMotions[].ignoreDevice",
             "wemoMotions[].noMotionTimer",
             "wemoMotions[].overrideLogging"
           ]
@@ -655,8 +689,9 @@
         {
           "type": "fieldset",
           "items": [
-            "wemoOutlets[].serialNumber",
             "wemoOutlets[].label",
+            "wemoOutlets[].serialNumber",
+            "wemoOutlets[].ignoreDevice",
             "wemoOutlets[].showAs",
             "wemoOutlets[].overrideLogging"
           ]
@@ -674,8 +709,9 @@
         {
           "type": "fieldset",
           "items": [
-            "wemoOthers[].serialNumber",
             "wemoOthers[].label",
+            "wemoOthers[].serialNumber",
+            "wemoOthers[].ignoreDevice",
             "wemoOthers[].overrideLogging"
           ]
         }
