@@ -2,6 +2,15 @@
 
 All notable changes to this homebridge-platform-wemo will be documented in this file.
 
+## BETA
+
+### Changed
+
+- **Homebridge UI**
+  - `label` field now appears first in the device configuration sections
+  - A device can now be ignored/removed from Homebridge by the `ignoreDevice` setting in the device configuration sections
+  - Set a manual IP/URL for a device with the `manualIP` setting in the device configuration sections
+
 ## 3.2.2 (2021-07-08)
 
 ### Changes
