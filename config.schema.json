@@ -112,6 +112,15 @@
                 "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].makerType === 'garageDoor' && !model.makerTypes[arrayIndices].ignoreDevice);"
               }
             },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
+              "condition": {
+                "functionBody": "return (model.makerTypes && model.makerTypes[arrayIndices] && model.makerTypes[arrayIndices].serialNumber && model.makerTypes[arrayIndices].serialNumber.length > 0 && !model.makerTypes[arrayIndices].ignoreDevice);"
+              }
+            },
             "overrideLogging": {
               "type": "string",
               "title": "Override Logging Setting",
@@ -214,6 +223,15 @@
                 "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
               }
             },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
+              "condition": {
+                "functionBody": "return (model.wemoInsights && model.wemoInsights[arrayIndices] && model.wemoInsights[arrayIndices].serialNumber && model.wemoInsights[arrayIndices].serialNumber.length > 0 && !model.wemoInsights[arrayIndices].ignoreDevice);"
+              }
+            },
             "overrideLogging": {
               "type": "string",
               "title": "Override Logging Setting",
@@ -308,6 +326,15 @@
                 "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
               }
             },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
+              "condition": {
+                "functionBody": "return (model.wemoLights && model.wemoLights[arrayIndices] && model.wemoLights[arrayIndices].serialNumber && model.wemoLights[arrayIndices].serialNumber.length > 0 && !model.wemoLights[arrayIndices].ignoreDevice);"
+              }
+            },
             "overrideLogging": {
               "type": "string",
               "title": "Override Logging Setting",
@@ -367,6 +394,15 @@
               "description": "A timer (in seconds) for how long after motion is not detected that the state is changed.",
               "placeholder": 60,
               "minimum": 0,
+              "condition": {
+                "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0 && !model.wemoMotions[arrayIndices].ignoreDevice);"
+              }
+            },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
               "condition": {
                 "functionBody": "return (model.wemoMotions && model.wemoMotions[arrayIndices] && model.wemoMotions[arrayIndices].serialNumber && model.wemoMotions[arrayIndices].serialNumber.length > 0 && !model.wemoMotions[arrayIndices].ignoreDevice);"
               }
@@ -445,6 +481,15 @@
                 "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0 && !model.wemoOutlets[arrayIndices].ignoreDevice);"
               }
             },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
+              "condition": {
+                "functionBody": "return (model.wemoOutlets && model.wemoOutlets[arrayIndices] && model.wemoOutlets[arrayIndices].serialNumber && model.wemoOutlets[arrayIndices].serialNumber.length > 0 && !model.wemoOutlets[arrayIndices].ignoreDevice);"
+              }
+            },
             "overrideLogging": {
               "type": "string",
               "title": "Override Logging Setting",
@@ -496,6 +541,15 @@
               "description": "If true, this accessory will be removed and ignored from HomeKit.",
               "condition": {
                 "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0);"
+              }
+            },
+            "manualIP": {
+              "type": "string",
+              "title": "Manual IP/URL",
+              "placeholder": "192.168.1.20",
+              "description": "If the plugin cannot discover this device you can specify its IP and the plugin will try to determine the correct port. You can also specify a full address to specify both the IP and the port, e.g. http://192.168.1.1:49153/setup.xml.",
+              "condition": {
+                "functionBody": "return (model.wemoOthers && model.wemoOthers[arrayIndices] && model.wemoOthers[arrayIndices].serialNumber && model.wemoOthers[arrayIndices].serialNumber.length > 0 && !model.wemoOthers[arrayIndices].ignoreDevice);"
               }
             },
             "overrideLogging": {
@@ -607,6 +661,7 @@
             "makerTypes[].ignoreDevice",
             "makerTypes[].makerType",
             "makerTypes[].makerTimer",
+            "makerTypes[].manualIP",
             "makerTypes[].overrideLogging"
           ]
         }
@@ -630,6 +685,7 @@
             "wemoInsights[].wattDiff",
             "wemoInsights[].timeDiff",
             "wemoInsights[].showAs",
+            "wemoInsights[].manualIP",
             "wemoInsights[].overrideLogging"
           ]
         }
@@ -653,6 +709,7 @@
             "wemoLights[].adaptiveLightingShift",
             "wemoLights[].transitionTime",
             "wemoLights[].pollingInterval",
+            "wemoLights[].manualIP",
             "wemoLights[].overrideLogging"
           ]
         }
@@ -673,6 +730,7 @@
             "wemoMotions[].serialNumber",
             "wemoMotions[].ignoreDevice",
             "wemoMotions[].noMotionTimer",
+            "wemoMotions[].manualIP",
             "wemoMotions[].overrideLogging"
           ]
         }
@@ -693,6 +751,7 @@
             "wemoOutlets[].serialNumber",
             "wemoOutlets[].ignoreDevice",
             "wemoOutlets[].showAs",
+            "wemoOutlets[].manualIP",
             "wemoOutlets[].overrideLogging"
           ]
         }
@@ -712,6 +771,7 @@
             "wemoOthers[].label",
             "wemoOthers[].serialNumber",
             "wemoOthers[].ignoreDevice",
+            "wemoOthers[].manualIP",
             "wemoOthers[].overrideLogging"
           ]
         }
