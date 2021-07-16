@@ -56,6 +56,10 @@
         "description": "If true, the included node-ssdp library will debug to the log.",
         "type": "boolean"
       },
+      "removeByName": {
+        "title": "Remove By Name",
+        "type": "string"
+      },
       "disablePlugin": {
         "type": "boolean",
         "title": "Disable Plugin",
@@ -599,10 +603,6 @@
           "title": "Serial Number",
           "description": "The serial number of the device that should be ignored. In the case of a Wemo Bulb (via Link) please use the device ID of the bulb, not the serial number of the Link."
         }
-      },
-      "removeByName": {
-        "title": "Remove By Name",
-        "type": "string"
       },
       "wemoClient": {
         "title": "Network Settings",
